@@ -62,6 +62,4 @@ protected:
     void **list;
 };
 
-//-------------------------------- Autres définitions dépendantes de <Xxx>
-
-#endif // XXX_H
+#endif // ARRAY_LIST_H
