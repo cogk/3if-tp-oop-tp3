@@ -1,4 +1,4 @@
 #!/bin/bash
 
-make
+make >/dev/null || make
 ./application
