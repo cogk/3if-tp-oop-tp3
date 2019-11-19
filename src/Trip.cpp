@@ -25,11 +25,12 @@ using namespace std;
 const City *Trip::GetStart() const
 {
     return this->startCity;
-} //----- Fin de Size
+} //----- Fin de GetStart
+
 const City *Trip::GetEnd() const
 {
     return this->endCity;
-} //----- Fin de Size
+} //----- Fin de GetEnd
 
 //-------------------------------------------- Constructeurs - destructeur
 Trip::Trip(const Trip &aTrip)
