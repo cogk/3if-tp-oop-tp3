@@ -26,7 +26,7 @@ class ArrayList
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    void Add(void * element);
+    void Add(void *element);
 
     void *Get(unsigned int index) const;
     // Contrat : index < this->Size()

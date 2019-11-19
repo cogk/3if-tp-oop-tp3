@@ -21,7 +21,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-void ArrayList::Add(void * element)
+void ArrayList::Add(void *element)
 {
     if (currentSize == maxSize)
     {
@@ -43,24 +43,25 @@ unsigned int ArrayList::Size() const
 
 //-------------------------------------------- Constructeurs - destructeur
 ArrayList::ArrayList(const ArrayList &anArrayList)
-        : currentSize(0), maxSize(anArrayList.maxSize)
+    : currentSize(0), maxSize(anArrayList.maxSize)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <ArrayList>" << endl;
 #endif
-    list = new void* [maxSize];
-    for (unsigned int i = 0; i < anArrayList.Size(); i++) {
+    list = new void *[maxSize];
+    for (unsigned int i = 0; i < anArrayList.Size(); i++)
+    {
         Add(anArrayList.Get(i));
     }
 } //----- Fin de ArrayList (constructeur de copie)
 
 ArrayList::ArrayList(unsigned int startingMaxSize)
-        : currentSize(0), maxSize(startingMaxSize)
+    : currentSize(0), maxSize(startingMaxSize)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <ArrayList>" << endl;
 #endif
-    list = new void* [maxSize];
+    list = new void *[maxSize];
 } //----- Fin de ArrayList
 
 ArrayList::~ArrayList()
@@ -68,7 +69,7 @@ ArrayList::~ArrayList()
 #ifdef MAP
     cout << "Appel au destructeur de <ArrayList>" << endl;
 #endif
-    delete [] list;
+    delete[] list;
 } //----- Fin de ~ArrayList
 
 //------------------------------------------------------------------ PRIVE
@@ -78,9 +79,10 @@ void ArrayList::DoubleSize()
 {
     maxSize *= 2;
     void **oldList = list;
-    list = new void* [maxSize];
-    for (unsigned int i = 0; i < currentSize; i++) {
+    list = new void *[maxSize];
+    for (unsigned int i = 0; i < currentSize; i++)
+    {
         list[i] = oldList[i];
     }
-    delete [] oldList;
+    delete[] oldList;
 }
