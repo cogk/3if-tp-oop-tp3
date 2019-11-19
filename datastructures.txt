@@ -1,0 +1,36 @@
+-= STANDARD DATA STRUCTURES =-
+
+* ArrayList
+
+-= SPECIFIC CLASSES =-
+
+* App
+
+* City
+	> City(const char *name)
+	> ---
+	> const char * getName() const
+
+
+* Catalog
+	> Catalog()
+	> ---
+	> void AddTrip(const Trip * trip)
+	> const ArrayList<Trip> getCatalog() const
+	> const Trip *SearchJourney(const City * start, const City * end) const
+
+
+* Trip <Virtual>
+  |	> Trip(const City * start, const City * end)
+  |	> ---
+  |	> City * getStart() const
+  |	> City * getEnd() const
+  |
+  |- SimpleTrip
+  |		> SimpleTrip(const City * start, const City * end)
+  |		> ---
+  |
+  |- ComposedTrip
+  |		> ComposedTrip(City * start, City * end, const ArrayList<City> * steps)
+  |		> ---
+  |		> ArrayList<City> * getSteps() const
