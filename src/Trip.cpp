@@ -33,7 +33,7 @@ const City *Trip::GetEnd() const
 
 //-------------------------------------------- Constructeurs - destructeur
 Trip::Trip(const Trip &aTrip)
-    : startCity(aTrip.start), endCity(aTrip.end)
+    : startCity(aTrip.startCity), endCity(aTrip.endCity)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Trip> (non-surchargé)" << endl;

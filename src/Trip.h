@@ -31,10 +31,10 @@ public:
     void Add(void *element);
 
     //-------------------------------------------- Constructeurs - destructeur
-    virtual Trip(const Trip &aTrip);
+    Trip(const Trip &aTrip);
     // Mode d'emploi (constructeur de copie) :
 
-    virtual Trip();
+    Trip(const City *start, const City *end);
 
     virtual ~Trip();
 
