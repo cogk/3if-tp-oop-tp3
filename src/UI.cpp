@@ -1,5 +1,5 @@
 /*************************************************************************
-                           App  -  description
+                           UI  -  description
                              -------------------
     début                : 2019-11-19
     copyright            : (C) 2019 BERTHOMET Guillaume & FORLER Corentin
@@ -7,50 +7,35 @@
                            corentin.forler@insa-lyon.fr
 *************************************************************************/
 
-//---------- Réalisation de la classe <App> (fichier App.cpp) ------------
+//---------- Réalisation de la classe <UI> (fichier UI.cpp) ------------
 
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
 using namespace std;
+#include <cstdio>
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
-#include "App.h"
 #include "UI.h"
 
 //------------------------------------------------------------- Constantes
+const int UI_BUFFER_SIZE = 256;
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-int App::Run()
+const char *
+UI::Ask(const char *question)
 {
-    cout << "Hello, World!" << EOL;
-    const char *answer = UI::Ask("Comment allez-vous ?");
-    cout << answer << EOL;
-    return 0;
+    char *answer = new char[UI_BUFFER_SIZE];
+
+    cout << question << " ";
+    scanf("%255[^\n]", answer);
+    getchar(); // skip new line
+
+    return answer;
 } //----- Fin de Méthode
-
-//-------------------------------------------- Constructeurs - destructeur
-
-App::App()
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <App>" << endl;
-#endif
-} //----- Fin de App
-
-App::~App()
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <App>" << endl;
-#endif
-} //----- Fin de ~App
 
 //------------------------------------------------------------------ PRIVE
 
