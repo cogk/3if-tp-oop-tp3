@@ -13,8 +13,8 @@
 
 //-------------------------------------------------------- Include système
 using namespace std;
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 //------------------------------------------------------ Include personnel
 #include "City.h"
@@ -55,5 +55,5 @@ City::~City()
 #ifdef MAP
     cout << "Appel au destructeur de <City>" << endl;
 #endif
-    delete [] name;
+    delete[] name;
 } //----- Fin de ~City
