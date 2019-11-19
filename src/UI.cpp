@@ -25,16 +25,42 @@ const int UI_BUFFER_SIZE = 256;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-const char *
-UI::Ask(const char *question)
+const char *UI::Ask(const char *question)
 {
-    char *answer = new char[UI_BUFFER_SIZE];
+  char *answer = new char[UI_BUFFER_SIZE];
 
-    cout << question << " ";
-    scanf("%255[^\n]", answer);
-    getchar(); // skip new line
+  cout << question << " ";
+  scanf("%255[^\n]", answer);
+  getchar(); // skip new line
 
-    return answer;
+  return answer;
+} //----- Fin de Méthode
+
+//----------------------------------------------------- Méthodes publiques
+/**
+ * Contrats :
+ * - la valeur de retour de la fonction est :
+ *     soit -1,
+ *     soit entre 1 et nChoices inclus.
+ *
+ */
+int UI::Choose(const int nChoices, const char *choices[])
+{
+  int answer = 0;
+
+  for (int i = 0; i < nChoices; i++)
+  {
+    cout << (i + 1) << ":\t" << choices[i] << EOL;
+  }
+
+  cin >> answer;
+
+  if (answer < 1 || answer > nChoices)
+  {
+    return -1;
+  }
+
+  return answer; // [1 ; nChoices]
 } //----- Fin de Méthode
 
 //------------------------------------------------------------------ PRIVE

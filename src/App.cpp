@@ -27,8 +27,26 @@ using namespace std;
 int App::Run()
 {
     cout << "Hello, World!" << EOL;
+
     const char *answer = UI::Ask("Comment allez-vous ?");
     cout << answer << EOL;
+
+    const int nChoices = 3;
+    const char *choices[nChoices] = {
+        "Lorem",
+        "Ipsum",
+        "Dolor"};
+    const int ans = UI::Choose(nChoices, choices);
+
+    if (ans == -1)
+    {
+        cout << "Cette option n'existe pas." << EOL;
+    }
+    else
+    {
+        cout << "Vous avez choisi " << ans << " - " << choices[ans - 1] << "." << EOL;
+    }
+
     return 0;
 } //----- Fin de Méthode
 

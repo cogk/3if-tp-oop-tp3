@@ -34,7 +34,7 @@ namespace UI
 //
 // Contrat :
 //
-// int Choose();
+int Choose(const int nChoices, const char *choices[]);
 const char *Ask(const char *question);
 
 //------------------------------------------------------------------ PRIVE
