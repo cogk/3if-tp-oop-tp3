@@ -26,10 +26,6 @@
   |	> City * GetStart() const
   |	> City * GetEnd() const
   |
-  |- SimpleTrip
-  |		> SimpleTrip(const City * start, const City * end)
-  |		> ---
-  |
   |- CompoundTrip
   |		> CompoundTrip(City * start, City * end, const ArrayList<City> * steps)
   |		> ---
