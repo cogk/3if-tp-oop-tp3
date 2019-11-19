@@ -9,7 +9,7 @@
 * City
 	> City(const char *name)
 	> ---
-	> const char * getName() const
+	> const char * GetName() const
 
 
 * Catalog
@@ -23,14 +23,14 @@
 * Trip <Virtual>
   |	> Trip(const City * start, const City * end)
   |	> ---
-  |	> City * getStart() const
-  |	> City * getEnd() const
+  |	> City * GetStart() const
+  |	> City * GetEnd() const
   |
   |- SimpleTrip
   |		> SimpleTrip(const City * start, const City * end)
   |		> ---
   |
-  |- ComposedTrip
-  |		> ComposedTrip(City * start, City * end, const ArrayList<City> * steps)
+  |- CompoundTrip
+  |		> CompoundTrip(City * start, City * end, const ArrayList<City> * steps)
   |		> ---
   |		> ArrayList<City> * getSteps() const
