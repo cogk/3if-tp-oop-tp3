@@ -1,5 +1,5 @@
 #!/bin/bash
 
 rm ./application >/dev/null
-make >/dev/null || make
+make -B >/dev/null || make -B
 ./application

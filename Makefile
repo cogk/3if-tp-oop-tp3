@@ -1,10 +1,14 @@
 CC        = g++
-CFLAGS    = -g -Wall -Werror
+CFLAGS    = -Wall -Werror
 EXEC_NAME = application
 INCLUDES  =
 LIBS      =
 SRCS      = $(wildcard src/*.cpp)
 OBJS      = $(addprefix tmp/,$(notdir $(SRCS:.cpp=.o)))
+
+ifdef DEBUG
+	CFLAGS += -DMAP -g
+endif
 
 all: directories $(EXEC_NAME)
 
