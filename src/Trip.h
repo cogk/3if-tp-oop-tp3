@@ -38,6 +38,9 @@ public:
 
     virtual ~Trip();
 
+    const City *GetStart() const;
+    const City *GetEnd() const;
+
     //------------------------------------------------------------------ PRIVE
 
 protected:
