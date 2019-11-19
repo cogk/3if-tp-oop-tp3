@@ -54,6 +54,8 @@ Trip::~Trip()
 #ifdef MAP
     cout << "Appel au destructeur de <Trip> (non-surchargé)" << endl;
 #endif
+    delete startCity;
+    delete endCity;
 } //----- Fin de ~Trip
 
 //------------------------------------------------------------------ PRIVE
