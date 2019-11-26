@@ -28,7 +28,7 @@ ArrayList * CompoundTrip::GetTrips() const
 
 //-------------------------------------------- Constructeurs - destructeur
 CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
-    : Trip::Trip(nullptr, nullptr, nullptr)
+    : Trip::Trip(nullptr, nullptr)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
@@ -44,7 +44,7 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
 } //----- Fin de CompoundTrip (constructeur de copie)
 
 CompoundTrip::CompoundTrip(ArrayList * trips)
-    : Trip::Trip(trips->Get(0)->GetStart(), trips->GetLast()->GetEnd(), nullptr)
+    : Trip::Trip(trips->Get(0)->GetStart(), trips->GetLast()->GetEnd())
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;
@@ -58,6 +58,10 @@ CompoundTrip::~CompoundTrip()
 #ifdef MAP
     cout << "Appel au destructeur de <CompoundTrip>" << endl;
 #endif
+    for (unsigned int i = 0; i < trips->Size(); i++)
+    {
+        delete trips->Get(i);
+    }
     delete trips;
 } //----- Fin de ~CompoundTrip
 

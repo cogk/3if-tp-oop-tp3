@@ -13,6 +13,7 @@
 
 //-------------------------------------------------------- Include système
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -33,6 +34,24 @@ void Catalog::Add(Trip *trip)
 Trip *Catalog::Get(unsigned int i)
 {
     return this->trajets->Get(i);
+}
+
+ArrayList *Catalog::Search(const City *start, const City *end) const
+{
+    ArrayList *result = new ArrayList();
+
+    for (unsigned int i = 0; i < trajets->Size(); i++)
+    {
+        const char * startCity = trajets->Get(i)->GetStart()->GetName();
+        const char * endCity = trajets->Get(i)->GetEnd()->GetName();
+        if (strcmp(startCity, start->GetName()) == 0 &&
+            strcmp(endCity, end->GetName()) == 0)
+        {
+            result->Add(trajets->Get(i));
+        }
+    }
+
+    return result;
 }
 
 //-------------------------------------------- Constructeurs - destructeur

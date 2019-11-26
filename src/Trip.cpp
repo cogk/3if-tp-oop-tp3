@@ -42,7 +42,7 @@ const char *Trip::GetMode() const
 Trip::Trip(const Trip &aTrip)
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <Trip> (non-surchargé)" << endl;
+    cout << "Appel au constructeur de copie de <Trip>" << endl;
 #endif
     startCity = new City(aTrip.startCity->GetName());
     endCity = new City(aTrip.endCity->GetName());
@@ -55,9 +55,8 @@ Trip::Trip(const City *start, const City *end, const char *mode)
     : startCity(start), endCity(end)
 {
 #ifdef MAP
-    cout << "Appel au constructeur de <Trip> (non-surchargé)" << endl;
+    cout << "Appel au constructeur de <Trip>" << endl;
 #endif
-    this->mode = new char[strlen(mode) + 1];
     char *tmpmode = new char[strlen(mode) + 1];
     strcpy(tmpmode, mode);
     this->mode = tmpmode;
@@ -66,7 +65,7 @@ Trip::Trip(const City *start, const City *end, const char *mode)
 Trip::~Trip()
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <Trip> (non-surchargé)" << endl;
+    cout << "Appel au destructeur de <Trip>" << endl;
 #endif
     delete startCity;
     delete endCity;
@@ -74,5 +73,13 @@ Trip::~Trip()
 } //----- Fin de ~Trip
 
 //------------------------------------------------------------------ PRIVE
+
+Trip::Trip(const City *start, const City *end)
+    : startCity(start), endCity(end)
+{
+#ifdef MAP
+    cout << "Appel au constructeur protégé de <Trip>" << endl;
+#endif
+}
 
 //----------------------------------------------------- Méthodes protégées

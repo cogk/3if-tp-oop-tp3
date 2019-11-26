@@ -69,10 +69,6 @@ ArrayList::~ArrayList()
 #ifdef MAP
     cout << "Appel au destructeur de <ArrayList>" << endl;
 #endif
-    for (unsigned int i = 0; i < currentSize; i++)
-    {
-        delete list[i];
-    }
     delete[] list;
 } //----- Fin de ~ArrayList
 
