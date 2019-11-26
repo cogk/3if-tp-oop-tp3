@@ -30,6 +30,7 @@ int App::Run()
 
     const char *answer = UI::Ask("Comment allez-vous ?");
     cout << answer << EOL;
+    delete[] answer;
 
     const int nChoices = 3;
     const char *choices[nChoices] = {
