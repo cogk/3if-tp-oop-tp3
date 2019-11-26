@@ -12,8 +12,8 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <iostream>
 #include <cstring>
+#include <iostream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
