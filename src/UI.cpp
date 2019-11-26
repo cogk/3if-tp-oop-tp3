@@ -45,6 +45,10 @@ const char *UI::Ask(const char *question)
         len--;
     }
 
+    if (len == 0)
+    {
+        return nullptr;
+    }
     return answer;
 } //----- Fin de Méthode
 
