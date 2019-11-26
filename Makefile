@@ -1,5 +1,5 @@
 CC        = g++
-CFLAGS    = -Wall -Werror
+CFLAGS    = -ansi -pedantic -Wall -Werror -std=c++11
 EXEC_NAME = application
 INCLUDES  =
 LIBS      =
