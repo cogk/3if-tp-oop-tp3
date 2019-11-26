@@ -22,7 +22,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-unsigned int Catalog::Size()
+unsigned int Catalog::Size() const
 {
     return this->trajets->Size();
 }
@@ -30,7 +30,7 @@ void Catalog::Add(Trip *trip)
 {
     this->trajets->Add(trip);
 }
-Trip *Catalog::Get(unsigned int i)
+Trip *Catalog::Get(unsigned int i) const
 {
     return this->trajets->Get(i);
 }
@@ -62,5 +62,10 @@ Catalog::~Catalog()
 #ifdef MAP
     cout << "Appel au destructeur de <Catalog>" << endl;
 #endif
+    for (unsigned int i = 0; i < trajets->Size(); i++)
+    {
+        Trip *trajet = trajets->Get(i);
+        delete trajet;
+    }
     delete trajets;
 } //----- Fin de ~Catalog

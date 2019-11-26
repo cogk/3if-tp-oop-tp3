@@ -29,9 +29,9 @@ class Catalog
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    unsigned int Size();
+    unsigned int Size() const;
     void Add(Trip *trip);
-    Trip *Get(unsigned int i);
+    Trip *Get(unsigned int i) const;
 
     //-------------------------------------------- Constructeurs - destructeur
     Catalog(const Catalog &aCatalog);
