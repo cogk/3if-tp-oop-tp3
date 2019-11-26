@@ -70,7 +70,7 @@ Trip::~Trip()
 #endif
     delete startCity;
     delete endCity;
-    delete [] mode;
+    delete[] mode;
 } //----- Fin de ~Trip
 
 //------------------------------------------------------------------ PRIVE
