@@ -8,21 +8,22 @@ int main(int argc, char const *argv[])
     // delete app;
     // return result;
 
-    Catalog cat;
-    cat.Add(new Trip(new City("Paris"), new City("Lyon"), "Train"));
-    cat.Add(new Trip(new City("Lyon"), new City("Bordeaux"), "Avion"));
+    Catalog *cat = new Catalog();
+    cat->Add(new Trip(new City("Paris"), new City("Lyon"), "Train"));
+    cat->Add(new Trip(new City("Lyon"), new City("Bordeaux"), "Avion"));
 
     ArrayList *trips = new ArrayList();
     trips->Add(new Trip(new City("Paris"), new City("Lyon"), "Train"));
-    trips->Add(new Trip(new City("Lyon"), new City("Madrid"), "Train"));
-    trips->Add(new Trip(new City("Madrid"), new City("Lisbonne"), "Train"));
+    // trips->Add(new Trip(new City("Lyon"), new City("Madrid"), "Train"));
+    // trips->Add(new Trip(new City("Madrid"), new City("Lisbonne"), "Train"));
     CompoundTrip *tc1 = new CompoundTrip(trips);
-    cat.Add(tc1);
+    cat->Add(tc1);
 
     City a("Paris");
     City b("Lisbonne");
 
-    ArrayList *result = cat.Search(&a, &b);
+    ArrayList *result = cat->Search(&a, &b);
     printf("%d\n", result->Size());
     delete result;
+    delete cat;
 }
