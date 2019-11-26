@@ -12,9 +12,9 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
 #include <cstring>
 #include <iostream>
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "City.h"

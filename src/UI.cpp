@@ -12,9 +12,9 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
 #include <cstdio>
 #include <iostream>
+using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "UI.h"
