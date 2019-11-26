@@ -16,6 +16,9 @@
 
 //------------------------------------------------------ Include personnel
 #include "Catalog.h"
+#include "CompoundTrip.h"
+#include "Trip.h"
+#include "UI.h"
 
 //------------------------------------------------------------- Constantes
 #define EOL "\r\n"
