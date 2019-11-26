@@ -42,7 +42,7 @@ const char *Ask(const char *question);
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-}; // namespace UI
+} // namespace UI
 
 //-------------------------------- Autres définitions dépendantes de <UI>
 
