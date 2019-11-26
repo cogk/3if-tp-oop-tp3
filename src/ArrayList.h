@@ -11,6 +11,9 @@
 #if !defined(ARRAY_LIST_H)
 #define ARRAY_LIST_H
 
+//--------------------------------------------------- Interfaces utilisées
+#include "Trip.h"
+
 //------------------------------------------------------------- Constantes
 const unsigned int DEFAULT_SIZE = 5;
 
@@ -26,10 +29,13 @@ class ArrayList
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    void Add(void *element);
+    void Add(Trip *element);
 
-    void *Get(unsigned int index) const;
+    Trip *Get(unsigned int index) const;
     // Contrat : index < this->Size()
+
+    Trip *GetLast() const;
+    // Contrat : this->Size() > 0
 
     unsigned int Size() const;
     // Mode d'emploi :
@@ -38,8 +44,7 @@ public:
     //-------------------------------------------- Constructeurs - destructeur
     ArrayList(const ArrayList &anArrayList);
     // Mode d'emploi (constructeur de copie) :
-    //  Copie le contenu de anArrayList.list dans this->list (!= copier
-    // anArrayList.list comme un pointeur) ainsi que anArrayList.maxSize
+    //  INTERDIT D'UTILISATION
 
     ArrayList(unsigned int startingMaxSize = DEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
@@ -59,7 +64,7 @@ protected:
     unsigned int currentSize;
     unsigned int maxSize;
 
-    void **list;
+    Trip **list;
 };
 
 #endif // ARRAY_LIST_H

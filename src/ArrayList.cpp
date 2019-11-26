@@ -17,11 +17,12 @@ using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "ArrayList.h"
+#include "Trip.h"
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-void ArrayList::Add(void *element)
+void ArrayList::Add(Trip *element)
 {
     if (currentSize == maxSize)
     {
@@ -31,10 +32,15 @@ void ArrayList::Add(void *element)
     list[currentSize++] = element;
 } //----- Fin de Add
 
-void *ArrayList::Get(unsigned int index) const
+Trip *ArrayList::Get(unsigned int index) const
 {
     return list[index];
 } //----- Fin de Get
+
+Trip *ArrayList::GetLast() const
+{
+    return list[currentSize - 1];
+} //----- Fin de GetLast
 
 unsigned int ArrayList::Size() const
 {
@@ -43,16 +49,10 @@ unsigned int ArrayList::Size() const
 
 //-------------------------------------------- Constructeurs - destructeur
 ArrayList::ArrayList(const ArrayList &anArrayList)
-    : currentSize(0), maxSize(anArrayList.maxSize)
 {
 #ifdef MAP
-    cout << "Appel au constructeur de copie de <ArrayList>" << endl;
+    cout << "Appel au constructeur de copie de <ArrayList> : PROBLEME" << endl;
 #endif
-    list = new void *[maxSize];
-    for (unsigned int i = 0; i < anArrayList.Size(); i++)
-    {
-        Add(anArrayList.Get(i));
-    }
 } //----- Fin de ArrayList (constructeur de copie)
 
 ArrayList::ArrayList(unsigned int startingMaxSize)
@@ -61,7 +61,7 @@ ArrayList::ArrayList(unsigned int startingMaxSize)
 #ifdef MAP
     cout << "Appel au constructeur de <ArrayList>" << endl;
 #endif
-    list = new void *[maxSize];
+    list = new Trip *[maxSize];
 } //----- Fin de ArrayList
 
 ArrayList::~ArrayList()
@@ -69,6 +69,10 @@ ArrayList::~ArrayList()
 #ifdef MAP
     cout << "Appel au destructeur de <ArrayList>" << endl;
 #endif
+    for (unsigned int i = 0; i < currentSize; i++)
+    {
+        delete list[i];
+    }
     delete[] list;
 } //----- Fin de ~ArrayList
 
@@ -78,8 +82,8 @@ ArrayList::~ArrayList()
 void ArrayList::DoubleSize()
 {
     maxSize *= 2;
-    void **oldList = list;
-    list = new void *[maxSize];
+    Trip **oldList = list;
+    list = new Trip *[maxSize];
     for (unsigned int i = 0; i < currentSize; i++)
     {
         list[i] = oldList[i];
