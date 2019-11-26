@@ -14,6 +14,9 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <iostream>
 
+//------------------------------------------------------ Include personnel
+#include "Catalog.h"
+
 //------------------------------------------------------------- Constantes
 #define EOL "\r\n"
 
@@ -29,6 +32,13 @@ class App
 {
     //----------------------------------------------------------------- PUBLIC
 
+    enum MenuStatus
+    {
+        DONE, // On a terminé sans problème.
+        ERROR // On sort de la boucle et on a déjà
+              // affiché une erreur à l'utilisateur.
+    };
+
 public:
     //----------------------------------------------------- Méthodes publiques
     // Mode d'emploi :
@@ -36,6 +46,13 @@ public:
     // Contrat :
     //
     int Run();
+
+    MenuStatus menuPrincipal();
+    MenuStatus menuConsulter();
+    MenuStatus menuAjouter();
+    MenuStatus menuAjouterTrajetSimple();
+    MenuStatus menuAjouterTrajetCompose();
+    MenuStatus menuRechercher();
 
     App();
     // Mode d'emploi :
@@ -55,6 +72,7 @@ protected:
     //----------------------------------------------------- Méthodes protégées
 
     //----------------------------------------------------- Attributs protégés
+    Catalog *catalog;
 };
 
 //-------------------------------- Autres définitions dépendantes de <App>
