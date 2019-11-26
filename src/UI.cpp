@@ -1,10 +1,10 @@
 /*************************************************************************
-                           UI  -  description
-                             -------------------
-    début                : 2019-11-19
-    copyright            : (C) 2019 BERTHOMET Guillaume & FORLER Corentin
-    e-mail               : guillaume.berthomet@insa-lyon.fr
-                           corentin.forler@insa-lyon.fr
+                                                     UI  -  description
+                                                         -------------------
+        début                : 2019-11-19
+        copyright            : (C) 2019 BERTHOMET Guillaume & FORLER Corentin
+        e-mail               : guillaume.berthomet@insa-lyon.fr
+                                                     corentin.forler@insa-lyon.fr
 *************************************************************************/
 
 //---------- Réalisation de la classe <UI> (fichier UI.cpp) ------------
@@ -13,6 +13,7 @@
 
 //-------------------------------------------------------- Include système
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 using namespace std;
 
@@ -27,13 +28,24 @@ const int UI_BUFFER_SIZE = 256;
 //----------------------------------------------------- Méthodes publiques
 const char *UI::Ask(const char *question)
 {
-  char *answer = new char[UI_BUFFER_SIZE];
+    cout << question;
 
-  cout << question << " ";
-  scanf("%255[^\n]", answer);
-  getchar(); // skip new line
+    char *answer = new char[UI_BUFFER_SIZE];
+    fgets(answer, UI_BUFFER_SIZE, stdin);
 
-  return answer;
+    if (!answer)
+    {
+        return nullptr;
+    }
+
+    unsigned int len = strlen(answer);
+    while (len > 0 && (answer[len - 1] == '\n' || answer[len - 1] == '\r'))
+    {
+        answer[len - 1] = '\0';
+        len--;
+    }
+
+    return answer;
 } //----- Fin de Méthode
 
 //----------------------------------------------------- Méthodes publiques
@@ -46,21 +58,22 @@ const char *UI::Ask(const char *question)
  */
 int UI::Choose(const int nChoices, const char *choices[])
 {
-  int answer = 0;
+    int answer = 0;
 
-  for (int i = 0; i < nChoices; i++)
-  {
-    cout << "| " << (i + 1) << ". \t" << choices[i] << EOL;
-  }
+    for (int i = 0; i < nChoices; i++)
+    {
+        cout << "| " << (i + 1) << ". \t" << choices[i] << EOL;
+    }
 
-  cin >> answer;
+    cin >> answer;
+    cin.ignore(1, '\n'); // skip new line
 
-  if (answer < 1 || answer > nChoices)
-  {
-    return -1;
-  }
+    if (answer < 1 || answer > nChoices)
+    {
+        return -1;
+    }
 
-  return answer; // [1 ; nChoices]
+    return answer; // [1 ; nChoices]
 } //----- Fin de Méthode
 
 //------------------------------------------------------------------ PRIVE

@@ -33,29 +33,41 @@ int App::Run()
 
 App::MenuStatus App::menuPrincipal()
 {
+    cout << EOL << "--- MENU PRINCIPAL ---" << EOL;
+
+    const int nChoices = 3;
+    const char *choices[] = {"Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet"};
+
     while (true)
     {
-        cout << EOL << "--- MENU PRINCIPAL ---" << EOL;
-
-        const int nChoices = 3;
-        const char *choices[] = {"Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet"};
-
         const int ans = UI::Choose(nChoices, choices);
 
+        MenuStatus status = MenuStatus::DONE;
         switch (ans)
         {
         case 1:
-            return App::menuConsulter();
+            status = App::menuConsulter();
+            break;
         case 2:
-            return App::menuAjouter();
+            status = App::menuAjouter();
+            break;
         case 3:
-            return App::menuRechercher();
+            status = App::menuRechercher();
+            break;
         default:
             cout << "Cette option n'existe pas." << EOL;
-            continue;
+            status = MenuStatus::ERROR;
+            break;
         }
 
-        return MenuStatus::DONE;
+        if (status == MenuStatus::ERROR)
+        {
+            return status;
+        }
+        else
+        {
+            continue;
+        }
     }
 }
 
@@ -76,7 +88,7 @@ App::MenuStatus App::menuConsulter()
     for (unsigned int i = 0; i < nTrajets; i++)
     {
         Trip *trajet = this->catalog->Get(i);
-        cout << "Trajet #" << i << "/" << nTrajets << " :\tde "
+        cout << "Trajet #" << i << "/" << nTrajets << " : de "
              << "'" << trajet->GetStart()->GetName() << "'"
              << " à "
              << "'" << trajet->GetEnd()->GetName() << "'"
@@ -86,17 +98,64 @@ App::MenuStatus App::menuConsulter()
 
     return MenuStatus::DONE;
 }
+
 App::MenuStatus App::menuAjouter()
 {
-    // const int nChoices = 2;
-    // const char *choices[] = {"Trajet simple", "Trajet composé"};
-    // const char *answer = UI::Ask("Comment allez-vous ?");
-    // cout << answer << EOL;
-    // delete[] answer;
-    return MenuStatus::DONE;
+    cout << EOL << "--- AJOUTER UN TRAJET ---" << EOL;
+    cout << EOL << "Veuillez choisir un type de trajet." << EOL;
+
+    const int nChoices = 2;
+    const char *choices[] = {"Trajet simple", "Trajet composé"};
+
+    while (true)
+    {
+        const int ans = UI::Choose(nChoices, choices);
+
+        switch (ans)
+        {
+        case 1:
+            return App::menuAjouterTrajetSimple();
+        case 2:
+            return App::menuAjouterTrajetCompose();
+        default:
+            cout << "Cette option n'existe pas." << EOL;
+            continue;
+        }
+
+        return MenuStatus::DONE;
+    }
 }
+
 App::MenuStatus App::menuAjouterTrajetSimple()
 {
+    cout << EOL << "--- AJOUTER UN TRAJET SIMPLE ---" << EOL;
+    cout << EOL << "Veuillez entrer les informations du trajet." << EOL;
+
+    const char MSG_DEP[] = "* Ville de départ:   ";
+    const char MSG_ARR[] = "* Ville d'arrivée:   ";
+    const char MSG_MOD[] = "* Mode de transport: ";
+
+    const char *startName = UI::Ask(MSG_DEP);
+    if (startName == nullptr)
+        return MenuStatus::ERROR;
+
+    const char *endName = UI::Ask(MSG_ARR);
+    if (endName == nullptr)
+        return MenuStatus::ERROR;
+
+    const char *mode = UI::Ask(MSG_MOD);
+    if (mode == nullptr)
+        return MenuStatus::ERROR;
+
+    const City *startCity = new City(startName);
+    const City *endCity = new City(endName);
+    Trip *trip = new Trip(startCity, endCity, mode);
+
+    this->catalog->Add(trip);
+
+    delete[] startName;
+    delete[] endName;
+    delete[] mode;
     return MenuStatus::DONE;
 }
 App::MenuStatus App::menuAjouterTrajetCompose()
