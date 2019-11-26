@@ -29,7 +29,7 @@ class City
 public:
     //----------------------------------------------------- Méthodes publiques
     const char *GetName() const;
-    // Mode d'emploi (constructeur de copie) :
+    // Mode d'emploi :
     //   Renvoie le nom de la cité.
     //   Ce nom est à delete[] par l'utilisateur
 
