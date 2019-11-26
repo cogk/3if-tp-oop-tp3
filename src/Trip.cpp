@@ -13,6 +13,7 @@
 
 //-------------------------------------------------------- Include système
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -32,21 +33,34 @@ const City *Trip::GetEnd() const
     return this->endCity;
 } //----- Fin de GetEnd
 
+const char *Trip::GetMode() const
+{
+    return this->mode;
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 Trip::Trip(const Trip &aTrip)
-    : startCity(aTrip.startCity), endCity(aTrip.endCity)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Trip> (non-surchargé)" << endl;
 #endif
+    startCity = new City(aTrip.startCity->GetName());
+    endCity = new City(aTrip.endCity->GetName());
+    char *tmpmode = new char[strlen(aTrip.mode) + 1];
+    strcpy(tmpmode, aTrip.mode);
+    mode = tmpmode;
 } //----- Fin de Trip (constructeur de copie)
 
-Trip::Trip(const City *start, const City *end)
+Trip::Trip(const City *start, const City *end, const char *mode)
     : startCity(start), endCity(end)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Trip> (non-surchargé)" << endl;
 #endif
+    this->mode = new char[strlen(mode) + 1];
+    char *tmpmode = new char[strlen(mode) + 1];
+    strcpy(tmpmode, mode);
+    this->mode = tmpmode;
 } //----- Fin de Trip
 
 Trip::~Trip()
@@ -56,6 +70,7 @@ Trip::~Trip()
 #endif
     delete startCity;
     delete endCity;
+    delete [] mode;
 } //----- Fin de ~Trip
 
 //------------------------------------------------------------------ PRIVE

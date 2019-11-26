@@ -17,9 +17,7 @@
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Trip>
-//  Trip est une classe abstraite qui est parente de
-//  SimpleTrip et CompoundTrip.
-// Elle permet de représenter un voyage entre deux villes.
+//  Trip représente un voyage entre deux villes
 //------------------------------------------------------------------------
 
 class Trip
@@ -28,18 +26,21 @@ class Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    void Add(void *element);
+    const City *GetStart() const;
+
+    const City *GetEnd() const;
+
+    const char *GetMode() const;
 
     //-------------------------------------------- Constructeurs - destructeur
     Trip(const Trip &aTrip);
     // Mode d'emploi (constructeur de copie) :
 
-    Trip(const City *start, const City *end);
+    Trip(const City *start, const City *end, const char *mode);
+    // Mode d'emploi : Trip s'occuppera de delete start et end
 
     virtual ~Trip();
-
-    const City *GetStart() const;
-    const City *GetEnd() const;
+    // Mode d'emploi : delete start, end et mode
 
     //------------------------------------------------------------------ PRIVE
 
@@ -49,6 +50,7 @@ protected:
     //----------------------------------------------------- Attributs protégés
     const City *startCity;
     const City *endCity;
+    const char *mode;
 };
 
 //-------------------------------- Autres définitions dépendantes de <TRIP>
