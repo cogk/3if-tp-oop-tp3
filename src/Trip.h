@@ -45,7 +45,8 @@ public:
     //------------------------------------------------------------------ PRIVE
 
 protected:
-    //----------------------------------------------------- Méthodes protégées
+    //------------------------------------------------- Constructeurs protégés
+    Trip(const City *start, const City *end);
 
     //----------------------------------------------------- Attributs protégés
     const City *startCity;

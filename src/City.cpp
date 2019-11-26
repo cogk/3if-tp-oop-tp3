@@ -24,9 +24,7 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 const char *City::GetName() const
 {
-    char *retStr = new char[strlen(name) + 1];
-    strcpy(retStr, name);
-    return retStr;
+    return name;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
