@@ -50,7 +50,7 @@ int UI::Choose(const int nChoices, const char *choices[])
 
   for (int i = 0; i < nChoices; i++)
   {
-    cout << (i + 1) << ":\t" << choices[i] << EOL;
+    cout << "| " << (i + 1) << ". \t" << choices[i] << EOL;
   }
 
   cin >> answer;
