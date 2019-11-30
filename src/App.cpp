@@ -34,8 +34,8 @@ App::MenuStatus App::menuPrincipal()
 {
     cout << EOL << "--- MENU PRINCIPAL ---" << EOL;
 
-    const int nChoices = 3;
-    const char *choices[] = {"Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet"};
+    const int nChoices = 4;
+    const char *choices[] = {"Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet", "Quitter"};
 
     while (true)
     {
@@ -52,6 +52,9 @@ App::MenuStatus App::menuPrincipal()
             break;
         case 3:
             status = App::menuRechercher();
+            break;
+        case 4:
+            return MenuStatus::DONE; // exit normally
             break;
         default:
             cout << "Cette option n'existe pas." << EOL;
