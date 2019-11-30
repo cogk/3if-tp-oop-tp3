@@ -87,49 +87,19 @@ App::MenuStatus App::menuConsulter()
     {
         cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << EOL << EOL;
 
-        int maxStartNameLen = 10;
-        int maxEndNameLen = 10;
-        int maxModeNameLen = 5;
-        for (unsigned int i = 0; i < nTrajets; i++)
-        {
-            Trip *trajet = this->catalog->Get(i);
-            const int startNameLen = strlen(trajet->GetStart()->GetName());
-            const int endNameLen = strlen(trajet->GetEnd()->GetName());
-            const int modeNameLen = strlen(trajet->GetMode());
+        const char FORMAT_LINE1[] = "---------+-------- [CATALOGUE] --------+----------" EOL;
+        const char FORMAT_HEADER[] = " %7s | %12s | %12s | %8s" EOL;
+        const char FORMAT_LINE2[] = "---------+--------------+--------------+----------" EOL;
+        const char FORMAT_SIMPLE[] = " %7d | %12s | %12s | %8s" EOL;
 
-            if (startNameLen > maxStartNameLen)
-                maxStartNameLen = startNameLen;
-            if (endNameLen > maxEndNameLen)
-                maxEndNameLen = endNameLen;
-            if (modeNameLen > maxModeNameLen)
-                maxModeNameLen = modeNameLen;
-        }
-
-        cout << "Trajet";
-        cout << " | ";
-        UI::PadString(cout, maxStartNameLen, "Départ", 6);
-        cout << " | ";
-        UI::PadString(cout, maxEndNameLen, "Arrivée", 7);
-        cout << " | ";
-        UI::PadString(cout, maxModeNameLen, "Mode");
-        cout << EOL;
-        cout << std::string(6 + 3 + maxStartNameLen + 3 + maxEndNameLen + 3 + maxModeNameLen, '-');
-        cout << EOL;
+        printf(FORMAT_LINE1);
+        printf(FORMAT_HEADER, "TRAJET", "DEPART", "ARRIVEE", "MODE");
+        printf(FORMAT_LINE2);
 
         for (unsigned int i = 0; i < nTrajets; i++)
         {
             Trip *trajet = this->catalog->Get(i);
-
-            char s[16];
-            sprintf(s, "%6d", i);
-            cout << s;
-            cout << " | ";
-            UI::PadString(cout, maxStartNameLen, trajet->GetStart()->GetName());
-            cout << " | ";
-            UI::PadString(cout, maxEndNameLen, trajet->GetEnd()->GetName());
-            cout << " | ";
-            UI::PadString(cout, maxModeNameLen, trajet->GetMode());
-            cout << EOL;
+            printf(FORMAT_SIMPLE, i, trajet->GetStart()->GetName(), trajet->GetEnd()->GetName(), trajet->GetMode());
         }
         cout << EOL;
     }
