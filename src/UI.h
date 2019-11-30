@@ -36,7 +36,6 @@ namespace UI
 //
 int Choose(const int nChoices, const char *choices[]);
 const char *Ask(const char *question);
-void PadString(std::ostream &out, const int fieldWidth, const char *str, const int l = -1);
 
 //------------------------------------------------------------------ PRIVE
 
