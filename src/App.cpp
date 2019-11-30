@@ -12,6 +12,7 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+#include <cstring>
 #include <iostream>
 using namespace std;
 
@@ -80,22 +81,57 @@ App::MenuStatus App::menuConsulter()
 
     if (nTrajets == 0)
     {
-        cout << "Pas de trajets dans le catalogue." << EOL;
+        cout << "Pas de trajets dans le catalogue." << EOL << EOL;
     }
     else
     {
-        cout << "Il y a " << nTrajets << " trajets dans le catalogue." << EOL;
-    }
+        cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << EOL << EOL;
 
-    for (unsigned int i = 0; i < nTrajets; i++)
-    {
-        Trip *trajet = this->catalog->Get(i);
-        cout << "Trajet #" << i << "/" << nTrajets << " : de "
-             << "'" << trajet->GetStart()->GetName() << "'"
-             << " à "
-             << "'" << trajet->GetEnd()->GetName() << "'"
-             << " en "
-             << "'" << trajet->GetMode() << "'";
+        int maxStartNameLen = 10;
+        int maxEndNameLen = 10;
+        int maxModeNameLen = 5;
+        for (unsigned int i = 0; i < nTrajets; i++)
+        {
+            Trip *trajet = this->catalog->Get(i);
+            const int startNameLen = strlen(trajet->GetStart()->GetName());
+            const int endNameLen = strlen(trajet->GetEnd()->GetName());
+            const int modeNameLen = strlen(trajet->GetMode());
+
+            if (startNameLen > maxStartNameLen)
+                maxStartNameLen = startNameLen;
+            if (endNameLen > maxEndNameLen)
+                maxEndNameLen = endNameLen;
+            if (modeNameLen > maxModeNameLen)
+                maxModeNameLen = modeNameLen;
+        }
+
+        cout << "Trajet";
+        cout << " | ";
+        UI::PadString(cout, maxStartNameLen, "Départ", 6);
+        cout << " | ";
+        UI::PadString(cout, maxEndNameLen, "Arrivée", 7);
+        cout << " | ";
+        UI::PadString(cout, maxModeNameLen, "Mode");
+        cout << EOL;
+        cout << std::string(6 + 3 + maxStartNameLen + 3 + maxEndNameLen + 3 + maxModeNameLen, '-');
+        cout << EOL;
+
+        for (unsigned int i = 0; i < nTrajets; i++)
+        {
+            Trip *trajet = this->catalog->Get(i);
+
+            char s[16];
+            sprintf(s, "%6d", i);
+            cout << s;
+            cout << " | ";
+            UI::PadString(cout, maxStartNameLen, trajet->GetStart()->GetName());
+            cout << " | ";
+            UI::PadString(cout, maxEndNameLen, trajet->GetEnd()->GetName());
+            cout << " | ";
+            UI::PadString(cout, maxModeNameLen, trajet->GetMode());
+            cout << EOL;
+        }
+        cout << EOL;
     }
 
     return MenuStatus::DONE;
