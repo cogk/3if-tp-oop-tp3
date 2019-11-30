@@ -52,7 +52,6 @@ const char *UI::Ask(const char *question)
     return answer;
 } //----- Fin de Méthode
 
-//----------------------------------------------------- Méthodes publiques
 /**
  * Contrats :
  * - la valeur de retour de la fonction est :
