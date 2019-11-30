@@ -79,6 +79,21 @@ int UI::Choose(const int nChoices, const char *choices[])
     return answer; // [1 ; nChoices]
 } //----- Fin de Méthode
 
+/**
+ */
+void UI::PadString(std::ostream &out, const int fieldWidth, const char *str, const int l)
+{
+    const int len = l == -1 ? strlen(str) : l;
+    const int width = len > fieldWidth ? len : fieldWidth;
+
+    for (int i = 0; i < (width - len); i++)
+    {
+        out << " ";
+    }
+
+    out << str;
+} //----- Fin de Méthode
+
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
