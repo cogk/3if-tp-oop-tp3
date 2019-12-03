@@ -33,6 +33,10 @@ public:
     //   Renvoie le nom de la cité.
     //   Ce nom est à delete[] par l'utilisateur
 
+    bool Equals(City *aCity) const;
+    // Mode d'emploi :
+    //  Renvoie vrai si les deux villes ont le même nom, faux sinon
+
     //-------------------------------------------- Constructeurs - destructeur
     City(const City &aCity);
     // Mode d'emploi (constructeur de copie) : copie aCity.name dans this->name

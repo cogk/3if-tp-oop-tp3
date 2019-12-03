@@ -36,16 +36,15 @@ Trip *Catalog::Get(unsigned int i) const
     return this->trajets->Get(i);
 }
 
-ArrayList *Catalog::Search(const City *start, const City *end) const
+ArrayList *Catalog::Search(const City *searchedStart, const City *searchedEnd) const
 {
     ArrayList *result = new ArrayList();
 
     for (unsigned int i = 0; i < trajets->Size(); i++)
     {
-        const char * startCity = trajets->Get(i)->GetStart()->GetName();
-        const char * endCity = trajets->Get(i)->GetEnd()->GetName();
-        if (strcmp(startCity, start->GetName()) == 0 &&
-            strcmp(endCity, end->GetName()) == 0)
+        const City * currStart = trajets->Get(i)->GetStart();
+        const City * currEnd = trajets->Get(i)->GetEnd();
+        if (currStart->Equals(searchStart) && currEnd->Equals(searchedEnd))
         {
             result->Add(trajets->Get(i));
         }
@@ -53,6 +52,50 @@ ArrayList *Catalog::Search(const City *start, const City *end) const
 
     return result;
 }
+
+/*
+bool Catalog::SearchNextTrip(ArrayList *currentTrips, const City *searchedEnd,
+            const unsigned nbSearched, const unsigned nbMax)
+{
+    if (nbSearched == nbMax)
+        return false;
+
+    City *searchedStart = currentTrips->GetLast()->GetEnd();
+
+    for (unsigned int i = 0; i < trajets->Size(); i++)
+    {
+        const City * currStart = trajets->Get(i)->GetStart();
+        const City * currEnd = trajets->Get(i)->GetEnd();
+        if (currStart->Equals(searchStart) &&
+            !currentTrips->Contains(trajets->Get(i)))
+        {
+            currentTrips->Add(trajets->Get(i));
+            if (currEnd->Equals(searchedEnd))
+            {
+                return true;
+            }
+        }
+    }
+}
+
+ArrayList *Catalog::SearchV2(const City *start, const City *end, unsigned int nbMaxTrip) const
+{
+    ArrayList *result = new ArrayList();
+
+    bool end = false;
+    while (!end && trajets->Size() != 0)
+    {
+        ArrayList *currSearch = new ArrayList();
+        bool found = false;
+        for (unsigned i = 0; i < nbMaxTrip; i++)
+        {
+
+        }
+    }
+
+    return result;
+}
+*/
 
 //-------------------------------------------- Constructeurs - destructeur
 Catalog::Catalog(const Catalog &aCatalog)

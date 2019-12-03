@@ -27,6 +27,11 @@ const char *City::GetName() const
     return name;
 }
 
+bool City::Equals(City *aCity) const
+{
+    return strcmp(this->name, aCity->name) == 0;
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 City::City(const City &aCity)
 {
