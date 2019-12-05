@@ -175,7 +175,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 
     unsigned int i = 0;
 
-    ArrayList *trips = new ArrayList(8);
+    ArrayList *trips = new ArrayList(4);
 
     while (true)
     {
