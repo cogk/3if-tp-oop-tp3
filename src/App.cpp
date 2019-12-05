@@ -169,6 +169,9 @@ App::MenuStatus App::menuAjouterTrajetSimple()
 App::MenuStatus App::menuAjouterTrajetCompose()
 {
     cout << EOL << "--- AJOUTER UN TRAJET COMPOSÉ ---" << EOL;
+    const char MSG_DEP[] = "  | Ville de départ:   ";
+    const char MSG_ARR[] = "  | Ville d'arrivée:   ";
+    const char MSG_MOD[] = "  | Mode de transport: ";
 
     unsigned int i = 0;
 
@@ -177,9 +180,6 @@ App::MenuStatus App::menuAjouterTrajetCompose()
     while (true)
     {
         cout << EOL << "Trajet #" << (i + 1) << EOL;
-        const char MSG_DEP[] = "  | Ville de départ:   ";
-        const char MSG_ARR[] = "  | Ville d'arrivée:   ";
-        const char MSG_MOD[] = "  | Mode de transport: ";
 
         const char *startName = UI::Ask(MSG_DEP);
         if (startName == nullptr)
