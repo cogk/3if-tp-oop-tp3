@@ -35,6 +35,7 @@ const char *UI::Ask(const char *question)
 
     if (!answer)
     {
+        delete[] answer;
         return nullptr;
     }
 
@@ -47,6 +48,7 @@ const char *UI::Ask(const char *question)
 
     if (len == 0)
     {
+        delete[] answer;
         return nullptr;
     }
     return answer;
