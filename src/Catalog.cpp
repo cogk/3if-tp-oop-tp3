@@ -44,7 +44,7 @@ ArrayList *Catalog::Search(const City *searchedStart, const City *searchedEnd) c
     {
         const City * currStart = trajets->Get(i)->GetStart();
         const City * currEnd = trajets->Get(i)->GetEnd();
-        if (currStart->Equals(searchStart) && currEnd->Equals(searchedEnd))
+        if (currStart->Equals(searchedStart) && currEnd->Equals(searchedEnd))
         {
             result->Add(trajets->Get(i));
         }
