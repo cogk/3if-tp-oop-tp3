@@ -181,17 +181,57 @@ App::MenuStatus App::menuAjouterTrajetCompose()
     {
         cout << EOL << "Trajet #" << (i + 1) << EOL;
 
-        const char *startName = UI::Ask(MSG_DEP);
+        char *startName = nullptr;
+
+        if (i == 0)
+        {
+            // S'il s'agit du premier trajet, alors on demande le nom de la ville de départ.
+            const char *answer = UI::Ask(MSG_DEP);
+
+            if (answer == nullptr)
+            {
+                break;
+            }
+
+            const unsigned int len = strlen(answer);
+            startName = new char[len + 1]{0};
+            startName = strncpy(startName, answer, len);
+
+            delete[] answer;
+        }
+        else
+        {
+            // S'il ne s'agit pas du premier trajet,
+            // alors on connait déjà le nom de sa ville de départ
+            // puisqu'il s'agit du nom de la dernière ville d'arrivée.
+            const char *lastEndCityName = trips->GetLast()->GetEnd()->GetName();
+
+            const unsigned int len = strlen(lastEndCityName);
+            startName = new char[len + 1]{0};
+            startName = strncpy(startName, lastEndCityName, len);
+
+            cout << MSG_DEP << startName << " [valeur remplie automatiquement]" << EOL;
+        }
+
         if (startName == nullptr)
+        {
             break;
+        }
 
         const char *endName = UI::Ask(MSG_ARR);
         if (endName == nullptr)
+        {
+            delete[] startName;
             break;
+        }
 
         const char *mode = UI::Ask(MSG_MOD);
         if (mode == nullptr)
+        {
+            delete[] startName;
+            delete[] endName;
             break;
+        }
 
         const City *startCity = new City(startName);
         const City *endCity = new City(endName);
