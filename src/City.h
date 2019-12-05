@@ -33,7 +33,7 @@ public:
     //   Renvoie le nom de la cité.
     //   Ce nom est à delete[] par l'utilisateur
 
-    bool Equals(City *aCity) const;
+    bool Equals(const City *aCity) const;
     // Mode d'emploi :
     //  Renvoie vrai si les deux villes ont le même nom, faux sinon
 
