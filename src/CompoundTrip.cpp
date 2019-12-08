@@ -44,8 +44,7 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
 } //----- Fin de CompoundTrip (constructeur de copie)
 
 CompoundTrip::CompoundTrip(ArrayList *trips)
-    : Trip::Trip(new City(*(trips->Get(0)->GetStart())),
-                 new City(*(trips->GetLast()->GetEnd())))
+    : Trip::Trip(trips->Get(0)->GetStart(), trips->GetLast()->GetEnd())
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;

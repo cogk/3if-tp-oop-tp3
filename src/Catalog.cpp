@@ -36,15 +36,20 @@ Trip *Catalog::Get(unsigned int i) const
     return this->trajets->Get(i);
 }
 
-ArrayList *Catalog::Search(const City *searchedStart, const City *searchedEnd) const
+bool StringEquals(const char *a, const char *b)
+{
+    return !strcmp(a, b);
+}
+
+ArrayList *Catalog::Search(const char *searchedStart, const char *searchedEnd) const
 {
     ArrayList *result = new ArrayList();
 
     for (unsigned int i = 0; i < trajets->Size(); i++)
     {
-        const City *currStart = trajets->Get(i)->GetStart();
-        const City *currEnd = trajets->Get(i)->GetEnd();
-        if (currStart->Equals(searchedStart) && currEnd->Equals(searchedEnd))
+        const char *currStart = trajets->Get(i)->GetStart();
+        const char *currEnd = trajets->Get(i)->GetEnd();
+        if (StringEquals(currStart, searchedStart) && StringEquals(currEnd, searchedEnd))
         {
             result->Add(trajets->Get(i));
         }
@@ -54,18 +59,18 @@ ArrayList *Catalog::Search(const City *searchedStart, const City *searchedEnd) c
 }
 
 /*
-bool Catalog::SearchNextTrip(ArrayList *currentTrips, const City *searchedEnd,
+bool Catalog::SearchNextTrip(ArrayList *currentTrips, const char *searchedEnd,
             const unsigned nbSearched, const unsigned nbMax)
 {
     if (nbSearched == nbMax)
         return false;
 
-    City *searchedStart = currentTrips->GetLast()->GetEnd();
+    char *searchedStart = currentTrips->GetLast()->GetEnd();
 
     for (unsigned int i = 0; i < trajets->Size(); i++)
     {
-        const City * currStart = trajets->Get(i)->GetStart();
-        const City * currEnd = trajets->Get(i)->GetEnd();
+        const char * currStart = trajets->Get(i)->GetStart();
+        const char * currEnd = trajets->Get(i)->GetEnd();
         if (currStart->Equals(searchStart) &&
             !currentTrips->Contains(trajets->Get(i)))
         {
@@ -78,7 +83,7 @@ bool Catalog::SearchNextTrip(ArrayList *currentTrips, const City *searchedEnd,
     }
 }
 
-ArrayList *Catalog::SearchV2(const City *start, const City *end, unsigned int nbMaxTrip) const
+ArrayList *Catalog::SearchV2(const char *start, const char *end, unsigned int nbMaxTrip) const
 {
     ArrayList *result = new ArrayList();
 

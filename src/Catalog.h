@@ -32,7 +32,7 @@ public:
     unsigned int Size() const;
     void Add(Trip *trip);
     Trip *Get(unsigned int i) const;
-    ArrayList *Search(const City *start, const City *end) const;
+    ArrayList *Search(const char *start, const char *end) const;
 
     //-------------------------------------------- Constructeurs - destructeur
     Catalog(const Catalog &aCatalog);

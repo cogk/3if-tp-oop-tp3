@@ -6,7 +6,7 @@
 
 * App
 
-* City
+* ~~City~~
 	> City(const char *name)
 	> ---
 	> const char * GetName() const

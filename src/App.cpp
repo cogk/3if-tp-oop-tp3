@@ -99,7 +99,7 @@ App::MenuStatus App::menuConsulter()
         for (unsigned int i = 0; i < nTrajets; i++)
         {
             Trip *trajet = this->catalog->Get(i);
-            printf(FORMAT_SIMPLE, i, trajet->GetStart()->GetName(), trajet->GetEnd()->GetName(), trajet->GetMode());
+            printf(FORMAT_SIMPLE, i, trajet->GetStart(), trajet->GetEnd(), trajet->GetMode());
         }
         cout << EOL;
     }
@@ -155,9 +155,7 @@ App::MenuStatus App::menuAjouterTrajetSimple()
     if (mode == nullptr)
         return MenuStatus::ERROR;
 
-    const City *startCity = new City(startName);
-    const City *endCity = new City(endName);
-    Trip *trip = new Trip(startCity, endCity, mode);
+    Trip *trip = new Trip(startName, endName, mode);
 
     this->catalog->Add(trip);
 
@@ -204,7 +202,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             // S'il ne s'agit pas du premier trajet,
             // alors on connait déjà le nom de sa ville de départ
             // puisqu'il s'agit du nom de la dernière ville d'arrivée.
-            const char *lastEndCityName = trips->GetLast()->GetEnd()->GetName();
+            const char *lastEndCityName = trips->GetLast()->GetEnd();
 
             const unsigned int len = strlen(lastEndCityName);
             startName = new char[len + 1]{0};
@@ -233,9 +231,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             break;
         }
 
-        const City *startCity = new City(startName);
-        const City *endCity = new City(endName);
-        Trip *trip = new Trip(startCity, endCity, mode);
+        Trip *trip = new Trip(startName, endName, mode);
 
         trips->Add(trip);
 

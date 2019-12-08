@@ -17,18 +17,17 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
-#include "City.h"
 #include "Trip.h"
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-const City *Trip::GetStart() const
+const char *Trip::GetStart() const
 {
     return this->startCity;
 } //----- Fin de GetStart
 
-const City *Trip::GetEnd() const
+const char *Trip::GetEnd() const
 {
     return this->endCity;
 } //----- Fin de GetEnd
@@ -40,26 +39,38 @@ const char *Trip::GetMode() const
 
 //-------------------------------------------- Constructeurs - destructeur
 Trip::Trip(const Trip &aTrip)
+    : Trip(aTrip.startCity, aTrip.endCity, aTrip.mode)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Trip>" << endl;
 #endif
-    startCity = new City(aTrip.startCity->GetName());
-    endCity = new City(aTrip.endCity->GetName());
-    char *tmpmode = new char[strlen(aTrip.mode) + 1];
-    strcpy(tmpmode, aTrip.mode);
-    mode = tmpmode;
 } //----- Fin de Trip (constructeur de copie)
 
-Trip::Trip(const City *start, const City *end, const char *mode)
-    : startCity(start), endCity(end)
+Trip::Trip(const char *start, const char *end, const char *mode)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Trip>" << endl;
 #endif
-    char *tmpmode = new char[strlen(mode) + 1];
-    strcpy(tmpmode, mode);
-    this->mode = tmpmode;
+    if (start != nullptr)
+    {
+        char *tmpStartCity = new char[strlen(start) + 1];
+        strcpy(tmpStartCity, start);
+        this->startCity = tmpStartCity;
+    }
+
+    if (end != nullptr)
+    {
+        char *tmpEndCity = new char[strlen(end) + 1];
+        strcpy(tmpEndCity, end);
+        this->endCity = tmpEndCity;
+    }
+
+    if (mode != nullptr)
+    {
+        char *tmpMode = new char[strlen(mode) + 1];
+        strcpy(tmpMode, mode);
+        this->mode = tmpMode;
+    }
 } //----- Fin de Trip
 
 Trip::~Trip()
@@ -67,19 +78,27 @@ Trip::~Trip()
 #ifdef MAP
     cout << "Appel au destructeur de <Trip>" << endl;
 #endif
-    delete startCity;
-    delete endCity;
+    delete[] startCity;
+    delete[] endCity;
     delete[] mode;
 } //----- Fin de ~Trip
 
 //------------------------------------------------------------------ PRIVE
 
-Trip::Trip(const City *start, const City *end)
-    : startCity(start), endCity(end)
+Trip::Trip(const char *start, const char *end)
+    : Trip(start, end, nullptr)
 {
 #ifdef MAP
     cout << "Appel au constructeur protégé de <Trip>" << endl;
 #endif
 }
+
+// Trip::Trip()
+//     : Trip(nullptr, nullptr, nullptr)
+// {
+// #ifdef MAP
+//     cout << "Appel au constructeur par défaut de <Trip>" << endl;
+// #endif
+// }
 
 //----------------------------------------------------- Méthodes protégées

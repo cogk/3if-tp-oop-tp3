@@ -11,8 +11,6 @@
 #if !defined(TRIP_H)
 #define TRIP_H
 
-#include "City.h"
-
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------------
@@ -26,9 +24,9 @@ class Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    const City *GetStart() const;
+    const char *GetStart() const;
 
-    const City *GetEnd() const;
+    const char *GetEnd() const;
 
     const char *GetMode() const;
 
@@ -36,7 +34,7 @@ public:
     Trip(const Trip &aTrip);
     // Mode d'emploi (constructeur de copie) :
 
-    Trip(const City *start, const City *end, const char *mode);
+    Trip(const char *start, const char *end, const char *mode);
     // Mode d'emploi : Trip s'occuppera de delete start et end
 
     virtual ~Trip();
@@ -46,11 +44,11 @@ public:
 
 protected:
     //------------------------------------------------- Constructeurs protégés
-    Trip(const City *start, const City *end);
+    Trip(const char *start, const char *end);
 
     //----------------------------------------------------- Attributs protégés
-    const City *startCity;
-    const City *endCity;
+    const char *startCity;
+    const char *endCity;
     const char *mode;
 };
 
