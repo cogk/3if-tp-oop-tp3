@@ -12,8 +12,8 @@
 #define COMPOUND_TRIP_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include "Trip.h"
 #include "ArrayList.h"
+#include "Trip.h"
 
 //------------------------------------------------------------------------
 // Rôle de la classe <CompoundTrip>
@@ -27,7 +27,7 @@ class CompoundTrip : public Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    ArrayList * GetTrips() const;
+    ArrayList *GetTrips() const;
     // Mode d'emploi :
     //  Renvoie la liste des trips
 
@@ -37,7 +37,7 @@ public:
     //  Copie le trajet "aCompoundTrip" en copiant en profondeur sa liste
     // d'étapes ainsi que sa ville de départ et d'arrivée
 
-    CompoundTrip(ArrayList * trips);
+    CompoundTrip(ArrayList *trips);
     // Mode d'emploi :
     //  Construit un trajet composé de l'ensemble des trajets (dans l'ordre) de
     // trips. CompoundTrip s'occuppera de delete la liste.
@@ -52,9 +52,9 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList * trips;
+    ArrayList *trips;
 };
 
 //-------------------------------- Autres définitions dépendantes de <CompoundTrip>
 
-#endif // XXX_H
+#endif // CompoundTrip_H

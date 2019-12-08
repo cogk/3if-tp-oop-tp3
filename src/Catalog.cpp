@@ -12,8 +12,8 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <iostream>
 #include <cstring>
+#include <iostream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -42,8 +42,8 @@ ArrayList *Catalog::Search(const City *searchedStart, const City *searchedEnd) c
 
     for (unsigned int i = 0; i < trajets->Size(); i++)
     {
-        const City * currStart = trajets->Get(i)->GetStart();
-        const City * currEnd = trajets->Get(i)->GetEnd();
+        const City *currStart = trajets->Get(i)->GetStart();
+        const City *currEnd = trajets->Get(i)->GetEnd();
         if (currStart->Equals(searchedStart) && currEnd->Equals(searchedEnd))
         {
             result->Add(trajets->Get(i));

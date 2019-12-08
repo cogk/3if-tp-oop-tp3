@@ -21,7 +21,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-ArrayList * CompoundTrip::GetTrips() const
+ArrayList *CompoundTrip::GetTrips() const
 {
     return trips;
 }
@@ -36,14 +36,14 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
     trips = new ArrayList();
     for (unsigned int i = 0; i < aCompoundTrip.trips->Size(); i++)
     {
-        trips->Add(new Trip(*( aCompoundTrip.trips->Get(i) )));
+        trips->Add(new Trip(*(aCompoundTrip.trips->Get(i))));
     }
     startCity = trips->Get(0)->GetStart();
     endCity = trips->GetLast()->GetEnd();
     mode = nullptr;
 } //----- Fin de CompoundTrip (constructeur de copie)
 
-CompoundTrip::CompoundTrip(ArrayList * trips)
+CompoundTrip::CompoundTrip(ArrayList *trips)
     : Trip::Trip(new City(*(trips->Get(0)->GetStart())),
                  new City(*(trips->GetLast()->GetEnd())))
 {
