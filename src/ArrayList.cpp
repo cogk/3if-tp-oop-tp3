@@ -34,13 +34,13 @@ void ArrayList::Add(Trip *element)
 
 Trip *ArrayList::Remove(unsigned int index)
 {
-  Trip *removed = list[index];
-  for (int i = index; i < currentSize - 1; i++)
-  {
-    list[i] = list[i+1];
-  }
-  currentSize--;
-  return removed;
+    Trip *removed = list[index];
+    for (unsigned int i = index; i < currentSize - 1; i++)
+    {
+        list[i] = list[i + 1];
+    }
+    currentSize--;
+    return removed;
 } //---- Fin de Remove
 
 Trip *ArrayList::Pop()
