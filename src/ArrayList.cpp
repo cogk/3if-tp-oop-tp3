@@ -32,6 +32,22 @@ void ArrayList::Add(Trip *element)
     list[currentSize++] = element;
 } //----- Fin de Add
 
+Trip *ArrayList::Remove(unsigned int index)
+{
+  Trip *removed = list[index];
+  for (int i = index; i < currentSize - 1; i++)
+  {
+    list[i] = list[i+1];
+  }
+  currentSize--;
+  return removed;
+} //---- Fin de Remove
+
+Trip *ArrayList::Pop()
+{
+    return list[--currentSize];
+}
+
 Trip *ArrayList::Get(unsigned int index) const
 {
     return list[index];
@@ -48,12 +64,6 @@ unsigned int ArrayList::Size() const
 } //----- Fin de Size
 
 //-------------------------------------------- Constructeurs - destructeur
-ArrayList::ArrayList(const ArrayList &anArrayList)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <ArrayList> : PROBLEME" << endl;
-#endif
-} //----- Fin de ArrayList (constructeur de copie)
 
 ArrayList::ArrayList(unsigned int startingMaxSize)
     : currentSize(0), maxSize(startingMaxSize)
@@ -61,6 +71,9 @@ ArrayList::ArrayList(unsigned int startingMaxSize)
 #ifdef MAP
     cout << "Appel au constructeur de <ArrayList>" << endl;
 #endif
+    if (maxSize == 0)
+        maxSize = 1;
+
     list = new Trip *[maxSize];
 } //----- Fin de ArrayList
 
@@ -75,6 +88,7 @@ ArrayList::~ArrayList()
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
+
 void ArrayList::DoubleSize()
 {
     maxSize *= 2;

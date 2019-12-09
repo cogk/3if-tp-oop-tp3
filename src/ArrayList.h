@@ -30,6 +30,16 @@ class ArrayList
 public:
     //----------------------------------------------------- Méthodes publiques
     void Add(Trip *element);
+    // Mode d'emploi : Ajoute un élément à la fin de la liste
+
+    Trip *Remove(unsigned int index);
+    // Mode d'emploi : Supprime un élément à l'index donné, renvoie le Trip
+    //    supprimé
+    // Contrat : index < this->Size()
+
+    Trip *Pop();
+    // Mode d'emploi : Supprime le dernier élément de la liste, renvoie le Trip
+    //    supprimé
 
     Trip *Get(unsigned int index) const;
     // Contrat : index < this->Size()
@@ -38,8 +48,7 @@ public:
     // Contrat : this->Size() > 0
 
     unsigned int Size() const;
-    // Mode d'emploi :
-    //  Retourne la taille actuellement utilisée la liste
+    // Mode d'emploi : Retourne la taille actuellement utilisée la liste
 
     //-------------------------------------------- Constructeurs - destructeur
     ArrayList(const ArrayList &anArrayList);
@@ -49,7 +58,7 @@ public:
     ArrayList(unsigned int startingMaxSize = DEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
     //   stocker ses éléments (qui pourra varier si besoin)
-    // Contrat : maxSize >= 1
+    // Contrat : startingMaxSize >= 1
 
     virtual ~ArrayList();
 
