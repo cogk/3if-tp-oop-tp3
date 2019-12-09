@@ -48,7 +48,7 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList *trajets;
+    ArrayList *trips;
 };
 
 #endif // CATALOG_H
