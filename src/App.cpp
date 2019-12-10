@@ -76,25 +76,7 @@ App::MenuStatus App::menuPrincipal()
 App::MenuStatus App::menuConsulter()
 {
     cout << EOL << "--- CONSULTATION DU CATALOGUE ---" << EOL;
-    const unsigned int nTrajets = this->catalog->Size();
-
-    if (nTrajets == 0)
-    {
-        cout << "Pas de trajets dans le catalogue." << EOL << EOL;
-    }
-    else
-    {
-        cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << EOL << EOL;
-
-        for (unsigned int i = 0; i < nTrajets; i++)
-        {
-            Trip *trajet = this->catalog->Get(i);
-            cout << "[" << (i + 1) << "]: ";
-            trajet->Display(cout);
-        }
-        cout << EOL;
-    }
-
+    catalog->Display();
     return MenuStatus::DONE;
 }
 
