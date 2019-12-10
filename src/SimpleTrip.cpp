@@ -26,17 +26,17 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 const char *SimpleTrip::GetStart() const
 {
-    return this->startCity;
+    return startCity;
 } //----- Fin de GetStart
 
 const char *SimpleTrip::GetEnd() const
 {
-    return this->endCity;
+    return endCity;
 } //----- Fin de GetEnd
 
 const char *SimpleTrip::GetMode() const
 {
-    return this->mode;
+    return mode;
 } //----- Fin de GetMode
 
 void SimpleTrip::Display(std::ostream &out) const
