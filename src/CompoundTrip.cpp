@@ -24,27 +24,27 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 const char *CompoundTrip::GetStart() const
 {
-    return this->trips->Get(0)->GetStart();
+    return subtrips->Get(0)->GetStart();
 } //----- Fin de GetStart
 
 const char *CompoundTrip::GetEnd() const
 {
-    return this->trips->GetLast()->GetEnd();
+    return subtrips->GetLast()->GetEnd();
 } //----- Fin de GetEnd
 
 ArrayList *CompoundTrip::GetTrips() const
 {
-    return this->trips;
+    return subtrips;
 } //----- Fin de GetTrips
 
 void CompoundTrip::Display(std::ostream &out) const
 {
-    const unsigned int N = trips->Size();
+    const unsigned int N = subtrips->Size();
     out << "Trajet Composé: " << GetStart() << " -> " << GetEnd();
     out << " (" << N << " sous-trajets)" << EOL;
     for (unsigned int i = 0; i < N; i++)
     {
-        Trip *trajet = trips->Get(i);
+        Trip *trajet = subtrips->Get(i);
         out << "     | [" << (i + 1) << "]: ";
         trajet->Display(cout);
     }
@@ -63,10 +63,10 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
 #endif
-    trips = new ArrayList();
-    for (unsigned int i = 0; i < aCompoundTrip.trips->Size(); i++)
+    subtrips = new ArrayList();
+    for (unsigned int i = 0; i < aCompoundTrip.subtrips->Size(); i++)
     {
-        trips->Add(aCompoundTrip.trips->Get(i)->Clone());
+        subtrips->Add(aCompoundTrip.subtrips->Get(i)->Clone());
     }
 } //----- Fin de CompoundTrip (constructeur de copie)
 
@@ -75,7 +75,7 @@ CompoundTrip::CompoundTrip(ArrayList *trips)
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;
 #endif
-    this->trips = trips;
+    this->subtrips = trips;
 } //----- Fin de CompoundTrip
 
 CompoundTrip::~CompoundTrip()
@@ -83,11 +83,11 @@ CompoundTrip::~CompoundTrip()
 #ifdef MAP
     cout << "Appel au destructeur de <CompoundTrip>" << endl;
 #endif
-    for (unsigned int i = 0; i < trips->Size(); i++)
+    for (unsigned int i = 0; i < subtrips->Size(); i++)
     {
-        delete trips->Get(i);
+        delete subtrips->Get(i);
     }
-    delete trips;
+    delete subtrips;
 } //----- Fin de ~CompoundTrip
 
 //------------------------------------------------------------------ PRIVE

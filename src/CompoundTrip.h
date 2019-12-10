@@ -60,7 +60,7 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList *trips;
+    ArrayList *subtrips;
 };
 
 //-------------------------------- Autres définitions dépendantes de <CompoundTrip>
