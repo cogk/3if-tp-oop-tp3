@@ -86,19 +86,11 @@ App::MenuStatus App::menuConsulter()
     {
         cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << EOL << EOL;
 
-        const char FORMAT_LINE1[] = "---------+-------- [CATALOGUE] --------+----------" EOL;
-        const char FORMAT_HEADER[] = " %7s | %12s | %12s | %8s" EOL;
-        const char FORMAT_LINE2[] = "---------+--------------+--------------+----------" EOL;
-        const char FORMAT_SIMPLE[] = " %7d | %12s | %12s | %8s" EOL;
-
-        printf(FORMAT_LINE1);
-        printf(FORMAT_HEADER, "TRAJET", "DEPART", "ARRIVEE", "MODE");
-        printf(FORMAT_LINE2);
-
         for (unsigned int i = 0; i < nTrajets; i++)
         {
             Trip *trajet = this->catalog->Get(i);
-            printf(FORMAT_SIMPLE, i, trajet->GetStart(), trajet->GetEnd(), trajet->GetMode());
+            cout << "[" << (i + 1) << "]: ";
+            trajet->Display(cout);
         }
         cout << EOL;
     }
@@ -154,9 +146,9 @@ App::MenuStatus App::menuAjouterTrajetSimple()
     if (mode == nullptr)
         return MenuStatus::ERROR;
 
-    Trip *trip = new Trip(startName, endName, mode);
+    Trip *trip = new SimpleTrip(startName, endName, mode);
 
-    this->catalog->Add(trip);
+    catalog->Add(trip);
 
     delete[] startName;
     delete[] endName;
@@ -230,7 +222,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             break;
         }
 
-        Trip *trip = new Trip(startName, endName, mode);
+        Trip *trip = (Trip *)new SimpleTrip(startName, endName, mode);
 
         trips->Add(trip);
 

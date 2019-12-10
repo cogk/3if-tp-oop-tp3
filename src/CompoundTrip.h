@@ -14,6 +14,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "ArrayList.h"
 #include "Trip.h"
+#include <iostream>
 
 //------------------------------------------------------------------------
 // Rôle de la classe <CompoundTrip>
@@ -30,6 +31,10 @@ public:
     ArrayList *GetTrips() const;
     // Mode d'emploi :
     //  Renvoie la liste des trips
+
+    virtual void Display(std::ostream &) const;
+
+    virtual Trip *Clone() const;
 
     //-------------------------------------------- Constructeurs - destructeur
     CompoundTrip(const CompoundTrip &aCompoundTrip);

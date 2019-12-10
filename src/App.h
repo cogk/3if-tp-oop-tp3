@@ -17,6 +17,7 @@
 //------------------------------------------------------ Include personnel
 #include "Catalog.h"
 #include "CompoundTrip.h"
+#include "SimpleTrip.h"
 #include "Trip.h"
 #include "UI.h"
 

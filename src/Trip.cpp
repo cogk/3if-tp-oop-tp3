@@ -17,6 +17,7 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
+#include "App.h"
 #include "Trip.h"
 
 //----------------------------------------------------------------- PUBLIC
@@ -32,21 +33,16 @@ const char *Trip::GetEnd() const
     return this->endCity;
 } //----- Fin de GetEnd
 
-const char *Trip::GetMode() const
-{
-    return this->mode;
-}
-
 //-------------------------------------------- Constructeurs - destructeur
 Trip::Trip(const Trip &aTrip)
-    : Trip(aTrip.startCity, aTrip.endCity, aTrip.mode)
+    : Trip::Trip(aTrip.startCity, aTrip.endCity)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Trip>" << endl;
 #endif
 } //----- Fin de Trip (constructeur de copie)
 
-Trip::Trip(const char *start, const char *end, const char *mode)
+Trip::Trip(const char *start, const char *end)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <Trip>" << endl;
@@ -57,6 +53,10 @@ Trip::Trip(const char *start, const char *end, const char *mode)
         strcpy(tmpStartCity, start);
         this->startCity = tmpStartCity;
     }
+    else
+    {
+        this->startCity = nullptr;
+    }
 
     if (end != nullptr)
     {
@@ -64,12 +64,9 @@ Trip::Trip(const char *start, const char *end, const char *mode)
         strcpy(tmpEndCity, end);
         this->endCity = tmpEndCity;
     }
-
-    if (mode != nullptr)
+    else
     {
-        char *tmpMode = new char[strlen(mode) + 1];
-        strcpy(tmpMode, mode);
-        this->mode = tmpMode;
+        this->endCity = nullptr;
     }
 } //----- Fin de Trip
 
@@ -80,25 +77,8 @@ Trip::~Trip()
 #endif
     delete[] startCity;
     delete[] endCity;
-    delete[] mode;
 } //----- Fin de ~Trip
 
 //------------------------------------------------------------------ PRIVE
-
-Trip::Trip(const char *start, const char *end)
-    : Trip(start, end, nullptr)
-{
-#ifdef MAP
-    cout << "Appel au constructeur protégé de <Trip>" << endl;
-#endif
-}
-
-// Trip::Trip()
-//     : Trip(nullptr, nullptr, nullptr)
-// {
-// #ifdef MAP
-//     cout << "Appel au constructeur par défaut de <Trip>" << endl;
-// #endif
-// }
 
 //----------------------------------------------------- Méthodes protégées

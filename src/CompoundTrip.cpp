@@ -16,6 +16,7 @@ using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
+#include "App.h"
 #include "CompoundTrip.h"
 
 //----------------------------------------------------------------- PUBLIC
@@ -26,9 +27,29 @@ ArrayList *CompoundTrip::GetTrips() const
     return trips;
 }
 
+void CompoundTrip::Display(std::ostream &out) const
+{
+    const unsigned int N = trips->Size();
+    out << "Trajet Composé: " << startCity << " -> " << endCity;
+    out << " (" << N << " sous-trajets)" << EOL;
+    for (unsigned int i = 0; i < N; i++)
+    {
+        Trip *trajet = trips->Get(i);
+        out << "     | [" << (i + 1) << "]: ";
+        trajet->Display(cout);
+    }
+}
+
+// Méthode virtuelle qui construit une copie de l'objet
+// à l'aide du constructeur de copie
+Trip *CompoundTrip::Clone() const
+{
+    return new CompoundTrip(*this);
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
-    : Trip::Trip(nullptr, nullptr)
+    : Trip::Trip(aCompoundTrip.trips->Get(0)->GetStart(), aCompoundTrip.trips->GetLast()->GetEnd())
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
@@ -36,11 +57,8 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
     trips = new ArrayList();
     for (unsigned int i = 0; i < aCompoundTrip.trips->Size(); i++)
     {
-        trips->Add(new Trip(*(aCompoundTrip.trips->Get(i))));
+        trips->Add(aCompoundTrip.trips->Get(i)->Clone());
     }
-    startCity = trips->Get(0)->GetStart();
-    endCity = trips->GetLast()->GetEnd();
-    mode = nullptr;
 } //----- Fin de CompoundTrip (constructeur de copie)
 
 CompoundTrip::CompoundTrip(ArrayList *trips)
@@ -50,7 +68,6 @@ CompoundTrip::CompoundTrip(ArrayList *trips)
     cout << "Appel au constructeur de <CompoundTrip>" << endl;
 #endif
     this->trips = trips;
-    mode = nullptr;
 } //----- Fin de CompoundTrip
 
 CompoundTrip::~CompoundTrip()
