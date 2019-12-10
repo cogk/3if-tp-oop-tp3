@@ -33,13 +33,12 @@ int App::Run()
 
 App::MenuStatus App::menuPrincipal()
 {
-    cout << EOL << "--- MENU PRINCIPAL ---" << EOL;
-
     const int nChoices = 4;
     const char *choices[] = {"Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet", "Quitter"};
 
     while (true)
     {
+        cout << EOL << "--- MENU PRINCIPAL ---" << EOL;
         const int ans = UI::Choose(nChoices, choices);
 
         MenuStatus status = MenuStatus::DONE;
