@@ -1,12 +1,12 @@
 2
 2
-DEPART
-ARRIVEE
-MODE
-ARR2
-MOD2
-ARR3
-MOD3
+depart
+arr1
+mod1
+arr2
+mod2
+arr3
+mod3
 
 1
 4
