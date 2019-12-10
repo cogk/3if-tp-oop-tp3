@@ -35,7 +35,7 @@ public:
     // Mode d'emploi :
     //  Renvoie la liste des trips
 
-    virtual void Display(std::ostream &) const;
+    virtual void Display() const;
 
     virtual Trip *Clone() const;
 

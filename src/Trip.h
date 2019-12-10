@@ -31,7 +31,7 @@ public:
 
     virtual const char *GetEnd() const = 0;
 
-    virtual void Display(std::ostream &out) const = 0;
+    virtual void Display() const = 0;
 
     virtual Trip *Clone() const = 0;
 

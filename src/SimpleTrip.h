@@ -33,7 +33,7 @@ public:
     virtual const char *GetEnd() const;
     const char *GetMode() const;
 
-    virtual void Display(std::ostream &) const;
+    virtual void Display() const;
 
     virtual Trip *Clone() const;
 

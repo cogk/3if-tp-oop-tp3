@@ -37,16 +37,16 @@ ArrayList *CompoundTrip::GetTrips() const
     return subtrips;
 } //----- Fin de GetTrips
 
-void CompoundTrip::Display(std::ostream &out) const
+void CompoundTrip::Display() const
 {
     const unsigned int N = subtrips->Size();
-    out << "Trajet Composé: " << GetStart() << " -> " << GetEnd();
-    out << " (" << N << " sous-trajets)" << EOL;
+    cout << "Trajet Composé: " << GetStart() << " -> " << GetEnd();
+    cout << " (" << N << " sous-trajets)" << EOL;
     for (unsigned int i = 0; i < N; i++)
     {
         Trip *trajet = subtrips->Get(i);
-        out << "     | [" << (i + 1) << "]: ";
-        trajet->Display(cout);
+        cout << "     | [" << (i + 1) << "]: ";
+        trajet->Display();
     }
 }
 

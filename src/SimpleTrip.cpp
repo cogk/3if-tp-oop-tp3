@@ -39,9 +39,9 @@ const char *SimpleTrip::GetMode() const
     return mode;
 } //----- Fin de GetMode
 
-void SimpleTrip::Display(std::ostream &out) const
+void SimpleTrip::Display() const
 {
-    out << "Trajet Simple: " << startCity << " -> " << endCity << " (" << mode << ")" << EOL;
+    cout << "Trajet Simple: " << startCity << " -> " << endCity << " (" << mode << ")" << EOL;
 }
 
 // Méthode virtuelle qui construit une copie de l'objet
