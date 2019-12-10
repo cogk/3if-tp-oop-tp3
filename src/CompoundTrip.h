@@ -28,6 +28,9 @@ class CompoundTrip : public Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
+    virtual const char *GetStart() const;
+    virtual const char *GetEnd() const;
+
     ArrayList *GetTrips() const;
     // Mode d'emploi :
     //  Renvoie la liste des trips

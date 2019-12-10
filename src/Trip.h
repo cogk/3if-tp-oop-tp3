@@ -27,9 +27,9 @@ class Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    const char *GetStart() const;
+    virtual const char *GetStart() const = 0;
 
-    const char *GetEnd() const;
+    virtual const char *GetEnd() const = 0;
 
     virtual void Display(std::ostream &out) const = 0;
 
@@ -39,7 +39,7 @@ public:
     Trip(const Trip &aTrip);
     // Mode d'emploi (constructeur de copie) :
 
-    Trip(const char *start, const char *end);
+    Trip();
     // Mode d'emploi : Trip s'occuppera de delete start et end
 
     virtual ~Trip();
@@ -51,8 +51,6 @@ protected:
     //------------------------------------------------- Constructeurs protégés
 
     //----------------------------------------------------- Attributs protégés
-    const char *startCity;
-    const char *endCity;
 };
 
 //-------------------------------- Autres définitions dépendantes de <TRIP>

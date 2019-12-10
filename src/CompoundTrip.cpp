@@ -22,15 +22,25 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+const char *CompoundTrip::GetStart() const
+{
+    return this->trips->Get(0)->GetStart();
+} //----- Fin de GetStart
+
+const char *CompoundTrip::GetEnd() const
+{
+    return this->trips->GetLast()->GetEnd();
+} //----- Fin de GetEnd
+
 ArrayList *CompoundTrip::GetTrips() const
 {
-    return trips;
-}
+    return this->trips;
+} //----- Fin de GetTrips
 
 void CompoundTrip::Display(std::ostream &out) const
 {
     const unsigned int N = trips->Size();
-    out << "Trajet Composé: " << startCity << " -> " << endCity;
+    out << "Trajet Composé: " << GetStart() << " -> " << GetEnd();
     out << " (" << N << " sous-trajets)" << EOL;
     for (unsigned int i = 0; i < N; i++)
     {
@@ -49,7 +59,6 @@ Trip *CompoundTrip::Clone() const
 
 //-------------------------------------------- Constructeurs - destructeur
 CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
-    : Trip::Trip(aCompoundTrip.trips->Get(0)->GetStart(), aCompoundTrip.trips->GetLast()->GetEnd())
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
@@ -62,7 +71,6 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
 } //----- Fin de CompoundTrip (constructeur de copie)
 
 CompoundTrip::CompoundTrip(ArrayList *trips)
-    : Trip::Trip(trips->Get(0)->GetStart(), trips->GetLast()->GetEnd())
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;

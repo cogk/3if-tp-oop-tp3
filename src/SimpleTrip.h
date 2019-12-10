@@ -29,6 +29,8 @@ class SimpleTrip : public Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
+    virtual const char *GetStart() const;
+    virtual const char *GetEnd() const;
     const char *GetMode() const;
 
     virtual void Display(std::ostream &) const;
@@ -51,6 +53,8 @@ protected:
     //------------------------------------------------- Constructeurs protégés
 
     //----------------------------------------------------- Attributs protégés
+    const char *startCity;
+    const char *endCity;
     const char *mode;
 };
 

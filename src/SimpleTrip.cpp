@@ -24,10 +24,20 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+const char *SimpleTrip::GetStart() const
+{
+    return this->startCity;
+} //----- Fin de GetStart
+
+const char *SimpleTrip::GetEnd() const
+{
+    return this->endCity;
+} //----- Fin de GetEnd
+
 const char *SimpleTrip::GetMode() const
 {
     return this->mode;
-}
+} //----- Fin de GetMode
 
 void SimpleTrip::Display(std::ostream &out) const
 {
@@ -51,11 +61,32 @@ SimpleTrip::SimpleTrip(const SimpleTrip &aSimpleTrip)
 } //----- Fin de SimpleTrip (constructeur de copie)
 
 SimpleTrip::SimpleTrip(const char *start, const char *end, const char *mode)
-    : Trip::Trip(start, end)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <SimpleTrip>" << endl;
 #endif
+    if (start != nullptr)
+    {
+        char *tmpStartCity = new char[strlen(start) + 1];
+        strcpy(tmpStartCity, start);
+        this->startCity = tmpStartCity;
+    }
+    else
+    {
+        this->startCity = nullptr;
+    }
+
+    if (end != nullptr)
+    {
+        char *tmpEndCity = new char[strlen(end) + 1];
+        strcpy(tmpEndCity, end);
+        this->endCity = tmpEndCity;
+    }
+    else
+    {
+        this->endCity = nullptr;
+    }
+
     if (mode != nullptr)
     {
         char *tmpMode = new char[strlen(mode) + 1];
@@ -73,6 +104,8 @@ SimpleTrip::~SimpleTrip()
 #ifdef MAP
     cout << "Appel au destructeur de <SimpleTrip>" << endl;
 #endif
+    delete[] startCity;
+    delete[] endCity;
     delete[] mode;
 } //----- Fin de ~SimpleTrip
 
