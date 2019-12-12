@@ -50,6 +50,9 @@ public:
     unsigned int Size() const;
     // Mode d'emploi : Retourne la taille actuellement utilisée la liste
 
+    // On désactive l'opérateur d'affectation
+    ArrayList &operator=(const ArrayList &) = delete;
+
     //-------------------------------------------- Constructeurs - destructeur
     ArrayList(const ArrayList &anArrayList);
     // Mode d'emploi (constructeur de copie) :

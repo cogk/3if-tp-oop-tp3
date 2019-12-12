@@ -35,6 +35,9 @@ public:
 
     virtual Trip *Clone() const = 0;
 
+    // On désactive l'opérateur d'affectation
+    Trip &operator=(const Trip &) = delete;
+
     //-------------------------------------------- Constructeurs - destructeur
     Trip(const Trip &aTrip);
     // Mode d'emploi (constructeur de copie) :

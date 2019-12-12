@@ -35,6 +35,9 @@ public:
     ArrayList *Search(const char *start, const char *end) const;
     void Display() const;
 
+    // On désactive l'opérateur d'affectation
+    Catalog &operator=(const Catalog &) = delete;
+
     //-------------------------------------------- Constructeurs - destructeur
     Catalog(const Catalog &aCatalog);
     // Mode d'emploi (constructeur de copie)

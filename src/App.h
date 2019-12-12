@@ -63,6 +63,9 @@ public:
     // Contrat :
     //
 
+    // On désactive l'opérateur d'affectation
+    App &operator=(const App &) = delete;
+
     //------------------------------------------------------------------ PRIVE
 
 protected:
