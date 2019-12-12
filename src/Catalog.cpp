@@ -26,20 +26,20 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 unsigned int Catalog::Size() const
 {
-    return this->trips->Size();
+    return trips->Size();
 }
 void Catalog::Add(Trip *trip)
 {
-    this->trips->Add(trip);
+    trips->Add(trip);
 }
 Trip *Catalog::Get(unsigned int i) const
 {
-    return this->trips->Get(i);
+    return trips->Get(i);
 }
 
 void Catalog::Display() const
 {
-    const unsigned int nTrajets = this->Size();
+    const unsigned int nTrajets = Size();
 
     if (nTrajets == 0)
     {
@@ -51,7 +51,7 @@ void Catalog::Display() const
 
         for (unsigned int i = 0; i < nTrajets; i++)
         {
-            Trip *trajet = this->Get(i);
+            Trip *trajet = Get(i);
             cout << "[" << (i + 1) << "]: ";
             trajet->Display();
         }
@@ -131,11 +131,11 @@ Catalog::Catalog(const Catalog &aCatalog)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Catalog>" << endl;
 #endif
-    this->trips = new ArrayList(0);
+    trips = new ArrayList(0);
     for (unsigned int i = 0; i < aCatalog.trips->Size(); i++)
     {
         Trip *trajet = aCatalog.trips->Get(i);
-        this->trips->Add(trajet);
+        trips->Add(trajet);
     }
 } //----- Fin de Catalog (constructeur de copie)
 
@@ -144,7 +144,7 @@ Catalog::Catalog()
 #ifdef MAP
     cout << "Appel au constructeur de <Catalog>" << endl;
 #endif
-    this->trips = new ArrayList(16);
+    trips = new ArrayList(16);
 } //----- Fin de Catalog
 
 Catalog::~Catalog()

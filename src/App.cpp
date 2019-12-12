@@ -340,7 +340,7 @@ App::App()
 #ifdef MAP
     cout << "Appel au constructeur de <App>" << endl;
 #endif
-    this->catalog = new Catalog();
+    catalog = new Catalog();
 } //----- Fin de App
 
 App::~App()
@@ -350,7 +350,7 @@ App::~App()
 #ifdef MAP
     cout << "Appel au destructeur de <App>" << endl;
 #endif
-    delete this->catalog;
+    delete catalog;
 } //----- Fin de ~App
 
 //------------------------------------------------------------------ PRIVE

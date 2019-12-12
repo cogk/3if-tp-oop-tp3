@@ -35,17 +35,17 @@ public:
     Trip *Remove(unsigned int index);
     // Mode d'emploi : Supprime un élément à l'index donné, renvoie le Trip
     //    supprimé
-    // Contrat : index < this->Size()
+    // Contrat : index < Size()
 
     Trip *Pop();
     // Mode d'emploi : Supprime le dernier élément de la liste, renvoie le Trip
     //    supprimé
 
     Trip *Get(unsigned int index) const;
-    // Contrat : index < this->Size()
+    // Contrat : index < Size()
 
     Trip *GetLast() const;
-    // Contrat : this->Size() > 0
+    // Contrat : Size() > 0
 
     unsigned int Size() const;
     // Mode d'emploi : Retourne la taille actuellement utilisée la liste

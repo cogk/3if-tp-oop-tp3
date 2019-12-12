@@ -75,7 +75,7 @@ CompoundTrip::CompoundTrip(ArrayList *trips)
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;
 #endif
-    this->subtrips = trips;
+    subtrips = trips;
 } //----- Fin de CompoundTrip
 
 CompoundTrip::~CompoundTrip()

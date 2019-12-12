@@ -93,35 +93,35 @@ SimpleTrip::SimpleTrip(const char *inStart, const char *inEnd, const char *inMod
 
     if (inStart != nullptr)
     {
-        this->startCity = tmpStartCity;
         char *tmpStartCity = new char[strlen(inStart) + 1];
         strcpy(tmpStartCity, inStart);
+        startCity = tmpStartCity;
     }
     else
     {
-        this->startCity = nullptr;
+        startCity = nullptr;
     }
 
     if (inEnd != nullptr)
     {
-        this->endCity = tmpEndCity;
         char *tmpEndCity = new char[strlen(inEnd) + 1];
         strcpy(tmpEndCity, inEnd);
+        endCity = tmpEndCity;
     }
     else
     {
-        this->endCity = nullptr;
+        endCity = nullptr;
     }
 
     if (inMode != nullptr)
     {
-        this->mode = tmpMode;
         char *tmpMode = new char[strlen(inMode) + 1];
         strcpy(tmpMode, inMode);
+        mode = tmpMode;
     }
     else
     {
-        this->mode = nullptr;
+        mode = nullptr;
     }
 } //----- Fin de SimpleTrip
 
