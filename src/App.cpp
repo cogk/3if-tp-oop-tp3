@@ -127,6 +127,15 @@ App::MenuStatus App::menuAjouterTrajetSimple()
     if (endName == nullptr)
         return MenuStatus::DONE;
 
+    if (!strcmp(startName, endName)) // startName equals endName
+    {
+        delete[] startName;
+        delete[] endName;
+
+        UI::Error("La ville d'arrivée doit être différente de la ville de départ. "
+                  "Le trajet simple n'a pas été enregistré.");
+        return MenuStatus::DONE;
+    }
 
     const char *mode = UI::Ask(MSG_MOD);
     if (mode == nullptr)
@@ -203,6 +212,21 @@ App::MenuStatus App::menuAjouterTrajetCompose()
         {
             delete[] startName;
             break;
+        }
+        if (!strcmp(startName, endName)) // startName equals endName
+        {
+            delete[] startName;
+            delete[] endName;
+            const unsigned int nSubTrips = trips->Size();
+            for (unsigned int i = 0; i < nSubTrips; i++)
+            {
+                delete trips->Get(i);
+            }
+            delete trips;
+
+            UI::Error("La ville d'arrivée doit être différente de la ville de départ. "
+                      "Le trajet composé n'a pas été enregistré.");
+            return MenuStatus::DONE;
         }
 
         const char *mode = UI::Ask(MSG_MOD);
