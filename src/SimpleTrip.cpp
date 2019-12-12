@@ -46,6 +46,7 @@ void SimpleTrip::Display() const
 
 //-------------------------------------------- Constructeurs - destructeur
 SimpleTrip::SimpleTrip(const char *inStart, const char *inEnd, const char *inMode)
+    : startCity(nullptr), endCity(nullptr), mode(nullptr)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <SimpleTrip>" << endl;
@@ -82,10 +83,6 @@ SimpleTrip::SimpleTrip(const char *inStart, const char *inEnd, const char *inMod
         strcpy(tmpStartCity, inStart);
         startCity = tmpStartCity;
     }
-    else
-    {
-        startCity = nullptr;
-    }
 
     if (inEnd != nullptr)
     {
@@ -93,20 +90,12 @@ SimpleTrip::SimpleTrip(const char *inStart, const char *inEnd, const char *inMod
         strcpy(tmpEndCity, inEnd);
         endCity = tmpEndCity;
     }
-    else
-    {
-        endCity = nullptr;
-    }
 
     if (inMode != nullptr)
     {
         char *tmpMode = new char[strlen(inMode) + 1];
         strcpy(tmpMode, inMode);
         mode = tmpMode;
-    }
-    else
-    {
-        mode = nullptr;
     }
 } //----- Fin de SimpleTrip
 
