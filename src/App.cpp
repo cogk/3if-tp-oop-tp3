@@ -156,7 +156,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
     {
         cout << EOL << "Trajet #" << (i + 1) << EOL;
 
-        char *startName = nullptr;
+        char *nonConstStartName = nullptr;
 
         if (i == 0)
         {
@@ -169,8 +169,8 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             }
 
             const unsigned int len = strlen(answer);
-            startName = new char[len + 1]{0};
-            startName = strncpy(startName, answer, len);
+            nonConstStartName = new char[len + 1]{0};
+            nonConstStartName = strncpy(nonConstStartName, answer, len);
 
             delete[] answer;
         }
@@ -182,12 +182,13 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             const char *lastEndCityName = trips->GetLast()->GetEnd();
 
             const unsigned int len = strlen(lastEndCityName);
-            startName = new char[len + 1]{0};
-            startName = strncpy(startName, lastEndCityName, len);
+            nonConstStartName = new char[len + 1]{0};
+            nonConstStartName = strncpy(nonConstStartName, lastEndCityName, len);
 
-            cout << MSG_DEP << startName << " [valeur remplie automatiquement]" << EOL;
+            cout << MSG_DEP << nonConstStartName << " [valeur remplie automatiquement]" << EOL;
         }
 
+        const char *startName = nonConstStartName;
         if (startName == nullptr)
         {
             break;
@@ -208,8 +209,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             break;
         }
 
-        Trip *trip = (Trip *)new SimpleTrip(startName, endName, mode);
-
+        Trip *trip = new SimpleTrip(startName, endName, mode);
         trips->Add(trip);
 
         delete[] startName;
