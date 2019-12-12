@@ -393,13 +393,13 @@ App::MenuStatus App::menuRechercher() const
 
 //-------------------------------------------- Constructeurs - destructeur
 App::App()
+    : catalog(new Catalog())
 // Algorithme :
 //
 {
 #ifdef MAP
     cout << "Appel au constructeur de <App>" << endl;
 #endif
-    catalog = new Catalog();
 } //----- Fin de App
 
 App::~App()
