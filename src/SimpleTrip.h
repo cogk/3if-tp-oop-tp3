@@ -44,7 +44,7 @@ public:
     SimpleTrip(const SimpleTrip &aSimpleTrip);
     // Mode d'emploi (constructeur de copie) :
 
-    SimpleTrip(const char *start, const char *end, const char *mode);
+    SimpleTrip(const char *inStart, const char *inEnd, const char *inMode);
     // Mode d'emploi : Trip s'occuppera de delete start et end
 
     virtual ~SimpleTrip();

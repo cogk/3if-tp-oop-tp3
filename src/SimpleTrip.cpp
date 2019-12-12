@@ -60,7 +60,7 @@ SimpleTrip::SimpleTrip(const SimpleTrip &aSimpleTrip)
 #endif
 } //----- Fin de SimpleTrip (constructeur de copie)
 
-SimpleTrip::SimpleTrip(const char *start, const char *end, const char *mode)
+SimpleTrip::SimpleTrip(const char *inStart, const char *inEnd, const char *inMode)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <SimpleTrip>" << endl;
@@ -91,33 +91,33 @@ SimpleTrip::SimpleTrip(const char *start, const char *end, const char *mode)
        toutes les zones dynamiques de l'objet. »
     */
 
-    if (start != nullptr)
+    if (inStart != nullptr)
     {
-        char *tmpStartCity = new char[strlen(start) + 1];
-        strcpy(tmpStartCity, start);
         this->startCity = tmpStartCity;
+        char *tmpStartCity = new char[strlen(inStart) + 1];
+        strcpy(tmpStartCity, inStart);
     }
     else
     {
         this->startCity = nullptr;
     }
 
-    if (end != nullptr)
+    if (inEnd != nullptr)
     {
-        char *tmpEndCity = new char[strlen(end) + 1];
-        strcpy(tmpEndCity, end);
         this->endCity = tmpEndCity;
+        char *tmpEndCity = new char[strlen(inEnd) + 1];
+        strcpy(tmpEndCity, inEnd);
     }
     else
     {
         this->endCity = nullptr;
     }
 
-    if (mode != nullptr)
+    if (inMode != nullptr)
     {
-        char *tmpMode = new char[strlen(mode) + 1];
-        strcpy(tmpMode, mode);
         this->mode = tmpMode;
+        char *tmpMode = new char[strlen(inMode) + 1];
+        strcpy(tmpMode, inMode);
     }
     else
     {
