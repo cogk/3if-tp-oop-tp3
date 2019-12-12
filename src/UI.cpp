@@ -47,27 +47,31 @@ const char *UI::Ask(const char *question)
  * Contrats :
  * - la valeur de retour de la fonction est :
  *     soit -1,
- *     soit entre 1 et nChoices inclus.
- *
+ *     soit entre 0 et nChoices inclus.
  */
-int UI::Choose(const int nChoices, const char *choices[])
+int UI::Choose(const unsigned int nChoices, const char *choices[])
 {
-    int answer = 0;
+    unsigned int answer = 0;
 
-    for (int i = 0; i < nChoices; i++)
+    for (unsigned int i = 1; i < nChoices; i++)
     {
-        cout << "| " << (i + 1) << ". " << choices[i] << EOL;
+        cout << "| " << i << ". " << choices[i] << EOL;
     }
 
-    cin >> answer;
-    cin.ignore(1, '\n'); // skip new line
+    // Quitter ou retourner au menu précédent
+    cout << "| " << 0 << ". " << choices[0] << EOL;
 
-    if (answer < 1 || answer > nChoices)
+    cin >> answer;
+    cin.clear(); // on efface les bits d'erreur du flux std::cin
+
+    cin.ignore(10000, '\n'); // skip new line
+
+    if (answer > nChoices)
     {
         return -1;
     }
 
-    return answer; // [1 ; nChoices]
+    return answer; // [0 ; nChoices]
 } //----- Fin de UI::Choose
 
 void UI::Error(const char *message)

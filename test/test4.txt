@@ -22,5 +22,4 @@ Lyon
 Paris
 Marseille
 2
-4
-
+0

@@ -34,7 +34,7 @@ int App::Run()
 App::MenuStatus App::menuPrincipal()
 {
     const int nChoices = 4;
-    const char *choices[] = {"Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet", "Quitter"};
+    const char *choices[] = {"Quitter l'application", "Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet"};
 
     while (true)
     {
@@ -44,6 +44,9 @@ App::MenuStatus App::menuPrincipal()
         MenuStatus status = MenuStatus::DONE;
         switch (ans)
         {
+        case 0:
+            return MenuStatus::DONE; // exit normally
+            // break;
         case 1:
             status = App::menuConsulter();
             break;
@@ -53,13 +56,11 @@ App::MenuStatus App::menuPrincipal()
         case 3:
             status = App::menuRechercher();
             break;
-        case 4:
-            return MenuStatus::DONE; // exit normally
-            break;
         default:
             UI::Error("Cette option n'existe pas.");
-            status = MenuStatus::ERROR;
-            break;
+            continue;
+            // status = MenuStatus::ERROR;
+            // break;
         }
 
         if (status == MenuStatus::ERROR)
@@ -85,8 +86,8 @@ App::MenuStatus App::menuAjouter()
     cout << EOL << "--- AJOUTER UN TRAJET ---" << EOL;
     cout << "Veuillez choisir un type de trajet." << EOL;
 
-    const int nChoices = 2;
-    const char *choices[] = {"Trajet simple", "Trajet composé"};
+    const int nChoices = 3;
+    const char *choices[] = {"Retourner au menu principal", "Trajet simple", "Trajet composé"};
 
     while (true)
     {
@@ -94,6 +95,8 @@ App::MenuStatus App::menuAjouter()
 
         switch (ans)
         {
+        case 0:
+            return MenuStatus::DONE;
         case 1:
             return App::menuAjouterTrajetSimple();
         case 2:
@@ -260,7 +263,7 @@ App::MenuStatus App::menuRechercher() const
 
     cout << EOL << "Veuillez choisir un type de recherche." << EOL;
     const int nChoices = 3;
-    const char *choices[] = {"Recherche simple", "Recherche avancée", "Quitter"};
+    const char *choices[] = {"Retourner au menu principal", "Recherche simple", "Recherche avancée"};
 
     ArrayList<ArrayList<Trip>> *results = nullptr;
     while (results == nullptr)
@@ -269,6 +272,10 @@ App::MenuStatus App::menuRechercher() const
 
         switch (ans)
         {
+        case 0:
+            delete startName;
+            delete endName;
+            return MenuStatus::DONE;
         case 1:
             results = catalog->Search(startName, endName);
             if (results == nullptr)
@@ -288,11 +295,6 @@ App::MenuStatus App::menuRechercher() const
                 delete endName;
                 return MenuStatus::ERROR;
             }
-            break;
-        case 3:
-            delete startName;
-            delete endName;
-            return MenuStatus::DONE;
             break;
         default:
             UI::Error("Cette option n'existe pas.");
