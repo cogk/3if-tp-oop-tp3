@@ -65,6 +65,32 @@ SimpleTrip::SimpleTrip(const char *start, const char *end, const char *mode)
 #ifdef MAP
     cout << "Appel au constructeur de <SimpleTrip>" << endl;
 #endif
+    /*
+     POURQUOI COPIER LES CHAINES DE CARACTÈRES PASSÉES EN PARAMÈTRE ?
+
+     La raison est que l'espace mémoire consommé par les chaînes
+       données en paramètre est égal à la taille du buffer UI_BUFFER_SIZE.
+     On peut rapidement arriver à de fortes consommations
+       de mémoire de manière inutile.
+
+     Nous avons donc fait le choix de systématiquement copier les chaines
+       données en paramètre dans un espace mémoire de taille adapté.
+
+     Cependant, ce choix a un coût :
+       - le constructeur est plus lent ;
+       - le constructeur est plus complexe (ce qui augmente le risque de bug) ;
+       - l'espace mémoire risque d'être fragmenté plus facilement.
+
+     Nous considérons cependant que ce choix est une bonne manière
+       de satisfaire un certain nombre de contraintes rigoureuses que
+       nous nous sommes fixées (notamment le fait que les paramètres
+       en entrée doivent être tous `const`).
+
+     Enfin, ce choix est en adéquation avec le Guide de Style imposé,
+       notamment la règle C-3 : « Le constructeur doit allouer lui-même
+       toutes les zones dynamiques de l'objet. »
+    */
+
     if (start != nullptr)
     {
         char *tmpStartCity = new char[strlen(start) + 1];
