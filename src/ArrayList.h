@@ -16,7 +16,7 @@
 using namespace std;
 
 //------------------------------------------------------------- Constantes
-const unsigned int DEFAULT_SIZE = 5;
+const unsigned int DEFAULT_SIZE = 4;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <ArrayList>
