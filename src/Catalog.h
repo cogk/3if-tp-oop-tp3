@@ -33,6 +33,10 @@ public:
     void Add(Trip *trip);
     Trip *Get(unsigned int i) const;
     ArrayList *Search(const char *start, const char *end) const;
+    void Display() const;
+
+    // On désactive l'opérateur d'affectation
+    Catalog &operator=(const Catalog &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
     Catalog(const Catalog &aCatalog);
@@ -48,7 +52,7 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList *trajets;
+    ArrayList *trips;
 };
 
 #endif // CATALOG_H

@@ -17,6 +17,7 @@
 //------------------------------------------------------ Include personnel
 #include "Catalog.h"
 #include "CompoundTrip.h"
+#include "SimpleTrip.h"
 #include "Trip.h"
 #include "UI.h"
 
@@ -50,13 +51,6 @@ public:
     //
     int Run();
 
-    MenuStatus menuPrincipal();
-    MenuStatus menuConsulter();
-    MenuStatus menuAjouter();
-    MenuStatus menuAjouterTrajetSimple();
-    MenuStatus menuAjouterTrajetCompose();
-    MenuStatus menuRechercher();
-
     App();
     // Mode d'emploi :
     //
@@ -69,6 +63,9 @@ public:
     // Contrat :
     //
 
+    // On désactive l'opérateur d'affectation
+    App &operator=(const App &) = delete;
+
     //------------------------------------------------------------------ PRIVE
 
 protected:
@@ -76,6 +73,13 @@ protected:
 
     //----------------------------------------------------- Attributs protégés
     Catalog *catalog;
+
+    MenuStatus menuPrincipal();
+    MenuStatus menuConsulter() const;
+    MenuStatus menuAjouter();
+    MenuStatus menuAjouterTrajetSimple();
+    MenuStatus menuAjouterTrajetCompose();
+    MenuStatus menuRechercher() const;
 };
 
 //-------------------------------- Autres définitions dépendantes de <App>

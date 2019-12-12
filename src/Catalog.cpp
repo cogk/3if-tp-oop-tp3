@@ -17,6 +17,7 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
+#include "App.h"
 #include "Catalog.h"
 #include "Trip.h"
 
@@ -25,17 +26,39 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 unsigned int Catalog::Size() const
 {
-    return this->trajets->Size();
+    return trips->Size();
 }
 
 void Catalog::Add(Trip *trip)
 {
-    this->trajets->Add(trip);
+    trips->Add(trip);
 }
 
 Trip *Catalog::Get(unsigned int i) const
 {
-    return this->trajets->Get(i);
+    return trips->Get(i);
+}
+
+void Catalog::Display() const
+{
+    const unsigned int nTrajets = Size();
+
+    if (nTrajets == 0)
+    {
+        cout << "Pas de trajets dans le catalogue." << EOL << EOL;
+    }
+    else
+    {
+        cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << EOL << EOL;
+
+        for (unsigned int i = 0; i < nTrajets; i++)
+        {
+            Trip *trajet = Get(i);
+            cout << "[" << (i + 1) << "]: ";
+            trajet->Display();
+        }
+        cout << EOL;
+    }
 }
 
 bool StringEquals(const char *a, const char *b)
@@ -47,13 +70,13 @@ ArrayList *Catalog::Search(const char *searchedStart, const char *searchedEnd) c
 {
     ArrayList *result = new ArrayList();
 
-    for (unsigned int i = 0; i < trajets->Size(); i++)
+    for (unsigned int i = 0; i < trips->Size(); i++)
     {
-        const char *currStart = trajets->Get(i)->GetStart();
-        const char *currEnd = trajets->Get(i)->GetEnd();
+        const char *currStart = trips->Get(i)->GetStart();
+        const char *currEnd = trips->Get(i)->GetEnd();
         if (StringEquals(currStart, searchedStart) && StringEquals(currEnd, searchedEnd))
         {
-            result->Add(trajets->Get(i));
+            result->Add(trips->Get(i));
         }
     }
 
@@ -133,11 +156,11 @@ Catalog::Catalog(const Catalog &aCatalog)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Catalog>" << endl;
 #endif
-    this->trajets = new ArrayList(0);
-    for (unsigned int i = 0; i < aCatalog.trajets->Size(); i++)
+    trips = new ArrayList(0);
+    for (unsigned int i = 0; i < aCatalog.trips->Size(); i++)
     {
-        Trip *trajet = aCatalog.trajets->Get(i);
-        this->trajets->Add(trajet);
+        Trip *trajet = aCatalog.trips->Get(i);
+        trips->Add(trajet);
     }
 } //----- Fin de Catalog (constructeur de copie)
 
@@ -146,7 +169,7 @@ Catalog::Catalog()
 #ifdef MAP
     cout << "Appel au constructeur de <Catalog>" << endl;
 #endif
-    this->trajets = new ArrayList(16);
+    trips = new ArrayList(16);
 } //----- Fin de Catalog
 
 Catalog::~Catalog()
@@ -154,10 +177,10 @@ Catalog::~Catalog()
 #ifdef MAP
     cout << "Appel au destructeur de <Catalog>" << endl;
 #endif
-    for (unsigned int i = 0; i < trajets->Size(); i++)
+    for (unsigned int i = 0; i < trips->Size(); i++)
     {
-        Trip *trajet = trajets->Get(i);
+        Trip *trajet = trips->Get(i);
         delete trajet;
     }
-    delete trajets;
+    delete trips;
 } //----- Fin de ~Catalog

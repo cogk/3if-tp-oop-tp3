@@ -1,5 +1,5 @@
 /*************************************************************************
-                           Trip  -  description
+                           SimpleTrip  -  description
                              -------------------
     début                : 2019-11-19
     copyright            : (C) 2019 BERTHOMET Guillaume & FORLER Corentin
@@ -7,45 +7,47 @@
                            corentin.forler@insa-lyon.fr
 *************************************************************************/
 
-//---- Interface de la classe <Trip> (fichier Trip.h) ----------
-#if !defined(TRIP_H)
-#define TRIP_H
+//---- Interface de la classe <SimpleTrip> (fichier SimpleTrip.h) ----------
+#if !defined(SIMPLE_TRIP_H)
+#define SIMPLE_TRIP_H
 
 //--------------------------------------------------- Interfaces utilisées
+#include "Trip.h"
+#include <cstring>
 #include <iostream>
 
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Trip>
-//  Trip représente un voyage entre deux villes
+// Rôle de la classe <SimpleTrip>
+//  SimpleTrip représente un voyage entre deux villes
 //------------------------------------------------------------------------
 
-class Trip
+class SimpleTrip : public Trip
 {
     //----------------------------------------------------------------- PUBLIC
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    virtual const char *GetStart() const = 0;
+    virtual const char *GetStart() const;
+    virtual const char *GetEnd() const;
+    const char *GetMode() const;
 
-    virtual const char *GetEnd() const = 0;
+    virtual void Display() const;
 
-    virtual void Display() const = 0;
-
-    virtual Trip *Clone() const = 0;
+    virtual Trip *Clone() const;
 
     // On désactive l'opérateur d'affectation
-    Trip &operator=(const Trip &) = delete;
+    SimpleTrip &operator=(const SimpleTrip &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
-    Trip(const Trip &aTrip);
+    SimpleTrip(const SimpleTrip &aSimpleTrip);
     // Mode d'emploi (constructeur de copie) :
 
-    Trip();
+    SimpleTrip(const char *inStart, const char *inEnd, const char *inMode);
     // Mode d'emploi : Trip s'occuppera de delete start et end
 
-    virtual ~Trip();
+    virtual ~SimpleTrip();
     // Mode d'emploi : delete start, end et mode
 
     //------------------------------------------------------------------ PRIVE
@@ -54,8 +56,11 @@ protected:
     //------------------------------------------------- Constructeurs protégés
 
     //----------------------------------------------------- Attributs protégés
+    const char *startCity;
+    const char *endCity;
+    const char *mode;
 };
 
-//-------------------------------- Autres définitions dépendantes de <TRIP>
+//-------------------------------- Autres définitions dépendantes de <SimpleTrip>
 
-#endif // TRIP_H
+#endif // SIMPLE_TRIP_H

@@ -16,41 +16,66 @@ using namespace std;
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
+#include "App.h"
 #include "CompoundTrip.h"
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
+const char *CompoundTrip::GetStart() const
+{
+    return subtrips->Get(0)->GetStart();
+} //----- Fin de GetStart
+
+const char *CompoundTrip::GetEnd() const
+{
+    return subtrips->GetLast()->GetEnd();
+} //----- Fin de GetEnd
+
 ArrayList *CompoundTrip::GetTrips() const
 {
-    return trips;
+    return subtrips;
+} //----- Fin de GetTrips
+
+void CompoundTrip::Display() const
+{
+    const unsigned int N = subtrips->Size();
+    cout << "Trajet Composé: " << GetStart() << " -> " << GetEnd();
+    cout << " (" << N << " sous-trajets)" << EOL;
+    for (unsigned int i = 0; i < N; i++)
+    {
+        Trip *trajet = subtrips->Get(i);
+        cout << "     | [" << (i + 1) << "]: ";
+        trajet->Display();
+    }
+}
+
+// Méthode virtuelle qui construit une copie de l'objet
+// à l'aide du constructeur de copie
+Trip *CompoundTrip::Clone() const
+{
+    return new CompoundTrip(*this);
 }
 
 //-------------------------------------------- Constructeurs - destructeur
 CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
-    : Trip::Trip(nullptr, nullptr)
 {
 #ifdef MAP
     cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
 #endif
-    trips = new ArrayList();
-    for (unsigned int i = 0; i < aCompoundTrip.trips->Size(); i++)
+    subtrips = new ArrayList();
+    for (unsigned int i = 0; i < aCompoundTrip.subtrips->Size(); i++)
     {
-        trips->Add(new Trip(*(aCompoundTrip.trips->Get(i))));
+        subtrips->Add(aCompoundTrip.subtrips->Get(i)->Clone());
     }
-    startCity = trips->Get(0)->GetStart();
-    endCity = trips->GetLast()->GetEnd();
-    mode = nullptr;
 } //----- Fin de CompoundTrip (constructeur de copie)
 
 CompoundTrip::CompoundTrip(ArrayList *trips)
-    : Trip::Trip(trips->Get(0)->GetStart(), trips->GetLast()->GetEnd())
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;
 #endif
-    this->trips = trips;
-    mode = nullptr;
+    subtrips = trips;
 } //----- Fin de CompoundTrip
 
 CompoundTrip::~CompoundTrip()
@@ -58,11 +83,11 @@ CompoundTrip::~CompoundTrip()
 #ifdef MAP
     cout << "Appel au destructeur de <CompoundTrip>" << endl;
 #endif
-    for (unsigned int i = 0; i < trips->Size(); i++)
+    for (unsigned int i = 0; i < subtrips->Size(); i++)
     {
-        delete trips->Get(i);
+        delete subtrips->Get(i);
     }
-    delete trips;
+    delete subtrips;
 } //----- Fin de ~CompoundTrip
 
 //------------------------------------------------------------------ PRIVE

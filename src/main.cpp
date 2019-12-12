@@ -1,10 +1,8 @@
 #include "App.h"
-#include "CompoundTrip.h"
 
 int main(int argc, char const *argv[])
 {
-    App *app = new App();
-    int result = app->Run();
-    delete app;
+    App app;
+    int result = app.Run();
     return result;
 }

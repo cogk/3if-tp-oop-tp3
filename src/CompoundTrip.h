@@ -14,6 +14,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "ArrayList.h"
 #include "Trip.h"
+#include <iostream>
 
 //------------------------------------------------------------------------
 // Rôle de la classe <CompoundTrip>
@@ -27,9 +28,19 @@ class CompoundTrip : public Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
+    virtual const char *GetStart() const;
+    virtual const char *GetEnd() const;
+
     ArrayList *GetTrips() const;
     // Mode d'emploi :
     //  Renvoie la liste des trips
+
+    virtual void Display() const;
+
+    virtual Trip *Clone() const;
+
+    // On désactive l'opérateur d'affectation
+    CompoundTrip &operator=(const CompoundTrip &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
     CompoundTrip(const CompoundTrip &aCompoundTrip);
@@ -52,7 +63,7 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList *trips;
+    ArrayList *subtrips;
 };
 
 //-------------------------------- Autres définitions dépendantes de <CompoundTrip>
