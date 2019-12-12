@@ -73,7 +73,7 @@ App::MenuStatus App::menuPrincipal()
     }
 }
 
-App::MenuStatus App::menuConsulter()
+App::MenuStatus App::menuConsulter() const
 {
     cout << EOL << "--- CONSULTATION DU CATALOGUE ---" << EOL;
     catalog->Display();
@@ -225,7 +225,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
     return MenuStatus::DONE;
 }
 
-App::MenuStatus App::menuRechercher()
+App::MenuStatus App::menuRechercher() const
 {
     return MenuStatus::DONE;
 }

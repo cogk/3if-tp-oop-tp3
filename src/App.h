@@ -51,13 +51,6 @@ public:
     //
     int Run();
 
-    MenuStatus menuPrincipal();
-    MenuStatus menuConsulter();
-    MenuStatus menuAjouter();
-    MenuStatus menuAjouterTrajetSimple();
-    MenuStatus menuAjouterTrajetCompose();
-    MenuStatus menuRechercher();
-
     App();
     // Mode d'emploi :
     //
@@ -77,6 +70,13 @@ protected:
 
     //----------------------------------------------------- Attributs protégés
     Catalog *catalog;
+
+    MenuStatus menuPrincipal();
+    MenuStatus menuConsulter() const;
+    MenuStatus menuAjouter();
+    MenuStatus menuAjouterTrajetSimple();
+    MenuStatus menuAjouterTrajetCompose();
+    MenuStatus menuRechercher() const;
 };
 
 //-------------------------------- Autres définitions dépendantes de <App>
