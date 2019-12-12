@@ -81,15 +81,13 @@ bool ListOfTrips::IsEmpty() const
 //-------------------------------------------- Constructeurs - destructeur
 
 ListOfTrips::ListOfTrips(unsigned int startingMaxSize)
-    : currentSize(0), maxSize(startingMaxSize)
+    : currentSize(0), maxSize(startingMaxSize), list(new Trip *[maxSize])
 {
 #ifdef MAP
     cout << "Appel au constructeur de <ListOfTrips>" << endl;
 #endif
     if (maxSize == 0)
         maxSize = 1;
-
-    list = new Trip *[maxSize];
 } //----- Fin de ListOfTrips
 
 ListOfTrips::~ListOfTrips()
