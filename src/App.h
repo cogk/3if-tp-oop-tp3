@@ -74,16 +74,15 @@ public:
 
 protected:
     //----------------------------------------------------- Méthodes protégées
-
-    //----------------------------------------------------- Attributs protégés
-    Catalog *catalog;
-
     MenuStatus menuPrincipal();
     MenuStatus menuConsulter() const;
     MenuStatus menuAjouter();
     MenuStatus menuAjouterTrajetSimple();
     MenuStatus menuAjouterTrajetCompose();
     MenuStatus menuRechercher() const;
+
+    //----------------------------------------------------- Attributs protégés
+    Catalog *catalog;
 };
 
 //-------------------------------- Autres définitions dépendantes de <App>
