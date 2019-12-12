@@ -27,7 +27,7 @@ void ListOfTrips::Add(Trip *element)
 {
     if (currentSize == maxSize)
     {
-        DoubleSize();
+        doubleSize();
     }
 
     list[currentSize++] = element;
@@ -102,7 +102,7 @@ ListOfTrips::~ListOfTrips()
 
 //----------------------------------------------------- Méthodes protégées
 
-void ListOfTrips::DoubleSize()
+void ListOfTrips::doubleSize()
 {
     maxSize *= 2;
     Trip **oldList = list;

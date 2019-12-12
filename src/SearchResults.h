@@ -63,7 +63,7 @@ public:
 
 protected:
     //----------------------------------------------------- Méthodes protégées
-    void DoubleSize();
+    void doubleSize();
     // Mode d'emploi : double la taille actuellement allouée à la list
 
     //----------------------------------------------------- Attributs protégés
