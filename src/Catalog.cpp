@@ -17,11 +17,11 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
+#include "App.h"
 #include "Catalog.h"
 #include "ListOfTrips.h"
 #include "SearchResults.h"
 #include "Trip.h"
-#include "UI.h"
 
 //----------------------------------------------------------------- PUBLIC
 

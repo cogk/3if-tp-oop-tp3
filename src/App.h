@@ -19,10 +19,10 @@
 #include "CompoundTrip.h"
 #include "SimpleTrip.h"
 #include "Trip.h"
-#include "UI.h"
 
 //------------------------------------------------------------- Constantes
 #define EOL "\r\n"
+const int UI_BUFFER_SIZE = 256;
 
 //------------------------------------------------------------------ Types
 
@@ -50,6 +50,30 @@ public:
     // Contrat :
     //
     int Run();
+
+    static int Choose(const unsigned int nChoices, const char *choices[]);
+    // Mode d'emploi :
+    //
+    // Contrat :
+    //
+
+    static const char *Ask(const char *question);
+    // Mode d'emploi :
+    // Le paramètre question est une chaîne de caractères
+    // qui décrit la question à poser à l'utilisateur
+    // Contrat :
+    // * question doit être un pointeur vers une chaîne de caractères
+    //   (donc différent de nullptr)
+    // * La valeur de retour est un pointeur vers
+    //   une chaîne de caractères allouée sur le tas,
+    //   donc ce pointeur doit être libéré, car il ne sera pas libéré dans
+    //   Ask(...), à part si Ask(...) retourne `nullptr`.
+    // * La valeur de retourne ne vaut `nullptr` que quand l'utilisateur
+    //   a entré une chaîne vide.
+
+    static void Error(const char *message);
+
+    static void MenuTitle(const char *title);
 
     // On désactive l'opérateur d'affectation
     App &operator=(const App &) = delete;

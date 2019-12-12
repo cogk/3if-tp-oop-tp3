@@ -31,6 +31,90 @@ int App::Run()
     return (res == MenuStatus::ERROR) ? 1 : 0;
 } //----- Fin de App::Run
 
+const char *App::Ask(const char *question)
+{
+    cout << question;
+
+    char *answer = new char[UI_BUFFER_SIZE]{0};
+
+    cin.getline(answer, UI_BUFFER_SIZE);
+
+    if (answer[0] == '\0')
+    {
+        // length == 0
+        delete[] answer;
+        return nullptr;
+    }
+
+    return answer;
+} //----- Fin de App::Ask
+
+/**
+ * Contrats :
+ * - la valeur de retour de la fonction est :
+ *     soit -1,
+ *     soit entre 0 et nChoices inclus.
+ */
+int App::Choose(const unsigned int nChoices, const char *choices[])
+{
+    unsigned int answer = 0;
+
+    for (unsigned int i = 1; i < nChoices; i++)
+    {
+        cout << "| " << i << ". " << choices[i] << EOL;
+    }
+
+    // Quitter ou retourner au menu précédent
+    cout << "| " << 0 << ". " << choices[0] << EOL;
+
+    cin >> answer;
+    cin.clear(); // on efface les bits d'erreur du flux std::cin
+
+    cin.ignore(10000, '\n'); // skip new line
+
+    if (answer > nChoices)
+    {
+        return -1;
+    }
+
+    return answer; // [0 ; nChoices]
+} //----- Fin de App::Choose
+
+void App::Error(const char *message)
+{
+    cerr << "Erreur: " << message << EOL;
+} //----- Fin de App::Error
+
+void App::MenuTitle(const char *title)
+{
+    cout << EOL << "--- " << title << " ---" << EOL;
+} //----- Fin de App::Error
+
+//-------------------------------------------- Constructeurs - destructeur
+App::App()
+    : catalog(new Catalog())
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <App>" << endl;
+#endif
+} //----- Fin de App
+
+App::~App()
+// Algorithme :
+//
+{
+#ifdef MAP
+    cout << "Appel au destructeur de <App>" << endl;
+#endif
+    delete catalog;
+} //----- Fin de ~App
+
+//------------------------------------------------------------------ PRIVE
+
+//----------------------------------------------------- Méthodes protégées
+
 App::MenuStatus App::menuPrincipal()
 {
     const int nChoices = 4;
@@ -38,8 +122,8 @@ App::MenuStatus App::menuPrincipal()
 
     while (true)
     {
-        UI::MenuTitle("MENU PRINCIPAL");
-        const int ans = UI::Choose(nChoices, choices);
+        App::MenuTitle("MENU PRINCIPAL");
+        const int ans = App::Choose(nChoices, choices);
 
         MenuStatus status = MenuStatus::DONE;
         switch (ans)
@@ -57,7 +141,7 @@ App::MenuStatus App::menuPrincipal()
             status = App::menuRechercher();
             break;
         default:
-            UI::Error("Cette option n'existe pas.");
+            App::Error("Cette option n'existe pas.");
             continue;
             // status = MenuStatus::ERROR;
             // break;
@@ -76,14 +160,14 @@ App::MenuStatus App::menuPrincipal()
 
 App::MenuStatus App::menuConsulter() const
 {
-    UI::MenuTitle("CONSULTATION DU CATALOGUE");
+    App::MenuTitle("CONSULTATION DU CATALOGUE");
     catalog->Display();
     return MenuStatus::DONE;
 }
 
 App::MenuStatus App::menuAjouter()
 {
-    UI::MenuTitle("AJOUTER UN TRAJET");
+    App::MenuTitle("AJOUTER UN TRAJET");
     cout << "Veuillez choisir un type de trajet." << EOL;
 
     const int nChoices = 3;
@@ -91,7 +175,7 @@ App::MenuStatus App::menuAjouter()
 
     while (true)
     {
-        const int ans = UI::Choose(nChoices, choices);
+        const int ans = App::Choose(nChoices, choices);
 
         switch (ans)
         {
@@ -102,7 +186,7 @@ App::MenuStatus App::menuAjouter()
         case 2:
             return App::menuAjouterTrajetCompose();
         default:
-            UI::Error("Cette option n'existe pas.");
+            App::Error("Cette option n'existe pas.");
             break;
         }
 
@@ -112,18 +196,18 @@ App::MenuStatus App::menuAjouter()
 
 App::MenuStatus App::menuAjouterTrajetSimple()
 {
-    UI::MenuTitle("AJOUTER UN TRAJET SIMPLE");
+    App::MenuTitle("AJOUTER UN TRAJET SIMPLE");
     cout << "Veuillez entrer les informations du trajet." << EOL;
 
     const char MSG_DEP[] = "* Ville de départ:   ";
     const char MSG_ARR[] = "* Ville d'arrivée:   ";
     const char MSG_MOD[] = "* Mode de transport: ";
 
-    const char *startName = UI::Ask(MSG_DEP);
+    const char *startName = App::Ask(MSG_DEP);
     if (startName == nullptr)
         return MenuStatus::DONE;
 
-    const char *endName = UI::Ask(MSG_ARR);
+    const char *endName = App::Ask(MSG_ARR);
     if (endName == nullptr)
         return MenuStatus::DONE;
 
@@ -132,12 +216,12 @@ App::MenuStatus App::menuAjouterTrajetSimple()
         delete[] startName;
         delete[] endName;
 
-        UI::Error("La ville d'arrivée doit être différente de la ville de départ. "
-                  "Le trajet simple n'a pas été enregistré.");
+        App::Error("La ville d'arrivée doit être différente de la ville de départ. "
+                   "Le trajet simple n'a pas été enregistré.");
         return MenuStatus::DONE;
     }
 
-    const char *mode = UI::Ask(MSG_MOD);
+    const char *mode = App::Ask(MSG_MOD);
     if (mode == nullptr)
         return MenuStatus::DONE;
 
@@ -153,7 +237,7 @@ App::MenuStatus App::menuAjouterTrajetSimple()
 
 App::MenuStatus App::menuAjouterTrajetCompose()
 {
-    UI::MenuTitle("AJOUTER UN TRAJET COMPOSÉ");
+    App::MenuTitle("AJOUTER UN TRAJET COMPOSÉ");
     cout << "Appuyez sur [entrée] à tout moment pour quitter." << EOL
          << "Tous les sous-trajets valides seront enregistrés.";
 
@@ -173,7 +257,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
         if (k == 0)
         {
             // S'il s'agit du premier trajet, alors on demande le nom de la ville de départ.
-            const char *answer = UI::Ask(MSG_DEP);
+            const char *answer = App::Ask(MSG_DEP);
 
             if (answer == nullptr)
             {
@@ -206,7 +290,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             break;
         }
 
-        const char *endName = UI::Ask(MSG_ARR);
+        const char *endName = App::Ask(MSG_ARR);
         if (endName == nullptr)
         {
             delete[] startName;
@@ -223,12 +307,12 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             }
             delete trips;
 
-            UI::Error("La ville d'arrivée doit être différente de la ville de départ. "
-                      "Le trajet composé n'a pas été enregistré.");
+            App::Error("La ville d'arrivée doit être différente de la ville de départ. "
+                       "Le trajet composé n'a pas été enregistré.");
             return MenuStatus::DONE;
         }
 
-        const char *mode = UI::Ask(MSG_MOD);
+        const char *mode = App::Ask(MSG_MOD);
         if (mode == nullptr)
         {
             delete[] startName;
@@ -254,8 +338,8 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             delete trips->Get(i);
         }
         delete trips;
-        UI::Error("Pas assez de sous-trajets dans le trajet composé en cours de création. "
-                  "Le trajet composé n'a pas été enregistré.");
+        App::Error("Pas assez de sous-trajets dans le trajet composé en cours de création. "
+                   "Le trajet composé n'a pas été enregistré.");
         return MenuStatus::DONE;
     }
     else
@@ -272,19 +356,19 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 
 App::MenuStatus App::menuRechercher() const
 {
-    UI::MenuTitle("RECHERCHER UN TRAJET");
+    App::MenuTitle("RECHERCHER UN TRAJET");
     cout << "Veuillez renseigner les paramètres de recherche." << EOL;
 
     const char MSG_DEP[] = "  | Ville de départ: ";
     const char MSG_ARR[] = "  | Ville d'arrivée: ";
 
-    const char *startName = UI::Ask(MSG_DEP);
+    const char *startName = App::Ask(MSG_DEP);
     if (startName == nullptr)
     {
         return MenuStatus::DONE;
     }
 
-    const char *endName = UI::Ask(MSG_ARR);
+    const char *endName = App::Ask(MSG_ARR);
     if (endName == nullptr)
     {
         delete[] startName;
@@ -298,7 +382,7 @@ App::MenuStatus App::menuRechercher() const
     while (results == nullptr)
     {
         cout << EOL << "Veuillez choisir un type de recherche." << EOL;
-        const int ans = UI::Choose(nChoices, choices);
+        const int ans = App::Choose(nChoices, choices);
 
         switch (ans)
         {
@@ -310,7 +394,7 @@ App::MenuStatus App::menuRechercher() const
             results = catalog->Search(startName, endName);
             if (results == nullptr)
             {
-                UI::Error("BUG: results == nullptr");
+                App::Error("BUG: results == nullptr");
                 delete startName;
                 delete endName;
                 return MenuStatus::ERROR;
@@ -320,14 +404,14 @@ App::MenuStatus App::menuRechercher() const
             results = catalog->SearchV2(startName, endName);
             if (results == nullptr)
             {
-                UI::Error("BUG: results == nullptr");
+                App::Error("BUG: results == nullptr");
                 delete startName;
                 delete endName;
                 return MenuStatus::ERROR;
             }
             break;
         default:
-            UI::Error("Cette option n'existe pas.");
+            App::Error("Cette option n'existe pas.");
             // return MenuStatus::DONE;
             break;
         }
@@ -389,28 +473,3 @@ App::MenuStatus App::menuRechercher() const
 
     return MenuStatus::DONE;
 }
-
-//-------------------------------------------- Constructeurs - destructeur
-App::App()
-    : catalog(new Catalog())
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <App>" << endl;
-#endif
-} //----- Fin de App
-
-App::~App()
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au destructeur de <App>" << endl;
-#endif
-    delete catalog;
-} //----- Fin de ~App
-
-//------------------------------------------------------------------ PRIVE
-
-//----------------------------------------------------- Méthodes protégées
