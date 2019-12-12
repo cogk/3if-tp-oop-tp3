@@ -60,10 +60,12 @@ public:
 
     bool IsEmpty() const;
 
+    // On désactive l'opérateur d'affectation
+    ArrayList &operator=(const ArrayList &) = delete;
+
     //-------------------------------------------- Constructeurs - destructeur
-    ArrayList(const ArrayList &anArrayList);
-    // Mode d'emploi (constructeur de copie) :
-    //  INTERDIT D'UTILISATION (provoquera une erreur de l'EDL)
+    // On désactive le constructeur de copie
+    ArrayList(const ArrayList &anArrayList) = delete;
 
     ArrayList(unsigned int startingMaxSize = DEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
