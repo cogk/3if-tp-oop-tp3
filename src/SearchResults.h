@@ -36,29 +36,14 @@ public:
     void Add(ListOfTrips *elem);
     // Mode d'emploi : Ajoute un élément à la fin de la liste
 
-    ListOfTrips *Remove(unsigned int index);
-    // Mode d'emploi : Supprime un élément à l'index donné, renvoie l'élément
-    //    supprimé
-    // Contrat : index < Size()
-
-    ListOfTrips *Pop();
-    // Mode d'emploi : Supprime le dernier élément de la liste, renvoie le Trip
-    //    supprimé
-
     ListOfTrips *Get(unsigned int index) const;
     // Contrat : index < Size()
 
     ListOfTrips *GetLast() const;
     // Contrat : Size() > 0
 
-    bool Contains(ListOfTrips *elem) const;
-    // Mode d'emploi : Renvoie vrai si la liste contient un pointeur pointant
-    //   sur LA MEME CASE MEMOIRE que le paramètre elem (égalité de référence)
-
     unsigned int Size() const;
     // Mode d'emploi : Retourne la taille actuelle de la liste
-
-    bool IsEmpty() const;
 
     // On désactive l'opérateur d'affectation
     SearchResults &operator=(const SearchResults &) = delete;

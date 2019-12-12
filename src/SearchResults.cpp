@@ -32,22 +32,6 @@ void SearchResults::Add(ListOfTrips *element)
     list[currentSize++] = element;
 } //----- Fin de Add
 
-ListOfTrips *SearchResults::Remove(unsigned int index)
-{
-    ListOfTrips *removed = list[index];
-    for (unsigned int i = index; i < currentSize - 1; i++)
-    {
-        list[i] = list[i + 1];
-    }
-    currentSize--;
-    return removed;
-} //---- Fin de Remove
-
-ListOfTrips *SearchResults::Pop()
-{
-    return list[--currentSize];
-} //----- Fin de Pop
-
 ListOfTrips *SearchResults::Get(unsigned int index) const
 {
     return list[index];
@@ -58,24 +42,10 @@ ListOfTrips *SearchResults::GetLast() const
     return list[currentSize - 1];
 } //----- Fin de GetLast
 
-bool SearchResults::Contains(ListOfTrips *elem) const
-{
-    for (unsigned int i = 0; i < currentSize; i++)
-        if (list[i] == elem)
-            return true;
-
-    return false;
-} //----- Fin de Contains
-
 unsigned int SearchResults::Size() const
 {
     return currentSize;
 } //----- Fin de Size
-
-bool SearchResults::IsEmpty() const
-{
-    return Size() == 0;
-} //----- Fin de IsEmpty
 
 //-------------------------------------------- Constructeurs - destructeur
 
