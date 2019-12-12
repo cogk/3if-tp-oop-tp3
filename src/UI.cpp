@@ -12,7 +12,6 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <cstring>
 #include <iostream>
 using namespace std;
 
