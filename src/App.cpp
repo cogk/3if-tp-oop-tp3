@@ -121,15 +121,16 @@ App::MenuStatus App::menuAjouterTrajetSimple()
 
     const char *startName = UI::Ask(MSG_DEP);
     if (startName == nullptr)
-        return MenuStatus::ERROR;
+        return MenuStatus::DONE;
 
     const char *endName = UI::Ask(MSG_ARR);
     if (endName == nullptr)
-        return MenuStatus::ERROR;
+        return MenuStatus::DONE;
+
 
     const char *mode = UI::Ask(MSG_MOD);
     if (mode == nullptr)
-        return MenuStatus::ERROR;
+        return MenuStatus::DONE;
 
     Trip *trip = new SimpleTrip(startName, endName, mode);
     catalog->Add(trip);
@@ -298,7 +299,7 @@ App::MenuStatus App::menuRechercher() const
             break;
         default:
             UI::Error("Cette option n'existe pas.");
-            return MenuStatus::ERROR;
+            // return MenuStatus::DONE;
             break;
         }
     }
