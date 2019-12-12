@@ -342,14 +342,25 @@ App::MenuStatus App::menuRechercher() const
     delete[] startName;
     delete[] endName;
     for (unsigned int i = 0; i < results->Size(); i++)
+    {
+        // ATTENTION: on ne delete pas les trajets
+        // contenus dans les sous-résultats car ils
+        // ne sont que des références (pointeurs)
+        // vers des objets qui sont présents dans le catalogue.
+
+        // ArrayList<Trip> *x = results->Get(i);
+        // for (unsigned int j = 0; j < x->Size(); j++)
+        // {
+        //     delete x->Get(j);
+        // }
         delete results->Get(i);
+    }
     delete results;
 
     return MenuStatus::DONE;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
-
 App::App()
 // Algorithme :
 //
