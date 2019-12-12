@@ -12,7 +12,6 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <cstdio>
 #include <cstring>
 #include <iostream>
 using namespace std;
@@ -51,8 +50,9 @@ const char *UI::Ask(const char *question)
         delete[] answer;
         return nullptr;
     }
+
     return answer;
-} //----- Fin de Méthode
+} //----- Fin de UI::Ask
 
 /**
  * Contrats :
@@ -67,7 +67,7 @@ int UI::Choose(const int nChoices, const char *choices[])
 
     for (int i = 0; i < nChoices; i++)
     {
-        cout << "| " << (i + 1) << ". \t" << choices[i] << EOL;
+        cout << "| " << (i + 1) << ". " << choices[i] << EOL;
     }
 
     cin >> answer;
@@ -79,7 +79,12 @@ int UI::Choose(const int nChoices, const char *choices[])
     }
 
     return answer; // [1 ; nChoices]
-} //----- Fin de Méthode
+} //----- Fin de UI::Choose
+
+void UI::Error(const char *message)
+{
+    cerr << "Erreur: " << message << EOL;
+} //----- Fin de UI::Error
 
 //------------------------------------------------------------------ PRIVE
 

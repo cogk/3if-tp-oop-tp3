@@ -57,7 +57,7 @@ App::MenuStatus App::menuPrincipal()
             return MenuStatus::DONE; // exit normally
             break;
         default:
-            cout << "Cette option n'existe pas." << EOL;
+            UI::Error("Cette option n'existe pas.");
             status = MenuStatus::ERROR;
             break;
         }
@@ -83,7 +83,7 @@ App::MenuStatus App::menuConsulter()
 App::MenuStatus App::menuAjouter()
 {
     cout << EOL << "--- AJOUTER UN TRAJET ---" << EOL;
-    cout << EOL << "Veuillez choisir un type de trajet." << EOL;
+    cout << "Veuillez choisir un type de trajet." << EOL;
 
     const int nChoices = 2;
     const char *choices[] = {"Trajet simple", "Trajet composé"};
@@ -99,8 +99,8 @@ App::MenuStatus App::menuAjouter()
         case 2:
             return App::menuAjouterTrajetCompose();
         default:
-            cout << "Cette option n'existe pas." << EOL;
-            continue;
+            UI::Error("Cette option n'existe pas.");
+            break;
         }
 
         return MenuStatus::DONE;
@@ -110,7 +110,7 @@ App::MenuStatus App::menuAjouter()
 App::MenuStatus App::menuAjouterTrajetSimple()
 {
     cout << EOL << "--- AJOUTER UN TRAJET SIMPLE ---" << EOL;
-    cout << EOL << "Veuillez entrer les informations du trajet." << EOL;
+    cout << "Veuillez entrer les informations du trajet." << EOL;
 
     const char MSG_DEP[] = "* Ville de départ:   ";
     const char MSG_ARR[] = "* Ville d'arrivée:   ";
@@ -129,17 +129,21 @@ App::MenuStatus App::menuAjouterTrajetSimple()
         return MenuStatus::ERROR;
 
     Trip *trip = new SimpleTrip(startName, endName, mode);
-
     catalog->Add(trip);
 
     delete[] startName;
     delete[] endName;
     delete[] mode;
+
     return MenuStatus::DONE;
 }
+
 App::MenuStatus App::menuAjouterTrajetCompose()
 {
     cout << EOL << "--- AJOUTER UN TRAJET COMPOSÉ ---" << EOL;
+    cout << "Appuyez sur [entrée] à tout moment pour quitter." << EOL
+         << "Tous les sous-trajets valides seront enregistrés.";
+
     const char MSG_DEP[] = "  | Ville de départ:   ";
     const char MSG_ARR[] = "  | Ville d'arrivée:   ";
     const char MSG_MOD[] = "  | Mode de transport: ";
