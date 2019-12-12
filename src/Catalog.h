@@ -12,7 +12,8 @@
 #define CATALOG_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include "ArrayList.h"
+#include "ListOfTrips.h"
+#include "SearchResults.h"
 #include "Trip.h"
 
 //------------------------------------------------------------- Constantes
@@ -24,14 +25,14 @@
 //   Représente une ville
 //------------------------------------------------------------------------
 
-class Catalog : public ArrayList<Trip>
+class Catalog : public ListOfTrips
 {
     //----------------------------------------------------------------- PUBLIC
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    ArrayList<ArrayList<Trip>> *Search(const char *searchedStart, const char *searchedEnd) const;
-    ArrayList<ArrayList<Trip>> *SearchV2(const char *searchedStart, const char *searchedEnd) const;
+    SearchResults *Search(const char *searchedStart, const char *searchedEnd) const;
+    SearchResults *SearchV2(const char *searchedStart, const char *searchedEnd) const;
 
     void Display() const;
 

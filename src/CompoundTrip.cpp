@@ -32,7 +32,7 @@ const char *CompoundTrip::GetEnd() const
     return subtrips->GetLast()->GetEnd();
 } //----- Fin de GetEnd
 
-ArrayList<Trip> *CompoundTrip::GetTrips() const
+ListOfTrips *CompoundTrip::GetTrips() const
 {
     return subtrips;
 } //----- Fin de GetTrips
@@ -51,7 +51,7 @@ void CompoundTrip::Display() const
 }
 
 //-------------------------------------------- Constructeurs - destructeur
-CompoundTrip::CompoundTrip(ArrayList<Trip> *trips)
+CompoundTrip::CompoundTrip(ListOfTrips *trips)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;

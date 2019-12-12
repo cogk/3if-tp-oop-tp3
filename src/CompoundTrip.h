@@ -12,7 +12,7 @@
 #define COMPOUND_TRIP_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include "ArrayList.h"
+#include "ListOfTrips.h"
 #include "Trip.h"
 #include <iostream>
 
@@ -31,7 +31,7 @@ public:
     virtual const char *GetStart() const;
     virtual const char *GetEnd() const;
 
-    ArrayList<Trip> *GetTrips() const;
+    ListOfTrips *GetTrips() const;
     // Mode d'emploi :
     //  Renvoie la liste des trips
 
@@ -44,7 +44,7 @@ public:
     // On désactive le constructeur de copie
     CompoundTrip(const CompoundTrip &aCompoundTrip) = delete;
 
-    CompoundTrip(ArrayList<Trip> *trips);
+    CompoundTrip(ListOfTrips *trips);
     // Mode d'emploi :
     //  Construit un trajet composé de l'ensemble des trajets (dans l'ordre) de
     //  trips. CompoundTrip s'occuppera de delete la liste.
@@ -59,7 +59,7 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList<Trip> *subtrips;
+    ListOfTrips *subtrips;
 };
 
 //-------------------------------- Autres définitions dépendantes de <CompoundTrip>

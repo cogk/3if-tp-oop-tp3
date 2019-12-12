@@ -163,7 +163,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 
     unsigned int i = 0;
 
-    ArrayList<Trip> *trips = new ArrayList<Trip>(4);
+    ListOfTrips *trips = new ListOfTrips(4);
 
     while (true)
     {
@@ -295,7 +295,7 @@ App::MenuStatus App::menuRechercher() const
     const int nChoices = 3;
     const char *choices[] = {"Retourner au menu principal", "Recherche simple", "Recherche avancée"};
 
-    ArrayList<ArrayList<Trip>> *results = nullptr;
+    SearchResults *results = nullptr;
     while (results == nullptr)
     {
         cout << EOL << "Veuillez choisir un type de recherche." << EOL;
@@ -348,7 +348,7 @@ App::MenuStatus App::menuRechercher() const
 
         for (unsigned int i = 0; i < nResults; i++)
         {
-            ArrayList<Trip> *subResult = results->Get(i);
+            ListOfTrips *subResult = results->Get(i);
             cout << "[Résultat N°" << (i + 1) << "]: ";
 
             const unsigned int nSubResult = subResult->Size();
@@ -379,7 +379,7 @@ App::MenuStatus App::menuRechercher() const
         // ne sont que des références (pointeurs)
         // vers des objets qui sont présents dans le catalogue.
 
-        // ArrayList<Trip> *x = results->Get(i);
+        // ListOfTrips *x = results->Get(i);
         // for (unsigned int j = 0; j < x->Size(); j++)
         // {
         //     delete x->Get(j);

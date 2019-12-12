@@ -17,9 +17,11 @@
 using namespace std;
 
 //------------------------------------------------------ Include personnel
-#include "App.h"
 #include "Catalog.h"
+#include "ListOfTrips.h"
+#include "SearchResults.h"
 #include "Trip.h"
+#include "UI.h"
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -51,9 +53,9 @@ bool StringEquals(const char *a, const char *b)
     return !strcmp(a, b);
 }
 
-ArrayList<ArrayList<Trip>> *Catalog::Search(const char *searchedStart, const char *searchedEnd) const
+SearchResults *Catalog::Search(const char *searchedStart, const char *searchedEnd) const
 {
-    ArrayList<ArrayList<Trip>> *results = new ArrayList<ArrayList<Trip>>();
+    SearchResults *results = new SearchResults();
 
     for (unsigned int i = 0; i < Size(); i++)
     {
@@ -61,7 +63,7 @@ ArrayList<ArrayList<Trip>> *Catalog::Search(const char *searchedStart, const cha
         const char *currEnd = Get(i)->GetEnd();
         if (StringEquals(currStart, searchedStart) && StringEquals(currEnd, searchedEnd))
         {
-            ArrayList<Trip> *toAdd = new ArrayList<Trip>(1);
+            ListOfTrips *toAdd = new ListOfTrips(1);
             toAdd->Add(Get(i));
             results->Add(toAdd);
         }
@@ -71,9 +73,9 @@ ArrayList<ArrayList<Trip>> *Catalog::Search(const char *searchedStart, const cha
 }
 
 // Fonction "privée" à SearchV2, l'aidant à créer un Trip une fois trouvé
-static ArrayList<Trip> *cloneList(ArrayList<Trip> &trips)
+static ListOfTrips *cloneList(ListOfTrips &trips)
 {
-    ArrayList<Trip> *cloned = new ArrayList<Trip>();
+    ListOfTrips *cloned = new ListOfTrips();
     for (unsigned int i = 0; i < trips.Size(); i++)
     {
         cloned->Add(trips.Get(i));
@@ -82,12 +84,12 @@ static ArrayList<Trip> *cloneList(ArrayList<Trip> &trips)
     return cloned;
 }
 
-ArrayList<ArrayList<Trip>> *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd) const
+SearchResults *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd) const
 {
-    ArrayList<ArrayList<Trip>> *results = new ArrayList<ArrayList<Trip>>();
-    ArrayList<Trip> usedTrip;
-    ArrayList<Trip> tripStack;
-    ArrayList<Trip> currentJourney;
+    SearchResults *results = new SearchResults();
+    ListOfTrips usedTrip;
+    ListOfTrips tripStack;
+    ListOfTrips currentJourney;
 
     // Init. de la recherche avec tous les trajets partant de la ville de départ
     for (unsigned int i = 0; i < Size(); i++)
