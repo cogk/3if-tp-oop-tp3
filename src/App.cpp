@@ -161,17 +161,16 @@ App::MenuStatus App::menuAjouterTrajetCompose()
     const char MSG_ARR[] = "  | Ville d'arrivée:   ";
     const char MSG_MOD[] = "  | Mode de transport: ";
 
-    unsigned int i = 0;
-
     ListOfTrips *trips = new ListOfTrips(4);
 
+    unsigned int k = 0;
     while (true)
     {
-        cout << EOL << "Trajet #" << (i + 1) << EOL;
+        cout << EOL << "Trajet #" << (k + 1) << EOL;
 
         char *nonConstStartName = nullptr;
 
-        if (i == 0)
+        if (k == 0)
         {
             // S'il s'agit du premier trajet, alors on demande le nom de la ville de départ.
             const char *answer = UI::Ask(MSG_DEP);
@@ -244,7 +243,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
         delete[] endName;
         delete[] mode;
 
-        i++;
+        k++;
     }
 
     const unsigned int nSubTrips = trips->Size();
