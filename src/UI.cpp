@@ -29,24 +29,13 @@ const char *UI::Ask(const char *question)
 {
     cout << question;
 
-    char *answer = new char[UI_BUFFER_SIZE];
-    fgets(answer, UI_BUFFER_SIZE, stdin);
+    char *answer = new char[UI_BUFFER_SIZE]{0};
 
-    if (!answer)
-    {
-        delete[] answer;
-        return nullptr;
-    }
+    cin.getline(answer, UI_BUFFER_SIZE);
 
-    unsigned int len = strlen(answer);
-    while (len > 0 && (answer[len - 1] == '\n' || answer[len - 1] == '\r'))
+    if (answer[0] == '\0')
     {
-        answer[len - 1] = '\0';
-        len--;
-    }
-
-    if (len == 0)
-    {
+        // length == 0
         delete[] answer;
         return nullptr;
     }
