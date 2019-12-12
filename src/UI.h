@@ -30,7 +30,7 @@ namespace UI
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-int Choose(const int nChoices, const char *choices[]);
+int Choose(const unsigned int nChoices, const char *choices[]);
 // Mode d'emploi :
 //
 // Contrat :
@@ -51,6 +51,8 @@ const char *Ask(const char *question);
 //   a entré une chaîne vide.
 
 void Error(const char *message);
+
+void MenuTitle(const char *title);
 
 //------------------------------------------------------------------ PRIVE
 

@@ -38,7 +38,7 @@ App::MenuStatus App::menuPrincipal()
 
     while (true)
     {
-        cout << EOL << "--- MENU PRINCIPAL ---" << EOL;
+        UI::MenuTitle("MENU PRINCIPAL");
         const int ans = UI::Choose(nChoices, choices);
 
         MenuStatus status = MenuStatus::DONE;
@@ -76,14 +76,14 @@ App::MenuStatus App::menuPrincipal()
 
 App::MenuStatus App::menuConsulter() const
 {
-    cout << EOL << "--- CONSULTATION DU CATALOGUE ---" << EOL;
+    UI::MenuTitle("CONSULTATION DU CATALOGUE");
     catalog->Display();
     return MenuStatus::DONE;
 }
 
 App::MenuStatus App::menuAjouter()
 {
-    cout << EOL << "--- AJOUTER UN TRAJET ---" << EOL;
+    UI::MenuTitle("AJOUTER UN TRAJET");
     cout << "Veuillez choisir un type de trajet." << EOL;
 
     const int nChoices = 3;
@@ -112,7 +112,7 @@ App::MenuStatus App::menuAjouter()
 
 App::MenuStatus App::menuAjouterTrajetSimple()
 {
-    cout << EOL << "--- AJOUTER UN TRAJET SIMPLE ---" << EOL;
+    UI::MenuTitle("AJOUTER UN TRAJET SIMPLE");
     cout << "Veuillez entrer les informations du trajet." << EOL;
 
     const char MSG_DEP[] = "* Ville de départ:   ";
@@ -143,7 +143,7 @@ App::MenuStatus App::menuAjouterTrajetSimple()
 
 App::MenuStatus App::menuAjouterTrajetCompose()
 {
-    cout << EOL << "--- AJOUTER UN TRAJET COMPOSÉ ---" << EOL;
+    UI::MenuTitle("AJOUTER UN TRAJET COMPOSÉ");
     cout << "Appuyez sur [entrée] à tout moment pour quitter." << EOL
          << "Tous les sous-trajets valides seront enregistrés.";
 
@@ -242,7 +242,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 
 App::MenuStatus App::menuRechercher() const
 {
-    cout << EOL << "--- RECHERCHER UN TRAJET ---" << EOL;
+    UI::MenuTitle("RECHERCHER UN TRAJET");
     cout << "Veuillez renseigner les paramètres de recherche." << EOL;
 
     const char MSG_DEP[] = "  | Ville de départ: ";

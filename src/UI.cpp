@@ -79,6 +79,11 @@ void UI::Error(const char *message)
     cerr << "Erreur: " << message << EOL;
 } //----- Fin de UI::Error
 
+void UI::MenuTitle(const char *title)
+{
+    cout << EOL << "--- " << title << " ---" << EOL;
+} //----- Fin de UI::Error
+
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées
