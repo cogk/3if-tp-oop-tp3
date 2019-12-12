@@ -247,10 +247,16 @@ App::MenuStatus App::menuAjouterTrajetCompose()
         i++;
     }
 
-    if (trips->Size() == 0) // trips est vide
+    const unsigned int nSubTrips = trips->Size();
+    if (nSubTrips == 0) // trips est vide
     {
+        for (unsigned int i = 0; i < nSubTrips; i++)
+        {
+            delete trips->Get(i);
+        }
         delete trips;
-        UI::Error("Pas assez de sous-trajets dans le trajet composé en cours de création.");
+        UI::Error("Pas assez de sous-trajets dans le trajet composé en cours de création. "
+                  "Le trajet composé n'a pas été enregistré.");
         return MenuStatus::DONE;
     }
     else
