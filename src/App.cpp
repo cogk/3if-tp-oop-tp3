@@ -239,6 +239,95 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 
 App::MenuStatus App::menuRechercher() const
 {
+    cout << EOL << "--- RECHERCHER UN TRAJET ---" << EOL;
+    cout << "Veuillez renseigner les paramètres de recherche." << EOL;
+
+    const char MSG_DEP[] = "  | Ville de départ: ";
+    const char MSG_ARR[] = "  | Ville d'arrivée: ";
+
+    const char *startName = UI::Ask(MSG_DEP);
+    if (startName == nullptr)
+    {
+        return MenuStatus::DONE;
+    }
+
+    const char *endName = UI::Ask(MSG_ARR);
+    if (endName == nullptr)
+    {
+        delete[] startName;
+        return MenuStatus::DONE;
+    }
+
+    cout << EOL << "Veuillez choisir un type de recherche." << EOL;
+    const int nChoices = 3;
+    const char *choices[] = {"Recherche simple", "Recherche avancée", "Quitter"};
+
+    ArrayList *results = nullptr;
+    while (results == nullptr)
+    {
+        const int ans = UI::Choose(nChoices, choices);
+
+        switch (ans)
+        {
+        case 1:
+            results = catalog->Search(startName, endName);
+            if (results == nullptr)
+            {
+                UI::Error("BUG: results == nullptr");
+                delete startName;
+                delete endName;
+                return MenuStatus::ERROR;
+            }
+            break;
+        case 2:
+            // results = catalog->SearchV2(startName, endName);
+            // if (results == nullptr)
+            // {
+            //     UI::Error("BUG: results == nullptr");
+            //     delete startName;
+            //     delete endName;
+            //     return MenuStatus::ERROR;
+            // }
+            // break;
+            UI::Error("TODO");
+            results = catalog->Search(startName, endName);
+            break;
+        case 3:
+            delete startName;
+            delete endName;
+            return MenuStatus::DONE;
+            break;
+        default:
+            UI::Error("Cette option n'existe pas.");
+            return MenuStatus::ERROR;
+            break;
+        }
+    }
+
+    const unsigned int nTrajets = results->Size();
+
+    if (nTrajets == 0)
+    {
+        cout << "Pas de trajet trouvé"
+             << " entre " << startName << " et " << endName << "." << EOL << EOL;
+    }
+    else
+    {
+        cout << "Il y a " << nTrajets << " résultat" << (nTrajets > 1 ? "s" : "") << " de recherche"
+             << " entre " << startName << " et " << endName << "." << EOL << EOL;
+
+        for (unsigned int i = 0; i < nTrajets; i++)
+        {
+            cout << "[" << (i + 1) << "]: ";
+            results->Get(i)->Display();
+        }
+        cout << EOL;
+    }
+
+    delete[] startName;
+    delete[] endName;
+    delete results;
+
     return MenuStatus::DONE;
 }
 
