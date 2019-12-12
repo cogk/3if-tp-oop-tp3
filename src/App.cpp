@@ -180,7 +180,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
                 break;
             }
 
-            const unsigned int len = strlen(answer);
+            const long unsigned int len = strlen(answer);
             nonConstStartName = new char[len + 1]{0};
             nonConstStartName = strncpy(nonConstStartName, answer, len);
 
@@ -193,7 +193,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             // puisqu'il s'agit du nom de la dernière ville d'arrivée.
             const char *lastEndCityName = trips->GetLast()->GetEnd();
 
-            const unsigned int len = strlen(lastEndCityName);
+            const long unsigned int len = strlen(lastEndCityName);
             nonConstStartName = new char[len + 1]{0};
             nonConstStartName = strncpy(nonConstStartName, lastEndCityName, len);
 
