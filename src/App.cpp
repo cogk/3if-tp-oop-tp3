@@ -301,34 +301,38 @@ App::MenuStatus App::menuRechercher() const
         }
     }
 
-    const unsigned int nTrajets = results->Size();
+    const unsigned int nResults = results->Size();
 
-    if (nTrajets == 0)
+    if (nResults == 0)
     {
         cout << "Pas de trajet trouvé"
              << " entre " << startName << " et " << endName << "." << EOL << EOL;
     }
     else
     {
-        cout << "Il y a " << nTrajets << " résultat" << (nTrajets > 1 ? "s" : "") << " de recherche"
+        cout << "Il y a " << nResults << " résultat" << (nResults > 1 ? "s" : "") << " de recherche"
              << " entre " << startName << " et " << endName << "." << EOL << EOL;
 
-        for (unsigned int i = 0; i < nTrajets; i++)
+        for (unsigned int i = 0; i < nResults; i++)
         {
             ArrayList<Trip> *subResult = results->Get(i);
-            if (subResult->Size() == 1)
+            cout << "[Résultat N°" << (i + 1) << "]: ";
+
+            const unsigned int nSubResult = subResult->Size();
+            if (nSubResult == 1)
             {
-                cout << "[" << (i + 1) << "]: ";
                 subResult->Get(0)->Display();
             }
             else
             {
-                for (unsigned int j = 0; j < subResult->Size(); j++)
+                cout << EOL;
+                for (unsigned int j = 0; j < nSubResult; j++)
                 {
-                    cout << "[" << (i + 1) << "]: ";
+                    cout << " |-[" << (j + 1) << "/" << nSubResult << "]: ";
                     subResult->Get(j)->Display();
                 }
             }
+            cout << EOL;
         }
         cout << EOL;
     }

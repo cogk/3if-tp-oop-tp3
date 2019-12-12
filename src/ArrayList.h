@@ -194,5 +194,4 @@ void ArrayList<T>::DoubleSize()
     delete[] oldList;
 }
 
-
 #endif // ARRAY_LIST_H

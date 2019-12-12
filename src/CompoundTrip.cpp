@@ -45,7 +45,7 @@ void CompoundTrip::Display() const
     for (unsigned int i = 0; i < N; i++)
     {
         Trip *trajet = subtrips->Get(i);
-        cout << "     | [" << (i + 1) << "]: ";
+        cout << "     |-[" << (i + 1) << "]: ";
         trajet->Display();
     }
 }
