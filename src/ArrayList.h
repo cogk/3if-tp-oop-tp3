@@ -12,7 +12,8 @@
 #define ARRAY_LIST_H
 
 //--------------------------------------------------- Interfaces utilisées
-#include "Trip.h"
+#include <iostream>
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 const unsigned int DEFAULT_SIZE = 5;
@@ -20,51 +21,49 @@ const unsigned int DEFAULT_SIZE = 5;
 //------------------------------------------------------------------------
 // Rôle de la classe <ArrayList>
 //  ArrayList permet de stocker et manipuler une liste de taille variable
-// de Trips
+// de 'T' génériques
 //  Via les méthodes Pop et Add, il est aussi possible de l'utiliser comme
-// une pile de Trip
+// une pile
 //------------------------------------------------------------------------
 
+template <typename T>
 class ArrayList
 {
     //----------------------------------------------------------------- PUBLIC
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    void Add(Trip *element);
+    void Add(T *elem);
     // Mode d'emploi : Ajoute un élément à la fin de la liste
 
-    Trip *Remove(unsigned int index);
-    // Mode d'emploi : Supprime un élément à l'index donné, renvoie le Trip
+    T *Remove(unsigned int index);
+    // Mode d'emploi : Supprime un élément à l'index donné, renvoie l'élément
     //    supprimé
-    // Contrat : index < Size()
+    // Contrat : index < this->Size()
 
-    Trip *Pop();
+    T *Pop();
     // Mode d'emploi : Supprime le dernier élément de la liste, renvoie le Trip
     //    supprimé
 
-    Trip *Get(unsigned int index) const;
-    // Contrat : index < Size()
+    T *Get(unsigned int index) const;
+    // Contrat : index < this->Size()
 
-    Trip *GetLast() const;
-    // Contrat : Size() > 0
+    T *GetLast() const;
+    // Contrat : this->Size() > 0
 
-    bool Contains(Trip *trip) const;
+    bool Contains(T *elem) const;
     // Mode d'emploi : Renvoie vrai si la liste contient un pointeur pointant
-    //   sur LA MEME CASE MEMOIRE que le paramètre trip (!= égalité des valeurs)
+    //   sur LA MEME CASE MEMOIRE que le paramètre elem (égalité de référence)
 
     unsigned int Size() const;
     // Mode d'emploi : Retourne la taille actuelle de la liste
 
     bool IsEmpty() const;
 
-    // On désactive l'opérateur d'affectation
-    ArrayList &operator=(const ArrayList &) = delete;
-
     //-------------------------------------------- Constructeurs - destructeur
     ArrayList(const ArrayList &anArrayList);
     // Mode d'emploi (constructeur de copie) :
-    //  INTERDIT D'UTILISATION
+    //  INTERDIT D'UTILISATION (provoquera une erreur de l'EDL)
 
     ArrayList(unsigned int startingMaxSize = DEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
@@ -84,7 +83,116 @@ protected:
     unsigned int currentSize;
     unsigned int maxSize;
 
-    Trip **list;
+    T **list;
 };
+
+//----------------------------------------------------------------- PUBLIC
+
+//----------------------------------------------------- Méthodes publiques
+
+template <typename T>
+void ArrayList<T>::Add(T *element)
+{
+    if (currentSize == maxSize)
+    {
+        DoubleSize();
+    }
+
+    list[currentSize++] = element;
+} //----- Fin de Add
+
+template <typename T>
+T *ArrayList<T>::Remove(unsigned int index)
+{
+    T *removed = list[index];
+    for (unsigned int i = index; i < currentSize - 1; i++)
+    {
+        list[i] = list[i + 1];
+    }
+    currentSize--;
+    return removed;
+} //---- Fin de Remove
+
+template <typename T>
+T *ArrayList<T>::Pop()
+{
+    return list[--currentSize];
+} //----- Fin de Pop
+
+template <typename T>
+T *ArrayList<T>::Get(unsigned int index) const
+{
+    return list[index];
+} //----- Fin de Get
+
+template <typename T>
+T *ArrayList<T>::GetLast() const
+{
+    return list[currentSize - 1];
+} //----- Fin de GetLast
+
+template <typename T>
+bool ArrayList<T>::Contains(T *elem) const
+{
+    for (unsigned int i = 0; i < currentSize; i++)
+        if (list[i] == elem)
+            return true;
+
+    return false;
+} //----- Fin de Contains
+
+template <typename T>
+unsigned int ArrayList<T>::Size() const
+{
+    return currentSize;
+} //----- Fin de Size
+
+template <typename T>
+bool ArrayList<T>::IsEmpty() const
+{
+    return Size() == 0;
+} //----- Fin de IsEmpty
+
+//-------------------------------------------- Constructeurs - destructeur
+
+template <typename T>
+ArrayList<T>::ArrayList(unsigned int startingMaxSize)
+    : currentSize(0), maxSize(startingMaxSize)
+{
+#ifdef MAP
+    cout << "Appel au constructeur de <ArrayList>" << endl;
+#endif
+    if (maxSize == 0)
+        maxSize = 1;
+
+    list = new T *[maxSize];
+} //----- Fin de ArrayList
+
+template <typename T>
+ArrayList<T>::~ArrayList()
+{
+#ifdef MAP
+    cout << "Appel au destructeur de <ArrayList>" << endl;
+#endif
+    delete[] list;
+} //----- Fin de ~ArrayList
+
+//------------------------------------------------------------------ PRIVE
+
+//----------------------------------------------------- Méthodes protégées
+
+template <typename T>
+void ArrayList<T>::DoubleSize()
+{
+    maxSize *= 2;
+    T **oldList = list;
+    list = new T *[maxSize];
+    for (unsigned int i = 0; i < currentSize; i++)
+    {
+        list[i] = oldList[i];
+    }
+    delete[] oldList;
+}
+
 
 #endif // ARRAY_LIST_H

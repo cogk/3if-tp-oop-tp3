@@ -32,7 +32,7 @@ const char *CompoundTrip::GetEnd() const
     return subtrips->GetLast()->GetEnd();
 } //----- Fin de GetEnd
 
-ArrayList *CompoundTrip::GetTrips() const
+ArrayList<Trip> *CompoundTrip::GetTrips() const
 {
     return subtrips;
 } //----- Fin de GetTrips
@@ -63,14 +63,14 @@ CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
 #endif
-    subtrips = new ArrayList();
+    subtrips = new ArrayList<Trip>();
     for (unsigned int i = 0; i < aCompoundTrip.subtrips->Size(); i++)
     {
         subtrips->Add(aCompoundTrip.subtrips->Get(i)->Clone());
     }
 } //----- Fin de CompoundTrip (constructeur de copie)
 
-CompoundTrip::CompoundTrip(ArrayList *trips)
+CompoundTrip::CompoundTrip(ArrayList<Trip> *trips)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;

@@ -13,6 +13,7 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include "ArrayList.h"
+#include "Trip.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -32,7 +33,8 @@ public:
     unsigned int Size() const;
     void Add(Trip *trip);
     Trip *Get(unsigned int i) const;
-    ArrayList *Search(const char *start, const char *end) const;
+    ArrayList<ArrayList<Trip>> *Search(const char *searchedStart, const char *searchedEnd) const;
+    ArrayList<ArrayList<Trip>> *SearchV2(const char *searchedStart, const char *searchedEnd) const;
     void Display() const;
 
     // On désactive l'opérateur d'affectation
@@ -52,7 +54,7 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList *trips;
+    ArrayList<Trip> *trips;
 };
 
 #endif // CATALOG_H

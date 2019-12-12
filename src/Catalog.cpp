@@ -66,9 +66,9 @@ bool StringEquals(const char *a, const char *b)
     return !strcmp(a, b);
 }
 
-ArrayList *Catalog::Search(const char *searchedStart, const char *searchedEnd) const
+ArrayList<ArrayList<Trip>> *Catalog::Search(const char *searchedStart, const char *searchedEnd) const
 {
-    ArrayList *result = new ArrayList();
+    ArrayList<ArrayList<Trip>> *results = new ArrayList<ArrayList<Trip>>();
 
     for (unsigned int i = 0; i < trips->Size(); i++)
     {
@@ -76,43 +76,40 @@ ArrayList *Catalog::Search(const char *searchedStart, const char *searchedEnd) c
         const char *currEnd = trips->Get(i)->GetEnd();
         if (StringEquals(currStart, searchedStart) && StringEquals(currEnd, searchedEnd))
         {
-            result->Add(trips->Get(i));
+            ArrayList<Trip> *toAdd = new ArrayList<Trip>(1);
+            toAdd->Add(trips->Get(i));
+            results->Add(toAdd);
         }
     }
 
-    return result;
+    return results;
 }
 
 // Fonction "privée" à SearchV2, l'aidant à créer un Trip une fois trouvé
-static Trip *createTrip(ArrayList *trips)
+static ArrayList<Trip> *cloneList(ArrayList<Trip> &trips)
 {
-    if (trips.Size() == 1)
+    ArrayList<Trip> *cloned = new ArrayList<Trip>();
+    for (unsigned int i = 0; i < trips.Size(); i++)
     {
-        return trips.Get(0);
+        cloned->Add(trips.Get(i));
     }
 
-    ArrayList *journey = new ArrayList();
-    for (unsigned i = 0; i < trips->Size(); i++)
-    {
-        journey->Add(trips->Get[i]);
-    }
-
-    return new CompoundTrip(journey);
+    return cloned;
 }
 
-ArrayList *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd) const
+ArrayList<ArrayList<Trip>> *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd) const
 {
-    ArrayList *result = new ArrayList();
-    ArrayList usedTrip;
-    ArrayList tripStack;
-    ArrayList currentJourney;
+    ArrayList<ArrayList<Trip>> *results = new ArrayList<ArrayList<Trip>>();
+    ArrayList<Trip> usedTrip;
+    ArrayList<Trip> tripStack;
+    ArrayList<Trip> currentJourney;
 
     // Init. de la recherche avec tous les trajets partant de la ville de départ
-    for (int i = 0; i < trajets->Size(); i++)
+    for (unsigned int i = 0; i < trips->Size(); i++)
     {
-        if (StringEquals(trajets->Get(i)->GetStart(), searchedStart))
+        if (StringEquals(trips->Get(i)->GetStart(), searchedStart))
         {
-            tripStack.Add(trajets->Get(i));
+            tripStack.Add(trips->Get(i));
         }
     }
 
@@ -122,24 +119,28 @@ ArrayList *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd)
         usedTrip.Add(currentTrip);
 
         // Mise à jour du trajet actuellement testé
-        const char *endCurrJourney = currentJourney.GetLast()->GetEnd();
-        const char *startCurrTrip = currentTrip->GetStart();
-        while (!currentJourney.IsEmpty() &&
-               !StringEquals(endCurrJourney, startCurrTrip))
+        if (!currentJourney.IsEmpty())
         {
-            currentJourney.Pop();
-            endCurrJourney = currentJourney.GetLast()->GetEnd();
+            const char *endCurrJourney = currentJourney.GetLast()->GetEnd();
+            const char *startCurrTrip = currentTrip->GetStart();
+            while (!StringEquals(endCurrJourney, startCurrTrip))
+            {
+                currentJourney.Pop();
+                if (currentJourney.IsEmpty())
+                    break;
+                endCurrJourney = currentJourney.GetLast()->GetEnd();
+            }
         }
         currentJourney.Add(currentTrip);
 
         if (StringEquals(currentTrip->GetEnd(), searchedEnd))
         {
-            result.Add(createTrip(&currentJourney));
+            results->Add(cloneList(currentJourney));
         }
 
-        for (int i = 0; i < trajets->Size(); i++)
+        for (unsigned int i = 0; i < trips->Size(); i++)
         {
-            Trip *next = trajets->Get(i);
+            Trip *next = trips->Get(i);
             if (!usedTrip.Contains(next) && StringEquals(next->GetStart(), currentTrip->GetEnd()))
             {
                 tripStack.Add(next);
@@ -147,7 +148,7 @@ ArrayList *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd)
         }
     }
 
-    return result;
+    return results;
 } //----- Fin de SearchV2
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -156,7 +157,7 @@ Catalog::Catalog(const Catalog &aCatalog)
 #ifdef MAP
     cout << "Appel au constructeur de copie de <Catalog>" << endl;
 #endif
-    trips = new ArrayList(0);
+    trips = new ArrayList<Trip>(0);
     for (unsigned int i = 0; i < aCatalog.trips->Size(); i++)
     {
         Trip *trajet = aCatalog.trips->Get(i);
@@ -169,7 +170,7 @@ Catalog::Catalog()
 #ifdef MAP
     cout << "Appel au constructeur de <Catalog>" << endl;
 #endif
-    trips = new ArrayList(16);
+    trips = new ArrayList<Trip>(16);
 } //----- Fin de Catalog
 
 Catalog::~Catalog()

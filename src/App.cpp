@@ -150,7 +150,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 
     unsigned int i = 0;
 
-    ArrayList *trips = new ArrayList(4);
+    ArrayList<Trip> *trips = new ArrayList<Trip>(4);
 
     while (true)
     {
@@ -262,7 +262,7 @@ App::MenuStatus App::menuRechercher() const
     const int nChoices = 3;
     const char *choices[] = {"Recherche simple", "Recherche avancée", "Quitter"};
 
-    ArrayList *results = nullptr;
+    ArrayList<ArrayList<Trip>> *results = nullptr;
     while (results == nullptr)
     {
         const int ans = UI::Choose(nChoices, choices);
@@ -280,17 +280,14 @@ App::MenuStatus App::menuRechercher() const
             }
             break;
         case 2:
-            // results = catalog->SearchV2(startName, endName);
-            // if (results == nullptr)
-            // {
-            //     UI::Error("BUG: results == nullptr");
-            //     delete startName;
-            //     delete endName;
-            //     return MenuStatus::ERROR;
-            // }
-            // break;
-            UI::Error("TODO");
-            results = catalog->Search(startName, endName);
+            results = catalog->SearchV2(startName, endName);
+            if (results == nullptr)
+            {
+                UI::Error("BUG: results == nullptr");
+                delete startName;
+                delete endName;
+                return MenuStatus::ERROR;
+            }
             break;
         case 3:
             delete startName;
@@ -318,14 +315,28 @@ App::MenuStatus App::menuRechercher() const
 
         for (unsigned int i = 0; i < nTrajets; i++)
         {
-            cout << "[" << (i + 1) << "]: ";
-            results->Get(i)->Display();
+            ArrayList<Trip> *subResult = results->Get(i);
+            if (subResult->Size() == 1)
+            {
+                cout << "[" << (i + 1) << "]: ";
+                subResult->Get(0)->Display();
+            }
+            else
+            {
+                for (unsigned int j = 0; j < subResult->Size(); j++)
+                {
+                    cout << "[" << (i + 1) << "]: ";
+                    subResult->Get(j)->Display();
+                }
+            }
         }
         cout << EOL;
     }
 
     delete[] startName;
     delete[] endName;
+    for (unsigned int i = 0; i < results->Size(); i++)
+        delete results->Get(i);
     delete results;
 
     return MenuStatus::DONE;
