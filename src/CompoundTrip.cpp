@@ -52,11 +52,11 @@ void CompoundTrip::Display() const
 
 //-------------------------------------------- Constructeurs - destructeur
 CompoundTrip::CompoundTrip(ListOfTrips *trips)
+    : subtrips(trips)
 {
 #ifdef MAP
     cout << "Appel au constructeur de <CompoundTrip>" << endl;
 #endif
-    subtrips = trips;
 } //----- Fin de CompoundTrip
 
 CompoundTrip::~CompoundTrip()
