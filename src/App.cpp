@@ -27,8 +27,8 @@ using namespace std;
 int App::Run()
 {
     cout << "Bienvenue dans l'application de gestion de trajets !" << EOL;
-    menuPrincipal();
-    return 0;
+    App::MenuStatus res = menuPrincipal();
+    return (res == MenuStatus::ERROR) ? 1 : 0;
 } //----- Fin de App::Run
 
 App::MenuStatus App::menuPrincipal()
