@@ -219,10 +219,22 @@ App::MenuStatus App::menuAjouterTrajetCompose()
         i++;
     }
 
-    CompoundTrip *compoundTrip = new CompoundTrip(trips);
-    catalog->Add(compoundTrip);
+    if (trips->Size() == 0) // trips est vide
+    {
+        delete trips;
+        UI::Error("Pas assez de sous-trajets dans le trajet composé en cours de création.");
+        return MenuStatus::DONE;
+    }
+    else
+    {
+        CompoundTrip *compoundTrip = new CompoundTrip(trips);
+        catalog->Add(compoundTrip);
 
-    return MenuStatus::DONE;
+        cout << "Vous avez ajouté un nouveau trajet." << EOL;
+        compoundTrip->Display();
+
+        return MenuStatus::DONE;
+    }
 }
 
 App::MenuStatus App::menuRechercher() const
