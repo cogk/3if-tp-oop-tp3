@@ -24,25 +24,23 @@
 //   Représente une ville
 //------------------------------------------------------------------------
 
-class Catalog
+class Catalog : public ArrayList<Trip>
 {
     //----------------------------------------------------------------- PUBLIC
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    unsigned int Size() const;
-    void Add(Trip *trip);
-    Trip *Get(unsigned int i) const;
     ArrayList<ArrayList<Trip>> *Search(const char *searchedStart, const char *searchedEnd) const;
     ArrayList<ArrayList<Trip>> *SearchV2(const char *searchedStart, const char *searchedEnd) const;
+
     void Display() const;
 
     // On désactive l'opérateur d'affectation
     Catalog &operator=(const Catalog &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
-    Catalog(const Catalog &aCatalog);
-    // Mode d'emploi (constructeur de copie)
+    // On désactive le constructeur de copie
+    Catalog(const Catalog &aCatalog) = delete;
 
     Catalog();
     // Mode d'emploi : Crée un catalogue vide
@@ -54,7 +52,6 @@ public:
 
 protected:
     //----------------------------------------------------- Attributs protégés
-    ArrayList<Trip> *trips;
 };
 
 #endif // CATALOG_H
