@@ -50,26 +50,7 @@ void CompoundTrip::Display() const
     }
 }
 
-// Méthode virtuelle qui construit une copie de l'objet
-// à l'aide du constructeur de copie
-Trip *CompoundTrip::Clone() const
-{
-    return new CompoundTrip(*this);
-}
-
 //-------------------------------------------- Constructeurs - destructeur
-CompoundTrip::CompoundTrip(const CompoundTrip &aCompoundTrip)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <CompoundTrip>" << endl;
-#endif
-    subtrips = new ArrayList<Trip>();
-    for (unsigned int i = 0; i < aCompoundTrip.subtrips->Size(); i++)
-    {
-        subtrips->Add(aCompoundTrip.subtrips->Get(i)->Clone());
-    }
-} //----- Fin de CompoundTrip (constructeur de copie)
-
 CompoundTrip::CompoundTrip(ArrayList<Trip> *trips)
 {
 #ifdef MAP

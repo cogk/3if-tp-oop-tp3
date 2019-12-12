@@ -33,14 +33,12 @@ public:
 
     virtual void Display() const = 0;
 
-    virtual Trip *Clone() const = 0;
-
     // On désactive l'opérateur d'affectation
     Trip &operator=(const Trip &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
-    Trip(const Trip &aTrip);
-    // Mode d'emploi (constructeur de copie) :
+    // On désactive le constructeur de copie
+    Trip(const Trip &aTrip) = delete;
 
     Trip();
     // Mode d'emploi : Trip s'occuppera de delete start et end

@@ -35,14 +35,12 @@ public:
 
     virtual void Display() const;
 
-    virtual Trip *Clone() const;
-
     // On désactive l'opérateur d'affectation
     SimpleTrip &operator=(const SimpleTrip &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
-    SimpleTrip(const SimpleTrip &aSimpleTrip);
-    // Mode d'emploi (constructeur de copie) :
+    // On désactive le constructeur de copie
+    SimpleTrip(const SimpleTrip &aSimpleTrip) = delete;
 
     SimpleTrip(const char *inStart, const char *inEnd, const char *inMode);
     // Mode d'emploi : Trip s'occuppera de delete start et end

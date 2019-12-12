@@ -51,6 +51,13 @@ public:
     //
     int Run();
 
+    // On désactive l'opérateur d'affectation
+    App &operator=(const App &) = delete;
+
+    //-------------------------------------------- Constructeurs - destructeur
+    // On désactive le constructeur de copie
+    App(const App &anApp) = delete;
+
     App();
     // Mode d'emploi :
     //
@@ -62,9 +69,6 @@ public:
     //
     // Contrat :
     //
-
-    // On désactive l'opérateur d'affectation
-    App &operator=(const App &) = delete;
 
     //------------------------------------------------------------------ PRIVE
 

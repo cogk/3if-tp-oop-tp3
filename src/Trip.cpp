@@ -25,13 +25,6 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 
 //-------------------------------------------- Constructeurs - destructeur
-Trip::Trip(const Trip &aTrip)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <Trip>" << endl;
-#endif
-} //----- Fin de Trip (constructeur de copie)
-
 Trip::Trip()
 {
 #ifdef MAP

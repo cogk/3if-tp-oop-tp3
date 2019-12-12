@@ -37,21 +37,17 @@ public:
 
     virtual void Display() const;
 
-    virtual Trip *Clone() const;
-
     // On désactive l'opérateur d'affectation
     CompoundTrip &operator=(const CompoundTrip &) = delete;
 
     //-------------------------------------------- Constructeurs - destructeur
-    CompoundTrip(const CompoundTrip &aCompoundTrip);
-    // Mode d'emploi (constructeur de copie) :
-    //  Copie le trajet "aCompoundTrip" en copiant en profondeur sa liste
-    // d'étapes ainsi que sa ville de départ et d'arrivée
+    // On désactive le constructeur de copie
+    CompoundTrip(const CompoundTrip &aCompoundTrip) = delete;
 
     CompoundTrip(ArrayList<Trip> *trips);
     // Mode d'emploi :
     //  Construit un trajet composé de l'ensemble des trajets (dans l'ordre) de
-    // trips. CompoundTrip s'occuppera de delete la liste.
+    //  trips. CompoundTrip s'occuppera de delete la liste.
     // Contrat :
     //  trips doit contenir au moins un trip
 

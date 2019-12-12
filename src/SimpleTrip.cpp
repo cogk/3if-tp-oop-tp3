@@ -44,22 +44,7 @@ void SimpleTrip::Display() const
     cout << "Trajet Simple: " << startCity << " -> " << endCity << " (" << mode << ")" << EOL;
 }
 
-// Méthode virtuelle qui construit une copie de l'objet
-// à l'aide du constructeur de copie
-Trip *SimpleTrip::Clone() const
-{
-    return new SimpleTrip(*this);
-}
-
 //-------------------------------------------- Constructeurs - destructeur
-SimpleTrip::SimpleTrip(const SimpleTrip &aSimpleTrip)
-    : SimpleTrip(aSimpleTrip.startCity, aSimpleTrip.endCity, aSimpleTrip.mode)
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <SimpleTrip>" << endl;
-#endif
-} //----- Fin de SimpleTrip (constructeur de copie)
-
 SimpleTrip::SimpleTrip(const char *inStart, const char *inEnd, const char *inMode)
 {
 #ifdef MAP
