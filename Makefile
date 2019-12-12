@@ -1,5 +1,6 @@
 CC        = g++
-CFLAGS    = -ansi -pedantic -Wall -Werror -std=c++11
+CFLAGS    = -ansi -pedantic -Wall -Werror -Wextra -std=c++11
+# ajout du flag -Wextra
 EXEC_NAME = application
 INCLUDES  =
 LIBS      =
