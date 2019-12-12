@@ -292,13 +292,13 @@ App::MenuStatus App::menuRechercher() const
         return MenuStatus::DONE;
     }
 
-    cout << EOL << "Veuillez choisir un type de recherche." << EOL;
     const int nChoices = 3;
     const char *choices[] = {"Retourner au menu principal", "Recherche simple", "Recherche avancée"};
 
     ArrayList<ArrayList<Trip>> *results = nullptr;
     while (results == nullptr)
     {
+        cout << EOL << "Veuillez choisir un type de recherche." << EOL;
         const int ans = UI::Choose(nChoices, choices);
 
         switch (ans)
