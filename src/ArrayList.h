@@ -19,8 +19,10 @@ const unsigned int DEFAULT_SIZE = 5;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <ArrayList>
-//  ArrayList permet de stocker une liste de taille variable d'éléments de
-//  types inconnus
+//  ArrayList permet de stocker et manipuler une liste de taille variable
+// de Trips
+//  Via les méthodes Pop et Add, il est aussi possible de l'utiliser comme
+// une pile de Trip
 //------------------------------------------------------------------------
 
 class ArrayList
@@ -47,8 +49,14 @@ public:
     Trip *GetLast() const;
     // Contrat : this->Size() > 0
 
+    bool Contains(Trip *trip) const;
+    // Mode d'emploi : Renvoie vrai si la liste contient un pointeur pointant
+    //   sur LA MEME CASE MEMOIRE que le paramètre trip (!= égalité des valeurs)
+
     unsigned int Size() const;
-    // Mode d'emploi : Retourne la taille actuellement utilisée la liste
+    // Mode d'emploi : Retourne la taille actuelle de la liste
+
+    bool IsEmpty() const;
 
     //-------------------------------------------- Constructeurs - destructeur
     ArrayList(const ArrayList &anArrayList);

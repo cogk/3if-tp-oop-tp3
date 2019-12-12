@@ -41,12 +41,12 @@ Trip *ArrayList::Remove(unsigned int index)
   }
   currentSize--;
   return removed;
-} //---- Fin de Remove
+} //----- Fin de Remove
 
 Trip *ArrayList::Pop()
 {
     return list[--currentSize];
-}
+} //----- Fin de Pop
 
 Trip *ArrayList::Get(unsigned int index) const
 {
@@ -58,10 +58,24 @@ Trip *ArrayList::GetLast() const
     return list[currentSize - 1];
 } //----- Fin de GetLast
 
+Trip *ArrayList::Contains(Trip *trip) const
+{
+    for (unsigned int i = 0; i < currentSize; i++)
+        if (list[i] == trip)
+            return true;
+
+    return false;
+} //----- Fin de Contains
+
 unsigned int ArrayList::Size() const
 {
     return currentSize;
 } //----- Fin de Size
+
+unsigned int ArrayList::IsEmpty() const
+{
+    return Size() == 0;
+} //----- Fin de IsEmpty
 
 //-------------------------------------------- Constructeurs - destructeur
 
