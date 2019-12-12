@@ -50,15 +50,13 @@ unsigned int SearchResults::Size() const
 //-------------------------------------------- Constructeurs - destructeur
 
 SearchResults::SearchResults(unsigned int startingMaxSize)
-    : currentSize(0), maxSize(startingMaxSize)
+    : currentSize(0), maxSize(startingMaxSize), list(new ListOfTrips *[maxSize])
 {
 #ifdef MAP
     cout << "Appel au constructeur de <SearchResults>" << endl;
 #endif
     if (maxSize == 0)
         maxSize = 1;
-
-    list = new ListOfTrips *[maxSize];
 } //----- Fin de SearchResults
 
 SearchResults::~SearchResults()
