@@ -39,17 +39,17 @@ public:
     T *Remove(unsigned int index);
     // Mode d'emploi : Supprime un élément à l'index donné, renvoie l'élément
     //    supprimé
-    // Contrat : index < this->Size()
+    // Contrat : index < Size()
 
     T *Pop();
     // Mode d'emploi : Supprime le dernier élément de la liste, renvoie le Trip
     //    supprimé
 
     T *Get(unsigned int index) const;
-    // Contrat : index < this->Size()
+    // Contrat : index < Size()
 
     T *GetLast() const;
-    // Contrat : this->Size() > 0
+    // Contrat : Size() > 0
 
     bool Contains(T *elem) const;
     // Mode d'emploi : Renvoie vrai si la liste contient un pointeur pointant
