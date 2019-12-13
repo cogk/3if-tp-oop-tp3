@@ -28,14 +28,28 @@ class CompoundTrip : public Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    virtual const char *GetStart() const;
-    virtual const char *GetEnd() const;
+    const char *GetStart() const;
+    // Mode d'emploi :
+    // Renvoie un pointeur vers une chaîne de caractères associée
+    // à la ville de départ du premier trajet.
+    // Contrats :
+    //
+
+    const char *GetEnd() const;
+    // Mode d'emploi :
+    // Renvoie un pointeur vers une chaîne de caractères associée
+    // à la ville d'arrivée du dernier trajet.
+    // Contrats :
+    //
 
     ListOfTrips *GetTrips() const;
     // Mode d'emploi :
-    //  Renvoie la liste des trips
+    //  Renvoie la liste des sous-trajets de ce trajet composé
 
-    virtual void Display() const;
+    void Display() const;
+    // Mode d'emploi :
+    // Affiche sur la sortie standard une représentation du trajet composé
+    // ainsi que des trajets contenus dans ce trajet composé.
 
     // On désactive l'opérateur d'affectation
     CompoundTrip &operator=(const CompoundTrip &) = delete;
@@ -47,7 +61,8 @@ public:
     CompoundTrip(ListOfTrips *trips);
     // Mode d'emploi :
     //  Construit un trajet composé de l'ensemble des trajets (dans l'ordre) de
-    //  trips. CompoundTrip s'occuppera de delete la liste.
+    //  trips.
+    // CompoundTrip s'occuppera de delete la liste et ses sous-trajets.
     // Contrat :
     //  trips doit contenir au moins un trip
 

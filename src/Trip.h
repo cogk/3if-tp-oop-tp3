@@ -18,7 +18,8 @@
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Trip>
-//  Trip représente un voyage entre deux villes
+//  Trip représente un voyage entre deux villes.
+//  Trip est une classe abstraite.
 //------------------------------------------------------------------------
 
 class Trip
@@ -28,10 +29,21 @@ class Trip
 public:
     //----------------------------------------------------- Méthodes publiques
     virtual const char *GetStart() const = 0;
+    // Méthode virtuelle pure
+    // Mode d'emploi :
+    // Accesseur de la propriété startCity.
+    // Renvoie un pointeur vers une chaîne de caractères.
 
     virtual const char *GetEnd() const = 0;
+    // Méthode virtuelle pure
+    // Mode d'emploi :
+    // Accesseur de la propriété endCity.
+    // Renvoie un pointeur vers une chaîne de caractères.
 
     virtual void Display() const = 0;
+    // Méthode virtuelle pure
+    // Mode d'emploi :
+    // Affiche sur la sortie standard une représentation du trajet.
 
     // On désactive l'opérateur d'affectation
     Trip &operator=(const Trip &) = delete;
@@ -41,10 +53,10 @@ public:
     Trip(const Trip &aTrip) = delete;
 
     Trip();
-    // Mode d'emploi : Trip s'occuppera de delete start et end
+    // Mode d'emploi : constructeur vide
 
     virtual ~Trip();
-    // Mode d'emploi : delete start, end et mode
+    // Mode d'emploi : destructeur vide
 
     //------------------------------------------------------------------ PRIVE
 

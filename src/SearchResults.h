@@ -17,14 +17,12 @@
 using namespace std;
 
 //------------------------------------------------------------- Constantes
-const unsigned int SEARCH_RESULTSDEFAULT_SIZE = 4;
+const unsigned int SEARCH_RESULTS_DEFAULT_SIZE = 4;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <SearchResults>
 //  SearchResults permet de stocker et manipuler une liste de taille variable
 // de ListOfTrips
-//  Via les méthodes Pop et Add, il est aussi possible de l'utiliser comme
-// une pile
 //------------------------------------------------------------------------
 
 class SearchResults
@@ -52,7 +50,7 @@ public:
     // On désactive le constructeur de copie
     SearchResults(const SearchResults &anSearchResults) = delete;
 
-    SearchResults(const unsigned int startingMaxSize = SEARCH_RESULTSDEFAULT_SIZE);
+    SearchResults(const unsigned int startingMaxSize = SEARCH_RESULTS_DEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
     //   stocker ses éléments (qui pourra varier si besoin)
     // Contrat : startingMaxSize >= 1

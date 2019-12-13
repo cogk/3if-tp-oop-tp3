@@ -49,12 +49,6 @@ const char *App::Ask(const char *question)
     return answer;
 } //----- Fin de App::Ask
 
-/**
- * Contrats :
- * - la valeur de retour de la fonction est :
- *     soit -1,
- *     soit entre 0 et nChoices inclus.
- */
 int App::Choose(const unsigned int nChoices, const char *choices[])
 {
     unsigned int answer = 0;

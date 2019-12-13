@@ -29,11 +29,32 @@ class SimpleTrip : public Trip
 
 public:
     //----------------------------------------------------- Méthodes publiques
-    virtual const char *GetStart() const;
-    virtual const char *GetEnd() const;
-    const char *GetMode() const;
+    const char *GetStart() const;
+    // Mode d'emploi :
+    // Accesseur de la propriété startCity.
+    // Renvoie un pointeur vers une chaîne de caractères.
+    // Contrats :
+    //
 
-    virtual void Display() const;
+    const char *GetEnd() const;
+    // Mode d'emploi :
+    // Accesseur de la propriété endCity.
+    // Renvoie un pointeur vers une chaîne de caractères.
+    // Contrats :
+    //
+
+    const char *GetMode() const;
+    // Mode d'emploi :
+    // Accesseur de la propriété mode.
+    // Renvoie un pointeur vers une chaîne de caractères.
+    // Contrats :
+    //
+
+    void Display() const;
+    // Mode d'emploi :
+    // Affiche sur la sortie standard une représentation du trajet simple,
+    // selon le format suivant :
+    //      ville départ -> ville arrivée (mode de transport)
 
     // On désactive l'opérateur d'affectation
     SimpleTrip &operator=(const SimpleTrip &) = delete;
@@ -43,10 +64,37 @@ public:
     SimpleTrip(const SimpleTrip &aSimpleTrip) = delete;
 
     SimpleTrip(const char *inStart, const char *inEnd, const char *inMode);
-    // Mode d'emploi : Trip s'occuppera de delete start et end
+    // Mode d'emploi :
+    // Crée une instance de la classe
+    // Trip s'occupera de delete start et end
+    //
+    // Les chaînes passées en paramètre seront copiées.
+    // Pourquoi copier les chaines de caractères passées en paramètre ?
+    // La raison est que l'espace mémoire consommé par les chaînes
+    //     données en paramètre est égal à la taille du buffer UI_BUFFER_SIZE.
+    // On peut rapidement arriver à de fortes consommations
+    //     de mémoire de manière inutile.
+    //
+    // Nous avons donc fait le choix de systématiquement copier les chaines
+    //     données en paramètre dans un espace mémoire de taille adapté.
+    //
+    // Cependant, ce choix a un coût :
+    //     - le constructeur est plus lent ;
+    //     - le constructeur est plus complexe (ce qui augmente le risque de bug) ;
+    //     - l'espace mémoire risque d'être fragmenté plus facilement.
+    //
+    // Nous considérons cependant que ce choix est une bonne manière
+    //     de satisfaire un certain nombre de contraintes rigoureuses que
+    //     nous nous sommes fixées (notamment le fait que les paramètres
+    //     en entrée doivent être tous `const`).
+    //
+    // Enfin, ce choix est en adéquation avec le Guide de Style imposé,
+    //     notamment la règle C-3 : « Le constructeur doit allouer lui-même
+    //     toutes les zones dynamiques de l'objet. »
 
     virtual ~SimpleTrip();
-    // Mode d'emploi : delete start, end et mode
+    // Mode d'emploi :
+    // Libération de l'espace mémoire pointé par startCity, endCity et mode
 
     //------------------------------------------------------------------ PRIVE
 
