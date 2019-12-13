@@ -54,6 +54,9 @@ bool StringEquals(const char *a, const char *b)
 }
 
 SearchResults *Catalog::Search(const char *searchedStart, const char *searchedEnd) const
+// Algorithme :
+// Vérification simple, pour chaque trajet, d'égalité entre ses villes
+// de départs et d'arrivée et les villes de départs et d'arrivées demandées
 {
     SearchResults *results = new SearchResults();
 
@@ -72,7 +75,8 @@ SearchResults *Catalog::Search(const char *searchedStart, const char *searchedEn
     return results;
 }
 
-// Fonction "privée" à SearchV2, l'aidant à créer un Trip une fois trouvé
+// Fonction "privée" à SearchV2, clonant une liste de trips pour pouvoir la
+// retourner en paramètre
 static ListOfTrips *cloneList(ListOfTrips &trips)
 {
     ListOfTrips *cloned = new ListOfTrips();
@@ -84,10 +88,60 @@ static ListOfTrips *cloneList(ListOfTrips &trips)
     return cloned;
 }
 
+static bool isBeginning(SearchResults *results, ListOfTrips *currentJourney, Trip *toAdd)
+{
+    ListOfTrips *trips = cloneList(*currentJourney);
+    trips->Add(toAdd);
+
+    for (unsigned int i = 0; i < results->Size(); i++)
+    {
+        ListOfTrips *currResult = results->Get(i);
+        for (unsigned int j = 0; j <= trips->Size(); j++)
+        {
+            if (j == trips->Size())
+            {
+                delete trips;
+                return true;
+            }
+            if (currResult->Size() <= j || currResult->Get(j) != trips->Get(j))
+                break;
+        }
+    }
+
+    delete trips;
+    return false;
+}
+
 SearchResults *Catalog::SearchV2(const char *searchedStart, const char *searchedEnd) const
+// Algorithme :
+//
+// ENTREE :
+//   - Ville debutVoulu, finVoulue
+//   - Liste<Trajet> catalogue
+// SORTIE :
+//   - Liste<Liste<Trajet> resultats    # Une liste de liste car chaque résultat
+//                                      # possible est lui même une liste de Trip
+// VARIABLES :
+//   - Pile<Trajet> aTraiter            # Les trajets vus mais pas encore traites
+//   - Liste<Trajet> voyageActuel       # La suite de trajet actuellement envisagée
+//   - Trajet trajetActuel              # Une variable permettant de naviguer dans la pile
+//
+// ALGORITHME :
+// # Initialisation de la pile avec les trajets partant directement du départ
+// Pour trajet dans catalogue:
+//   Si debut(trajet) = debutVoulu:
+//     Ajouter trajet à aTraiter
+//
+// Tant que aTraiter non vide:
+//   Pop la tête de aTraiter dans trajetActuel
+//   Mettre à jour voyageActuel en fonction de trajetActuel
+//   Si fin(trajetActuel) = finVoulue:
+//     Ajouter (un clone de) voyageActuel à resultats
+//   Pour trajetSuivant dans catalogue:
+//     Si fin(trajetActuel) = debut(trajetSuivant):
+//       Ajouter trajetSuivant à aTraiter
 {
     SearchResults *results = new SearchResults();
-    ListOfTrips usedTrip;
     ListOfTrips tripStack;
     ListOfTrips currentJourney;
 
@@ -103,15 +157,15 @@ SearchResults *Catalog::SearchV2(const char *searchedStart, const char *searched
     while (!tripStack.IsEmpty())
     {
         Trip *currentTrip = tripStack.Pop();
-        usedTrip.Add(currentTrip);
-
         // Mise à jour du trajet actuellement testé
         if (!currentJourney.IsEmpty())
         {
-            const char *endCurrJourney = currentJourney.GetLast()->GetEnd();
             const char *startCurrTrip = currentTrip->GetStart();
-            while (!StringEquals(endCurrJourney, startCurrTrip))
+            const char *endCurrJourney = currentJourney.GetLast()->GetEnd();
+            while (!StringEquals(endCurrJourney, startCurrTrip) ||
+                   isBeginning(results, &currentJourney, currentTrip))
             {
+                currentJourney.GetLast()->Display();
                 currentJourney.Pop();
                 if (currentJourney.IsEmpty())
                     break;
@@ -128,7 +182,7 @@ SearchResults *Catalog::SearchV2(const char *searchedStart, const char *searched
         for (unsigned int i = 0; i < Size(); i++)
         {
             Trip *next = Get(i);
-            if (!usedTrip.Contains(next) && StringEquals(next->GetStart(), currentTrip->GetEnd()))
+            if (!currentJourney.Contains(next) && StringEquals(next->GetStart(), currentTrip->GetEnd()))
             {
                 tripStack.Add(next);
             }

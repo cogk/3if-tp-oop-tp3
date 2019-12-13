@@ -34,11 +34,13 @@ public:
     //----------------------------------------------------- Méthodes publiques
     SearchResults *Search(const char *searchedStart, const char *searchedEnd) const;
     // Mode d'emploi :
-    //
+    // Recherche dans le catalogue tous les trajets allant de la ville
+    // searchedStart à la ville searchedEnd
 
     SearchResults *SearchV2(const char *searchedStart, const char *searchedEnd) const;
     // Mode d'emploi :
-    //
+    // Recherche dans le catalogue toutes les suites de trajets (sans répétition)
+    // allant de la ville searchedStart à la ville searchedEnd
 
     void Display() const;
     // Mode d'emploi :
