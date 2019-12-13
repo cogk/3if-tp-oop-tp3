@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm ./application >/dev/null
+rm ./exec >/dev/null
 make -B >/dev/null || make -B
-valgrind ./application
+valgrind ./exec
