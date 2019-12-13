@@ -36,7 +36,7 @@ public:
     void Add(ListOfTrips *elem);
     // Mode d'emploi : Ajoute un élément à la fin de la liste
 
-    ListOfTrips *Get(unsigned int index) const;
+    ListOfTrips *Get(const unsigned int index) const;
     // Contrat : index < Size()
 
     ListOfTrips *GetLast() const;
@@ -52,7 +52,7 @@ public:
     // On désactive le constructeur de copie
     SearchResults(const SearchResults &anSearchResults) = delete;
 
-    SearchResults(unsigned int startingMaxSize = SEARCH_RESULTSDEFAULT_SIZE);
+    SearchResults(const unsigned int startingMaxSize = SEARCH_RESULTSDEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
     //   stocker ses éléments (qui pourra varier si besoin)
     // Contrat : startingMaxSize >= 1

@@ -32,7 +32,7 @@ void SearchResults::Add(ListOfTrips *element)
     list[currentSize++] = element;
 } //----- Fin de Add
 
-ListOfTrips *SearchResults::Get(unsigned int index) const
+ListOfTrips *SearchResults::Get(const unsigned int index) const
 {
     return list[index];
 } //----- Fin de Get
@@ -49,7 +49,7 @@ unsigned int SearchResults::Size() const
 
 //-------------------------------------------- Constructeurs - destructeur
 
-SearchResults::SearchResults(unsigned int startingMaxSize)
+SearchResults::SearchResults(const unsigned int startingMaxSize)
     : currentSize(0), maxSize(startingMaxSize), list(new ListOfTrips *[maxSize])
 {
 #ifdef MAP

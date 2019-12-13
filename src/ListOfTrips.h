@@ -36,7 +36,7 @@ public:
     void Add(Trip *elem);
     // Mode d'emploi : Ajoute un élément à la fin de la liste
 
-    Trip *Remove(unsigned int index);
+    Trip *Remove(const unsigned int index);
     // Mode d'emploi : Supprime un élément à l'index donné, renvoie l'élément
     //    supprimé
     // Contrat : index < Size()
@@ -45,13 +45,13 @@ public:
     // Mode d'emploi : Supprime le dernier élément de la liste, renvoie le Trip
     //    supprimé
 
-    Trip *Get(unsigned int index) const;
+    Trip *Get(const unsigned int index) const;
     // Contrat : index < Size()
 
     Trip *GetLast() const;
     // Contrat : Size() > 0
 
-    bool Contains(Trip *elem) const;
+    bool Contains(const Trip *elem) const;
     // Mode d'emploi : Renvoie vrai si la liste contient un pointeur pointant
     //   sur LA MEME CASE MEMOIRE que le paramètre elem (égalité de référence)
 
@@ -67,7 +67,7 @@ public:
     // On désactive le constructeur de copie
     ListOfTrips(const ListOfTrips &anListOfTrips) = delete;
 
-    ListOfTrips(unsigned int startingMaxSize = LIST_OF_TRIPS_DEFAULT_SIZE);
+    ListOfTrips(const unsigned int startingMaxSize = LIST_OF_TRIPS_DEFAULT_SIZE);
     // Mode d'emploi : maxSize indique la taille que la liste allouera pour
     //   stocker ses éléments (qui pourra varier si besoin)
     // Contrat : startingMaxSize >= 1

@@ -33,7 +33,7 @@ void ListOfTrips::Add(Trip *element)
     list[currentSize++] = element;
 } //----- Fin de Add
 
-Trip *ListOfTrips::Remove(unsigned int index)
+Trip *ListOfTrips::Remove(const unsigned int index)
 {
     Trip *removed = list[index];
     for (unsigned int i = index; i < currentSize - 1; i++)
@@ -49,7 +49,7 @@ Trip *ListOfTrips::Pop()
     return list[--currentSize];
 } //----- Fin de Pop
 
-Trip *ListOfTrips::Get(unsigned int index) const
+Trip *ListOfTrips::Get(const unsigned int index) const
 {
     return list[index];
 } //----- Fin de Get
@@ -59,7 +59,7 @@ Trip *ListOfTrips::GetLast() const
     return list[currentSize - 1];
 } //----- Fin de GetLast
 
-bool ListOfTrips::Contains(Trip *elem) const
+bool ListOfTrips::Contains(const Trip *elem) const
 {
     for (unsigned int i = 0; i < currentSize; i++)
         if (list[i] == elem)
@@ -80,7 +80,7 @@ bool ListOfTrips::IsEmpty() const
 
 //-------------------------------------------- Constructeurs - destructeur
 
-ListOfTrips::ListOfTrips(unsigned int startingMaxSize)
+ListOfTrips::ListOfTrips(const unsigned int startingMaxSize)
     : currentSize(0), maxSize(startingMaxSize), list(new Trip *[maxSize])
 {
 #ifdef MAP
