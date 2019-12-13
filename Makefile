@@ -16,7 +16,7 @@ endif
 # On ne compile que les fichiers qui en ont besoin
 normal: directories $(EXEC_NAME)
 
-# On ne recompile tout
+# On recompile tout
 all: clean normal
 
 # Permet d'éviter que les fichiers du même nom que des règles
