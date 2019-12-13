@@ -1,11 +1,11 @@
 #!/bin/bash
 
-rm ./application >/dev/null
-DEBUG=1 make -B >/dev/null || make -B
+rm ./exec >/dev/null
+DEBUG=1 make all -B >/dev/null || make all -B
 
-for f in test/*; do
+for f in tests/*; do
   echo "--------------------------------------------------------------------------------"
   echo "$f"
-  cat "$f" | valgrind ./application
+  echo
+  cat "$f" | valgrind ./exec
 done
-

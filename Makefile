@@ -1,7 +1,8 @@
 CC        = g++
 CFLAGS    = -ansi -pedantic -Wall -Werror -Wextra -std=c++11
 # ajout du flag -Wextra
-EXEC_NAME = application
+
+EXEC_NAME = exec
 INCLUDES  =
 LIBS      =
 SRCS      = $(wildcard src/*.cpp)
@@ -11,19 +12,30 @@ ifdef DEBUG
 	CFLAGS += -DMAP -g
 endif
 
-all: directories $(EXEC_NAME)
 
-.PHONY: clean all
+# On ne compile que les fichiers qui en ont besoin
+normal: directories $(EXEC_NAME)
 
+# On ne recompile tout
+all: clean normal
+
+# Permet d'éviter que les fichiers du même nom que des règles
+# soient "interprétés" comme des dépendances.
+.PHONY: clean all normal
+
+# On supprime les fichiers temporaires et l'éxécutable
 clean:
-	rm $(EXEC_NAME) $(OBJS) || true
-	rmdir tmp || true
+	rm -f $(EXEC_NAME) $(OBJS) 2>/dev/null || true
+	rmdir -f tmp 2>/dev/null || true
 
-$(EXEC_NAME): $(OBJS)
-	$(CC) -o $(EXEC_NAME) $(OBJS) $(LIBS)
-
+# Création du répertoire temporaire
 directories:
 	mkdir -p tmp
 
+# Règle de compilation
 tmp/%.o: src/%.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+
+# Règle d'édition de liens
+$(EXEC_NAME): $(OBJS)
+	$(CC) -o $(EXEC_NAME) $(OBJS) $(LIBS)
