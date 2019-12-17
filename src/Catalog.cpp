@@ -32,11 +32,13 @@ void Catalog::Display() const
 
     if (nTrajets == 0)
     {
-        cout << "Pas de trajets dans le catalogue." << EOL << EOL;
+        cout << "Pas de trajets dans le catalogue." << endl
+             << endl;
     }
     else
     {
-        cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << EOL << EOL;
+        cout << "Il y a " << nTrajets << " trajet" << (nTrajets > 1 ? "s" : "") << " dans le catalogue." << endl
+             << endl;
 
         for (unsigned int i = 0; i < nTrajets; i++)
         {
@@ -44,7 +46,7 @@ void Catalog::Display() const
             cout << "[" << (i + 1) << "]: ";
             trajet->Display();
         }
-        cout << EOL;
+        cout << endl;
     }
 }
 

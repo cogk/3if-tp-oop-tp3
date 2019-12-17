@@ -41,7 +41,7 @@ void CompoundTrip::Display() const
 {
     const unsigned int N = subtrips->Size();
     cout << "Trajet Composé: " << GetStart() << " -> " << GetEnd();
-    cout << " (" << N << " sous-trajets)" << EOL;
+    cout << " (" << N << " sous-trajets)" << endl;
     for (unsigned int i = 0; i < N; i++)
     {
         Trip *trajet = subtrips->Get(i);
