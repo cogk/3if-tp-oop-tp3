@@ -13,11 +13,13 @@
 
 //-------------------------------------------------------- Include système
 using namespace std;
+#include <fstream>
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
 #include "App.h"
 #include "CompoundTrip.h"
+#include "SimpleTrip.h"
 
 //----------------------------------------------------------------- PUBLIC
 
@@ -48,6 +50,30 @@ void CompoundTrip::Display() const
         cout << "     |-[" << (i + 1) << "]: ";
         trajet->Display();
     }
+}
+
+void CompoundTrip::Serialize(ofstream &output) const
+{
+    const unsigned int nSubTrips = subtrips->Size();
+    output << "@" << endl;
+    output << nSubTrips << endl;
+    for (unsigned int i = 0; i < nSubTrips; i++)
+    {
+        const SimpleTrip *trip = (SimpleTrip *)subtrips->Get(i);
+        if (i == 0)
+        {
+            output << trip->GetStart() << endl;
+        }
+
+        output << trip->GetEnd() << endl;
+
+        output << trip->GetMode() << endl;
+    }
+}
+
+Trip::TYPE CompoundTrip::GetType() const
+{
+    return TYPE::COMPOUND;
 }
 
 //-------------------------------------------- Constructeurs - destructeur

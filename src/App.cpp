@@ -13,11 +13,16 @@
 
 //-------------------------------------------------------- Include système
 #include <cstring>
+#include <fstream>
 #include <iostream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
 #include "App.h"
+#include "CompoundTrip.h"
+#include "Parser.h"
+#include "SimpleTrip.h"
+#include "Trip.h"
 
 //------------------------------------------------------------- Constantes
 
@@ -62,6 +67,14 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
     cout << "| " << 0 << ". " << choices[0] << endl;
 
     cin >> answer;
+    if (cin.fail())
+    {
+        cin.clear();             // on efface les bits d'erreur du flux std::cin
+        cin.ignore(10000, '\n'); // skip new line
+
+        return -1;
+    }
+
     cin.clear(); // on efface les bits d'erreur du flux std::cin
 
     cin.ignore(10000, '\n'); // skip new line
@@ -112,8 +125,14 @@ App::~App()
 
 App::MenuStatus App::menuPrincipal()
 {
-    const int nChoices = 4;
-    const char *choices[] = {"Quitter l'application", "Consulter le catalogue", "Ajouter un trajet", "Rechercher un trajet"};
+    const int nChoices = 6;
+    const char *choices[] = {
+        "Quitter l'application",
+        "Consulter le catalogue",
+        "Ajouter un trajet",
+        "Rechercher un trajet",
+        "Charger un fichier",
+        "Sauvegarder dans un fichier"};
 
     while (true)
     {
@@ -134,6 +153,12 @@ App::MenuStatus App::menuPrincipal()
             break;
         case 3:
             status = App::menuRechercher();
+            break;
+        case 4:
+            status = App::menuCharger();
+            break;
+        case 5:
+            status = App::menuSauvegarder();
             break;
         default:
             App::Error("Cette option n'existe pas.");
@@ -469,6 +494,97 @@ App::MenuStatus App::menuRechercher() const
         delete results->Get(i);
     }
     delete results;
+
+    return MenuStatus::DONE;
+}
+
+App::MenuStatus App::menuSauvegarder() const
+{
+    App::MenuTitle("SAUVEGARDER LE CATALOGUE");
+
+    // On demande le nom du fichier de sortie
+
+    // On ouvre le fichier
+    ofstream output("./catalogue.txt");
+
+    // On affiche une erreur s'il est impossible d'ouvrir le fichier
+    if (output.fail())
+    {
+        App::Error("Impossible d'ouvrir le fichier de sauvegarde.");
+        return MenuStatus::ERROR;
+    }
+
+    // On demande quels trajets sauvegarder (filtrage)
+
+    // On affiche les trajets
+
+    for (unsigned int i = 0; i < catalog->Size(); i++)
+    {
+        Trip *trajet = catalog->Get(i);
+        trajet->Serialize(output);
+    }
+
+    output.close();
+
+    return MenuStatus::DONE;
+}
+
+App::MenuStatus App::menuCharger()
+{
+    App::MenuTitle("CHARGER DES TRAJETS DEPUIS UN FICHIER");
+
+    // On ouvre le fichier
+    ifstream input("./catalogue.txt");
+
+    // On affiche une erreur s'il est impossible d'ouvrir le fichier
+    if (input.fail())
+    {
+        App::Error("Impossible d'ouvrir le fichier à charger.");
+        return MenuStatus::ERROR;
+    }
+
+    ListOfTrips *parseResults = Parser::Parse(input);
+
+    // On filtre éventuellement la liste de trajets.
+
+    // const int nChoices = 3;
+    // const char *choices[] = {"Retourner au menu principal", "Recherche simple", "Recherche avancée"};
+
+    // while (results == nullptr)
+    // {
+    //     cout << endl
+    //          << "Veuillez choisir un type de recherche." << endl;
+    //     const int ans = App::Choose(nChoices, choices);
+
+    //     switch (ans)
+    //     {
+    //     case 0:
+    //         return MenuStatus::DONE;
+    //     case 1:
+    //         results = catalog->Search(startName, endName);
+    //         break;
+    //     case 2:
+    //         results = catalog->SearchV2(startName, endName);
+    //         break;
+    //     default:
+    //         App::Error("Cette option n'existe pas.");
+    //         break;
+    //     }
+    // }
+
+    const unsigned int nResults = parseResults->Size();
+    for (unsigned int i = 0; i < nResults; i++)
+    {
+        Trip *trip = parseResults->Get(i);
+        if (true)
+        {
+            catalog->Add(trip);
+        }
+    }
+
+    delete parseResults; // N'est qu'un type conteneur,
+                         // donc ne contient que des pointeurs,
+                         // et donc ne delete pas ses enfants.
 
     return MenuStatus::DONE;
 }

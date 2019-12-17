@@ -12,6 +12,7 @@
 #define TRIP_H
 
 //--------------------------------------------------- Interfaces utilisées
+#include <fstream>
 #include <iostream>
 
 //------------------------------------------------------------- Constantes
@@ -27,6 +28,12 @@ class Trip
     //----------------------------------------------------------------- PUBLIC
 
 public:
+    enum TYPE
+    {
+        SIMPLE,
+        COMPOUND
+    };
+
     //----------------------------------------------------- Méthodes publiques
     virtual const char *GetStart() const = 0;
     // Méthode virtuelle pure
@@ -44,6 +51,16 @@ public:
     // Méthode virtuelle pure
     // Mode d'emploi :
     // Affiche sur la sortie standard une représentation du trajet.
+
+    virtual Trip::TYPE GetType() const = 0;
+    // Méthode virtuelle pure
+    // Mode d'emploi :
+    // Renvoie le type de trajet parmi l'énumération Trip::TYPE
+
+    virtual void Serialize(std::ofstream &output) const = 0;
+    // Méthode virtuelle pure
+    // Mode d'emploi :
+    // Renvoie le type de trajet parmi l'énumération Trip::TYPE
 
     // On désactive l'opérateur d'affectation
     Trip &operator=(const Trip &) = delete;

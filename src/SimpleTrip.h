@@ -14,6 +14,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "Trip.h"
 #include <cstring>
+#include <fstream>
 #include <iostream>
 
 //------------------------------------------------------------- Constantes
@@ -55,6 +56,14 @@ public:
     // Affiche sur la sortie standard une représentation du trajet simple,
     // selon le format suivant :
     //      ville départ -> ville arrivée (mode de transport)
+
+    void Serialize(ofstream &output) const;
+    // Mode d'emploi :
+    //
+
+    Trip::TYPE GetType() const;
+    // Mode d'emploi :
+    // Renvoie le type de trajet, qui est Trip::TYPE::SIMPLE
 
     // On désactive l'opérateur d'affectation
     SimpleTrip &operator=(const SimpleTrip &) = delete;

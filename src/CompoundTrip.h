@@ -14,6 +14,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include "ListOfTrips.h"
 #include "Trip.h"
+#include <fstream>
 #include <iostream>
 
 //------------------------------------------------------------------------
@@ -50,6 +51,14 @@ public:
     // Mode d'emploi :
     // Affiche sur la sortie standard une représentation du trajet composé
     // ainsi que des trajets contenus dans ce trajet composé.
+
+    void Serialize(ofstream &output) const;
+    // Mode d'emploi :
+    //
+
+    Trip::TYPE GetType() const;
+    // Mode d'emploi :
+    // Renvoie le type de trajet, qui est Trip::TYPE::COMPOUND
 
     // On désactive l'opérateur d'affectation
     CompoundTrip &operator=(const CompoundTrip &) = delete;

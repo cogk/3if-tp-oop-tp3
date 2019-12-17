@@ -16,12 +16,8 @@
 
 //------------------------------------------------------ Include personnel
 #include "Catalog.h"
-#include "CompoundTrip.h"
-#include "SimpleTrip.h"
-#include "Trip.h"
 
 //------------------------------------------------------------- Constantes
-#define EOL "\r\n"
 const int UI_BUFFER_SIZE = 256;
 
 //------------------------------------------------------------------ Types
@@ -217,6 +213,9 @@ protected:
     //
     // La valeur de retour est MenuStatus::ERROR en cas d'erreur fatale
     // MenuStatus::DONE sinon (même si l'utilisateur quitte le menu).
+
+    MenuStatus menuCharger();
+    MenuStatus menuSauvegarder() const;
 
     //----------------------------------------------------- Attributs protégés
     Catalog *catalog;
