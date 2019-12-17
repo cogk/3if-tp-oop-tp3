@@ -26,7 +26,7 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
 int App::Run()
 {
-    cout << "Bienvenue dans l'application de gestion de trajets !" << EOL;
+    cout << "Bienvenue dans l'application de gestion de trajets !" << endl;
     App::MenuStatus res = menuPrincipal();
     return (res == MenuStatus::ERROR) ? 1 : 0;
 } //----- Fin de App::Run
@@ -55,11 +55,11 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
 
     for (unsigned int i = 1; i < nChoices; i++)
     {
-        cout << "| " << i << ". " << choices[i] << EOL;
+        cout << "| " << i << ". " << choices[i] << endl;
     }
 
     // Quitter ou retourner au menu précédent
-    cout << "| " << 0 << ". " << choices[0] << EOL;
+    cout << "| " << 0 << ". " << choices[0] << endl;
 
     cin >> answer;
     cin.clear(); // on efface les bits d'erreur du flux std::cin
@@ -76,12 +76,13 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
 
 void App::Error(const char *message)
 {
-    cerr << "Erreur: " << message << EOL;
+    cerr << "Erreur: " << message << endl;
 } //----- Fin de App::Error
 
 void App::MenuTitle(const char *title)
 {
-    cout << EOL << "--- " << title << " ---" << EOL;
+    cout << endl
+         << "--- " << title << " ---" << endl;
 } //----- Fin de App::Error
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -162,7 +163,7 @@ App::MenuStatus App::menuConsulter() const
 App::MenuStatus App::menuAjouter()
 {
     App::MenuTitle("AJOUTER UN TRAJET");
-    cout << "Veuillez choisir un type de trajet." << EOL;
+    cout << "Veuillez choisir un type de trajet." << endl;
 
     const int nChoices = 3;
     const char *choices[] = {"Retourner au menu principal", "Trajet simple", "Trajet composé"};
@@ -191,7 +192,7 @@ App::MenuStatus App::menuAjouter()
 App::MenuStatus App::menuAjouterTrajetSimple()
 {
     App::MenuTitle("AJOUTER UN TRAJET SIMPLE");
-    cout << "Veuillez entrer les informations du trajet." << EOL;
+    cout << "Veuillez entrer les informations du trajet." << endl;
 
     const char MSG_DEP[] = "* Ville de départ:   ";
     const char MSG_ARR[] = "* Ville d'arrivée:   ";
@@ -232,7 +233,7 @@ App::MenuStatus App::menuAjouterTrajetSimple()
 App::MenuStatus App::menuAjouterTrajetCompose()
 {
     App::MenuTitle("AJOUTER UN TRAJET COMPOSÉ");
-    cout << "Appuyez sur [entrée] à tout moment pour quitter." << EOL
+    cout << "Appuyez sur [entrée] à tout moment pour quitter." << endl
          << "Tous les sous-trajets valides seront enregistrés.";
 
     const char MSG_DEP[] = "  | Ville de départ:   ";
@@ -244,7 +245,8 @@ App::MenuStatus App::menuAjouterTrajetCompose()
     unsigned int k = 0;
     while (true)
     {
-        cout << EOL << "Trajet #" << (k + 1) << EOL;
+        cout << endl
+             << "Trajet #" << (k + 1) << endl;
 
         char *nonConstStartName = nullptr;
 
@@ -275,7 +277,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
             nonConstStartName = new char[len + 1]{0};
             nonConstStartName = strncpy(nonConstStartName, lastEndCityName, len);
 
-            cout << MSG_DEP << nonConstStartName << " [valeur remplie automatiquement]" << EOL;
+            cout << MSG_DEP << nonConstStartName << " [valeur remplie automatiquement]" << endl;
         }
 
         const char *startName = nonConstStartName;
@@ -341,7 +343,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
         CompoundTrip *compoundTrip = new CompoundTrip(trips);
         catalog->Add(compoundTrip);
 
-        cout << "Vous avez ajouté un nouveau trajet." << EOL;
+        cout << "Vous avez ajouté un nouveau trajet." << endl;
         compoundTrip->Display();
 
         return MenuStatus::DONE;
@@ -351,7 +353,7 @@ App::MenuStatus App::menuAjouterTrajetCompose()
 App::MenuStatus App::menuRechercher() const
 {
     App::MenuTitle("RECHERCHER UN TRAJET");
-    cout << "Veuillez renseigner les paramètres de recherche." << EOL;
+    cout << "Veuillez renseigner les paramètres de recherche." << endl;
 
     const char MSG_DEP[] = "  | Ville de départ: ";
     const char MSG_ARR[] = "  | Ville d'arrivée: ";
@@ -375,7 +377,8 @@ App::MenuStatus App::menuRechercher() const
     SearchResults *results = nullptr;
     while (results == nullptr)
     {
-        cout << EOL << "Veuillez choisir un type de recherche." << EOL;
+        cout << endl
+             << "Veuillez choisir un type de recherche." << endl;
         const int ans = App::Choose(nChoices, choices);
 
         switch (ans)
@@ -416,12 +419,14 @@ App::MenuStatus App::menuRechercher() const
     if (nResults == 0)
     {
         cout << "Pas de trajet trouvé"
-             << " entre " << startName << " et " << endName << "." << EOL << EOL;
+             << " entre " << startName << " et " << endName << "." << endl
+             << endl;
     }
     else
     {
         cout << "Il y a " << nResults << " résultat" << (nResults > 1 ? "s" : "") << " de recherche"
-             << " entre " << startName << " et " << endName << "." << EOL << EOL;
+             << " entre " << startName << " et " << endName << "." << endl
+             << endl;
 
         for (unsigned int i = 0; i < nResults; i++)
         {
@@ -435,16 +440,16 @@ App::MenuStatus App::menuRechercher() const
             }
             else
             {
-                cout << EOL;
+                cout << endl;
                 for (unsigned int j = 0; j < nSubResult; j++)
                 {
                     cout << " |-[" << (j + 1) << "/" << nSubResult << "]: ";
                     subResult->Get(j)->Display();
                 }
             }
-            cout << EOL;
+            cout << endl;
         }
-        cout << EOL;
+        cout << endl;
     }
 
     delete[] startName;
