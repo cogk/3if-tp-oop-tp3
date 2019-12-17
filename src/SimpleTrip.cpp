@@ -2,8 +2,8 @@
                                                      SimpleTrip  -  description
                                                          -------------------
         début                : 2019-11-19
-        copyright            : (C) 2019 BERTHOMET Guillaume & FORLER Corentin
-        e-mail               : guillaume.berthomet@insa-lyon.fr
+        copyright            : (C) 2019 FADILI Zineb & FORLER Corentin
+        e-mail               : zineb.fadili@insa-lyon.fr
                                                      corentin.forler@insa-lyon.fr
 *************************************************************************/
 
@@ -14,6 +14,7 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <cstring>
+#include <fstream>
 #include <iostream>
 
 //------------------------------------------------------ Include personnel
@@ -41,7 +42,20 @@ const char *SimpleTrip::GetMode() const
 
 void SimpleTrip::Display() const
 {
-    cout << "Trajet Simple: " << startCity << " -> " << endCity << " (" << mode << ")" << EOL;
+    cout << "Trajet Simple: " << startCity << " -> " << endCity << " (" << mode << ")" << endl;
+}
+
+void SimpleTrip::Serialize(ofstream &output) const
+{
+    output << ">" << endl;
+    output << startCity << endl;
+    output << endCity << endl;
+    output << mode << endl;
+}
+
+Trip::TYPE SimpleTrip::GetType() const
+{
+    return TYPE::SIMPLE;
 }
 
 //-------------------------------------------- Constructeurs - destructeur

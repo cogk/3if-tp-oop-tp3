@@ -2,8 +2,8 @@
                            CoumpoundTrip  -  description
                              -------------------
     début                : 2019-11-19
-    copyright            : (C) 2019 BERTHOMET Guillaume & FORLER Corentin
-    e-mail               : guillaume.berthomet@insa-lyon.fr
+    copyright            : (C) 2019 FADILI Zineb & FORLER Corentin
+    e-mail               : zineb.fadili@insa-lyon.fr
                            corentin.forler@insa-lyon.fr
 *************************************************************************/
 
