@@ -32,6 +32,10 @@ public:
     //----------------------------------------------------- Méthodes publiques
     static ListOfTrips *Parse(ifstream &input);
 
+    static ListOfTrips *FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet);
+
+    static ListOfTrips *FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin);
+
     //------------------------------------------------------------------ PRIVE
 
 protected:

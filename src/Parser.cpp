@@ -99,6 +99,43 @@ ListOfTrips *Parser::Parse(ifstream &input)
     return parseResults;
 }
 
+ListOfTrips *Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
+{
+    unsigned int nRemoved = 0;
+
+    for (unsigned int i = 0; i < trips->Size(); i++)
+    {
+        const unsigned int j = i - nRemoved;
+        if (trips->Get(j)->GetType() != typeTrajet)
+        {
+            trips->Remove(j);
+            nRemoved++;
+        }
+    }
+
+    return trips;
+}
+
+ListOfTrips *Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin)
+{
+    unsigned int nRemoved = 0;
+    const unsigned int n = trips->Size();
+
+    for (unsigned int i = 0; i < debut; i++)
+    {
+        trips->Remove(i - nRemoved);
+        nRemoved++;
+    }
+
+    for (unsigned int i = fin + 1; i < n; i++)
+    {
+        trips->Remove(i - nRemoved);
+        nRemoved++;
+    }
+
+    return trips;
+}
+
 //----------------------------------------------------- Méthodes publiques
 
 //-------------------------------------------- Constructeurs - destructeur
