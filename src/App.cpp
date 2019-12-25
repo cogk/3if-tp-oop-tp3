@@ -506,7 +506,9 @@ App::MenuStatus App::menuSauvegarder() const
     // On demande le nom du fichier de sortie
 
     // On ouvre le fichier
-    string filename = "./catalogue.txt";
+    string filename;
+    cout << "Nom du fichier de sauvegarde : ";
+    cin >> filename;
     ofstream output(filename); // TODO Nom de fichier personnalisé
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
@@ -550,7 +552,9 @@ App::MenuStatus App::menuCharger()
     App::MenuTitle("CHARGER DES TRAJETS DEPUIS UN FICHIER");
 
     // On ouvre le fichier
-    string filename = "./catalogue.txt";
+    string filename;
+    cout << "Nom du fichier à charger : ";
+    cin >> filename;
     ifstream input(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
