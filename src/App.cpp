@@ -67,6 +67,8 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
     // Quitter ou retourner au menu précédent
     cout << "| " << 0 << ". " << choices[0] << endl;
 
+    cout << "--> ";
+
     cin >> answer;
     if (cin.fail())
     {
