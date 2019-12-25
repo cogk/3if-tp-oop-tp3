@@ -108,7 +108,8 @@ void Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
         const unsigned int j = i - nRemoved;
         if (trips->Get(j)->GetType() != typeTrajet)
         {
-            trips->Remove(j);
+            const Trip *t = trips->Remove(j);
+            delete t;
             nRemoved++;
         }
     }
@@ -121,13 +122,15 @@ void Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int
 
     for (unsigned int i = 0; i < debut; i++)
     {
-        trips->Remove(i - nRemoved);
+        const Trip *t = trips->Remove(i - nRemoved);
+        delete t;
         nRemoved++;
     }
 
     for (unsigned int i = fin + 1; i < n; i++)
     {
-        trips->Remove(i - nRemoved);
+        const Trip *t = trips->Remove(i - nRemoved);
+        delete t;
         nRemoved++;
     }
 }
@@ -146,7 +149,8 @@ void Parser::FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const
 
         if (!startCityValid || !endCityValid)
         {
-            trips->Remove(i - nRemoved);
+            const Trip *t = trips->Remove(i - nRemoved);
+            delete t;
             nRemoved++;
         }
     }
