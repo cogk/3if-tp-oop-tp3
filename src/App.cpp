@@ -604,11 +604,25 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
         const int ans = App::Choose(3, types);
         const Trip::TYPE type = ans == 1 ? Trip::TYPE::SIMPLE : Trip::TYPE::COMPOUND;
         Parser::FiltreParType(liste, type);
-    }
-    break;
-    case 3:
-        App::Error("TODO Filtrer par ville de départ/d'arrivée");
         break;
+    }
+    case 3:
+    {
+        cout << endl
+             << "Veuillez définir les noms des villes :"
+             << endl
+             << "[Laissez vide pour ne pas filtrer]"
+             << endl;
+
+        const char *startCityName = App::Ask("* Ville de départ: ");
+        const char *endCityName = App::Ask("* Ville d'arrivée: ");
+
+        Parser::FiltreParNom(liste, startCityName, endCityName);
+
+        delete[] startCityName;
+        delete[] endCityName;
+        break;
+    }
     case 4:
     {
         unsigned int debut;
@@ -624,11 +638,12 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
         cin >> fin;
 
         Parser::FiltreParIndex(liste, debut, fin);
+        break;
     }
-    break;
     default:
         App::Error("Cette option n'existe pas.");
-        break;
+        return App::menuFiltrer(liste);
+        // break;
     }
 
     return MenuStatus::DONE;

@@ -141,10 +141,10 @@ void Parser::FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const
     {
         const Trip *trip = trips->Get(i - nRemoved);
 
-        const bool startDontMatch = startCitySearch != nullptr && strcmp(trip->GetStart(), startCitySearch) != 0;
-        const bool endDontMatch = endCitySearch != nullptr && strcmp(trip->GetEnd(), endCitySearch) != 0;
+        const bool startCityValid = (startCitySearch == nullptr) || (strcmp(trip->GetStart(), startCitySearch) == 0);
+        const bool endCityValid = (endCitySearch == nullptr) || (strcmp(trip->GetEnd(), endCitySearch) == 0);
 
-        if (startDontMatch || endDontMatch)
+        if (!startCityValid || !endCityValid)
         {
             trips->Remove(i - nRemoved);
             nRemoved++;
