@@ -75,7 +75,7 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
         cin.clear();             // on efface les bits d'erreur du flux std::cin
         cin.ignore(10000, '\n'); // skip new line
 
-        return -1;
+        return 0; // quit
     }
 
     cin.clear(); // on efface les bits d'erreur du flux std::cin
