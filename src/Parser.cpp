@@ -99,7 +99,7 @@ ListOfTrips *Parser::Parse(ifstream &input)
     return parseResults;
 }
 
-ListOfTrips *Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
+void Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
 {
     unsigned int nRemoved = 0;
 
@@ -112,11 +112,9 @@ ListOfTrips *Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
             nRemoved++;
         }
     }
-
-    return trips;
 }
 
-ListOfTrips *Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin)
+void Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin)
 {
     unsigned int nRemoved = 0;
     const unsigned int n = trips->Size();
@@ -132,8 +130,26 @@ ListOfTrips *Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsi
         trips->Remove(i - nRemoved);
         nRemoved++;
     }
+}
 
-    return trips;
+void Parser::FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const char *endCitySearch)
+{
+    unsigned int nRemoved = 0;
+    const unsigned int n = trips->Size();
+
+    for (unsigned int i = 0; i < n; i++)
+    {
+        const Trip *trip = trips->Get(i - nRemoved);
+
+        const bool startDontMatch = startCitySearch != nullptr && strcmp(trip->GetStart(), startCitySearch) != 0;
+        const bool endDontMatch = endCitySearch != nullptr && strcmp(trip->GetEnd(), endCitySearch) != 0;
+
+        if (startDontMatch || endDontMatch)
+        {
+            trips->Remove(i - nRemoved);
+            nRemoved++;
+        }
+    }
 }
 
 //----------------------------------------------------- Méthodes publiques

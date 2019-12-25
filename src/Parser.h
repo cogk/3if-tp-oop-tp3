@@ -32,9 +32,11 @@ public:
     //----------------------------------------------------- Méthodes publiques
     static ListOfTrips *Parse(ifstream &input);
 
-    static ListOfTrips *FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet);
+    static void FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet);
 
-    static ListOfTrips *FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin);
+    static void FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin);
+
+    static void FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const char *endCitySearch);
 
     //------------------------------------------------------------------ PRIVE
 
