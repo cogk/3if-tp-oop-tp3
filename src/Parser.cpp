@@ -55,7 +55,8 @@ ListOfTrips *Parser::Parse(ifstream &input)
 
             if (line != "")
             {
-                cerr << "Erreur de lecture: la ligne " << lineIndex << " doit ne contenir qu'un nombre.";
+                cerr << "Erreur de lecture: la ligne " << lineIndex << " doit ne contenir qu'un nombre" << endl;
+                cerr << "  mais “" << line << "” trouvé après le nombre lu (" << nSubTrips << ")." << endl;
                 input.close();
                 return nullptr;
             }
@@ -88,7 +89,8 @@ ListOfTrips *Parser::Parse(ifstream &input)
         else
         {
             cerr << "Erreur de lecture: caractère invalide à la ligne " << lineIndex << "." << endl;
-            cerr << "  ‘@’ ou ‘>’ attendu." << endl;
+            cerr << "  ‘@’ ou ‘>’ attendu" << endl;
+            cerr << "  mais “" << line << "” trouvé." << endl;
             input.close();
             return nullptr;
         }
