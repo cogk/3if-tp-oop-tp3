@@ -164,8 +164,6 @@ App::MenuStatus App::menuPrincipal()
         default:
             App::Error("Cette option n'existe pas.");
             continue;
-            // status = MenuStatus::ERROR;
-            // break;
         }
 
         if (status == MenuStatus::ERROR)
@@ -415,23 +413,9 @@ App::MenuStatus App::menuRechercher() const
             return MenuStatus::DONE;
         case 1:
             results = catalog->Search(startName, endName);
-            if (results == nullptr)
-            {
-                App::Error("BUG: results == nullptr");
-                delete startName;
-                delete endName;
-                return MenuStatus::ERROR;
-            }
             break;
         case 2:
             results = catalog->SearchV2(startName, endName);
-            if (results == nullptr)
-            {
-                App::Error("BUG: results == nullptr");
-                delete startName;
-                delete endName;
-                return MenuStatus::ERROR;
-            }
             break;
         default:
             App::Error("Cette option n'existe pas.");
@@ -515,7 +499,7 @@ App::MenuStatus App::menuSauvegarder() const
     if ((output.rdstate() & ifstream::failbit) != 0) // diapo page 79
     {
         App::Error("Impossible d'ouvrir le fichier de sauvegarde.");
-        return MenuStatus::ERROR;
+        return MenuStatus::DONE;
     }
 
     const unsigned int nTrips = catalog->Size();
@@ -561,7 +545,7 @@ App::MenuStatus App::menuCharger()
     if ((input.rdstate() & ifstream::failbit) != 0) // diapo page 79
     {
         App::Error("Impossible d'ouvrir le fichier à charger.");
-        return MenuStatus::ERROR;
+        return MenuStatus::DONE;
     }
 
     ListOfTrips *parseResults = Parser::Parse(input);
