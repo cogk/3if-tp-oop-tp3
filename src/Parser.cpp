@@ -67,10 +67,14 @@ ListOfTrips *Parser::Parse(ifstream &input)
             string mode;
 
             std::getline(input, city1);
+            lineIndex += 1;
+
+            // On lit <nSubTrips> éléments, soit 2 * nSubTrips lignes au total.
             for (unsigned int i = 0; i < nSubTrips; i++)
             {
                 std::getline(input, city2);
                 std::getline(input, mode);
+                lineIndex += 2;
 
                 SimpleTrip *theSubtrip = new SimpleTrip(city1.c_str(), city2.c_str(), mode.c_str());
                 subtrips->Add(theSubtrip);
@@ -80,9 +84,6 @@ ListOfTrips *Parser::Parse(ifstream &input)
 
             Trip *trip = new CompoundTrip(subtrips);
             parseResults->Add(trip);
-
-            lineIndex += 1;
-            // On lit <nombre> éléments.
         }
         else
         {
