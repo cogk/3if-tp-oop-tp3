@@ -67,7 +67,7 @@ ListOfTrips *Parser::Parse(ifstream &input)
             string mode;
 
             std::getline(input, city1);
-            for (unsigned int i; i < nSubTrips; i++)
+            for (unsigned int i = 0; i < nSubTrips; i++)
             {
                 std::getline(input, city2);
                 std::getline(input, mode);
