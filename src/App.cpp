@@ -70,12 +70,18 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
     cout << "--> ";
 
     cin >> answer;
+
+    if (cin.eof())
+    {
+        return 0; // quit
+    }
+
     if (cin.fail())
     {
         cin.clear();             // on efface les bits d'erreur du flux std::cin
         cin.ignore(10000, '\n'); // skip new line
 
-        return 0; // quit
+        return -1; // ask again
     }
 
     cin.clear(); // on efface les bits d'erreur du flux std::cin
