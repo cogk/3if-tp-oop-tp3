@@ -558,7 +558,19 @@ App::MenuStatus App::menuCharger()
 
     ListOfTrips *parseResults = Parser::Parse(input);
 
-    menuFiltrer(parseResults);
+    const MenuStatus status = menuFiltrer(parseResults);
+    if (status == MenuStatus::ERROR)
+    {
+        cout << "Chargement annulé." << endl;
+
+        for (unsigned int i = 0; i < parseResults->Size(); i++)
+        {
+            delete parseResults->Get(i);
+        }
+        delete parseResults;
+
+        return MenuStatus::DONE;
+    }
 
     const unsigned int nResults = parseResults->Size();
     for (unsigned int i = 0; i < nResults; i++)
@@ -615,10 +627,8 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
     case 3:
     {
         cout << endl
-             << "Veuillez définir les noms des villes :"
-             << endl
-             << "[Laissez vide pour ne pas filtrer]"
-             << endl;
+             << "Veuillez définir les noms des villes :" << endl
+             << "[Laissez vide pour ne pas filtrer]" << endl;
 
         const char *startCityName = App::Ask("* Ville de départ: ");
         const char *endCityName = App::Ask("* Ville d'arrivée: ");
@@ -635,20 +645,42 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
         unsigned int fin;
 
         cout << endl
-             << "Veuillez définir la plage de sélection :"
+             << "Veuillez définir la plage de sélection (indices à partir de 1) :"
              << endl;
 
+        // les indices sont donnés à partir de 1
         cout << "* Début: ";
         cin >> debut;
         cout << "* Fin:   ";
         cin >> fin;
 
-        Parser::FiltreParIndex(liste, debut, fin);
+        if (cin.fail())
+        {
+            cerr << endl;
+            App::Error("Vous devez entrer un nombre.");
+            cin.clear();              // on efface les bits d'erreur du flux std::cin
+            cin.ignore(10000, '\n');  // skip new line
+            return MenuStatus::ERROR; // quit
+        }
+
+        if (debut < 1 || fin > liste->Size() || (debut > fin))
+        {
+            cerr << "Erreur: l'intervalle ["
+                 << debut << ", " << fin << "] n'est pas correct." << endl;
+            return MenuStatus::ERROR;
+        }
+
+        // on transforme les indices pour qu'ils commencent à 0
+        Parser::FiltreParIndex(liste, debut - 1, fin - 1);
         break;
     }
     default:
         App::Error("Cette option n'existe pas.");
-        return App::menuFiltrer(liste);
+        return App::menuFiltrer(liste); // On redemande un filtre.
+                                        // On pourrait aussi utiliser
+                                        // une boucle while,
+                                        // mais ça complexifie le code
+                                        // alors que ce n'est pas demandé.
         // break;
     }
 
