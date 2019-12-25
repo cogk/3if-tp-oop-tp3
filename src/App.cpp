@@ -20,6 +20,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "App.h"
 #include "CompoundTrip.h"
+#include "ListOfTrips.h"
 #include "Parser.h"
 #include "SimpleTrip.h"
 #include "Trip.h"
@@ -505,24 +506,39 @@ App::MenuStatus App::menuSauvegarder() const
     // On demande le nom du fichier de sortie
 
     // On ouvre le fichier
-    ofstream output("./catalogue.txt");
+    string filename = "./catalogue.txt";
+    ofstream output(filename); // TODO Nom de fichier personnalisé
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
-    if (output.fail())
+    if ((output.rdstate() & ifstream::failbit) != 0) // diapo page 79
     {
         App::Error("Impossible d'ouvrir le fichier de sauvegarde.");
         return MenuStatus::ERROR;
     }
 
-    // On demande quels trajets sauvegarder (filtrage)
+    const unsigned int nTrips = catalog->Size();
+    ListOfTrips *filteredList = new ListOfTrips(nTrips);
 
-    // On affiche les trajets
-
-    for (unsigned int i = 0; i < catalog->Size(); i++)
+    for (unsigned int i = 0; i < nTrips; i++)
     {
-        Trip *trajet = catalog->Get(i);
+        filteredList->Add(catalog->Get(i));
+    }
+
+    menuFiltrer(filteredList);
+
+    const unsigned int nToSave = filteredList->Size();
+
+    for (unsigned int i = 0; i < nToSave; i++)
+    {
+        Trip *trajet = filteredList->Get(i);
         trajet->Serialize(output);
     }
+
+    cout << nToSave << " trajets sauvegardés vers le fichier " << filename << endl;
+
+    delete filteredList; // N'est qu'un type conteneur,
+                         // donc ne contient que des pointeurs,
+                         // et donc ne delete pas ses enfants.
 
     output.close();
 
@@ -534,10 +550,11 @@ App::MenuStatus App::menuCharger()
     App::MenuTitle("CHARGER DES TRAJETS DEPUIS UN FICHIER");
 
     // On ouvre le fichier
-    ifstream input("./catalogue.txt");
+    string filename = "./catalogue.txt";
+    ifstream input(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
-    if (input.fail())
+    if ((input.rdstate() & ifstream::failbit) != 0) // diapo page 79
     {
         App::Error("Impossible d'ouvrir le fichier à charger.");
         return MenuStatus::ERROR;
@@ -545,46 +562,84 @@ App::MenuStatus App::menuCharger()
 
     ListOfTrips *parseResults = Parser::Parse(input);
 
-    // On filtre éventuellement la liste de trajets.
-
-    // const int nChoices = 3;
-    // const char *choices[] = {"Retourner au menu principal", "Recherche simple", "Recherche avancée"};
-
-    // while (results == nullptr)
-    // {
-    //     cout << endl
-    //          << "Veuillez choisir un type de recherche." << endl;
-    //     const int ans = App::Choose(nChoices, choices);
-
-    //     switch (ans)
-    //     {
-    //     case 0:
-    //         return MenuStatus::DONE;
-    //     case 1:
-    //         results = catalog->Search(startName, endName);
-    //         break;
-    //     case 2:
-    //         results = catalog->SearchV2(startName, endName);
-    //         break;
-    //     default:
-    //         App::Error("Cette option n'existe pas.");
-    //         break;
-    //     }
-    // }
+    menuFiltrer(parseResults);
 
     const unsigned int nResults = parseResults->Size();
     for (unsigned int i = 0; i < nResults; i++)
     {
         Trip *trip = parseResults->Get(i);
-        if (true)
-        {
-            catalog->Add(trip);
-        }
+        catalog->Add(trip);
     }
+
+    cout << nResults << " trajets chargés depuis le fichier " << filename << endl;
 
     delete parseResults; // N'est qu'un type conteneur,
                          // donc ne contient que des pointeurs,
                          // et donc ne delete pas ses enfants.
+
+    input.close();
+
+    return MenuStatus::DONE;
+}
+
+App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette méthode modifie la liste en entrée
+{
+    const int nChoices = 5;
+    const char *choices[] = {
+        "Retourner au menu principal",
+        "Aucun filtrage",
+        "Filtrage par type",
+        "Filtrage par nom de ville",
+        "Filtrage par position"};
+
+    cout << endl
+         << "Veuillez choisir un type de filtre."
+         << endl;
+    const int ans = App::Choose(nChoices, choices);
+
+    switch (ans)
+    {
+    case 0:
+        return MenuStatus::DONE;
+        break;
+    case 1:
+        // On ne fait rien
+        break;
+    case 2:
+    {
+        cout << endl
+             << "Veuillez choisir un type de de trajet."
+             << endl;
+        const char *types[] = {"Annuler", "Simple", "Composé"};
+        const int ans = App::Choose(3, types);
+        const Trip::TYPE type = ans == 1 ? Trip::TYPE::SIMPLE : Trip::TYPE::COMPOUND;
+        Parser::FiltreParType(liste, type);
+    }
+    break;
+    case 3:
+        App::Error("TODO Filtrer par ville de départ/d'arrivée");
+        break;
+    case 4:
+    {
+        unsigned int debut;
+        unsigned int fin;
+
+        cout << endl
+             << "Veuillez définir la plage de sélection :"
+             << endl;
+
+        cout << "* Début: ";
+        cin >> debut;
+        cout << "* Fin:   ";
+        cin >> fin;
+
+        Parser::FiltreParIndex(liste, debut, fin);
+    }
+    break;
+    default:
+        App::Error("Cette option n'existe pas.");
+        break;
+    }
 
     return MenuStatus::DONE;
 }

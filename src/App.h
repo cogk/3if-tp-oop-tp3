@@ -16,6 +16,7 @@
 
 //------------------------------------------------------ Include personnel
 #include "Catalog.h"
+#include "ListOfTrips.h"
 
 //------------------------------------------------------------- Constantes
 const int UI_BUFFER_SIZE = 256;
@@ -216,6 +217,8 @@ protected:
 
     MenuStatus menuCharger();
     MenuStatus menuSauvegarder() const;
+
+    MenuStatus menuFiltrer(ListOfTrips *liste) const;
 
     //----------------------------------------------------- Attributs protégés
     Catalog *catalog;
