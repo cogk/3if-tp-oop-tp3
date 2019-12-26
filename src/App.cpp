@@ -520,7 +520,19 @@ App::MenuStatus App::menuSauvegarder() const
 
     // shouldFreeMemory = false
     // On ne doit pas libérer la mémoire car la liste est dupliquée (en surface)
-    menuFiltrer(filteredList, false);
+    const MenuStatus status = menuFiltrer(filteredList, false);
+    if (status == MenuStatus::ERROR)
+    {
+        cout << "Sauvegarde annulée." << endl;
+
+        for (unsigned int i = 0; i < filteredList->Size(); i++)
+        {
+            delete filteredList->Get(i);
+        }
+        delete filteredList;
+
+        return MenuStatus::DONE;
+    }
 
     const unsigned int nToSave = filteredList->Size();
 
@@ -598,7 +610,7 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) cons
 {
     const int nChoices = 5;
     const char *choices[] = {
-        "Retourner au menu principal",
+        "Annuler et retourner au menu principal",
         "Aucun filtrage",
         "Filtrage par type",
         "Filtrage par nom de ville",
@@ -612,7 +624,7 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) cons
     switch (ans)
     {
     case 0:
-        return MenuStatus::DONE;
+        return MenuStatus::ERROR;
         break;
     case 1:
         // On ne fait rien
@@ -624,6 +636,15 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) cons
              << endl;
         const char *types[] = {"Annuler", "Simple", "Composé"};
         const int ans = App::Choose(3, types);
+
+        if (ans == 0 || ans == -1)
+        {
+            // On redemande un filtre. On pourrait aussi utiliser
+            // une boucle while, mais ça complexifie le code
+            // alors que ce n'est pas demandé.
+            return App::menuFiltrer(liste, shouldFreeMemory);
+        }
+
         const Trip::TYPE type = ans == 1 ? Trip::TYPE::SIMPLE : Trip::TYPE::COMPOUND;
         Parser::FiltreParType(liste, shouldFreeMemory, type);
         break;
@@ -680,12 +701,11 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) cons
     }
     default:
         App::Error("Cette option n'existe pas.");
-        return App::menuFiltrer(liste,
-                                shouldFreeMemory); // On redemande un filtre.
-                                                   // On pourrait aussi utiliser
-                                                   // une boucle while,
-                                                   // mais ça complexifie le code
-                                                   // alors que ce n'est pas demandé.
+
+        // On redemande un filtre. On pourrait aussi utiliser
+        // une boucle while, mais ça complexifie le code
+        // alors que ce n'est pas demandé.
+        return App::menuFiltrer(liste, shouldFreeMemory);
         // break;
     }
 
