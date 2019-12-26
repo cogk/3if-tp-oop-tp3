@@ -499,9 +499,9 @@ App::MenuStatus App::menuSauvegarder() const
 
     // On ouvre le fichier
     string filename;
-    cout << "Nom du fichier de sauvegarde : ";
-    cin >> filename;
-    ofstream output(filename); // TODO Nom de fichier personnalisé
+    cout << "Chemin du fichier de sauvegarde : ";
+    std::getline(cin, filename);
+    ofstream output(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
     if ((output.rdstate() & ifstream::failbit) != 0) // diapo page 79
@@ -547,8 +547,8 @@ App::MenuStatus App::menuCharger()
 
     // On ouvre le fichier
     string filename;
-    cout << "Nom du fichier à charger : ";
-    cin >> filename;
+    cout << "Chemin du fichier à charger : ";
+    std::getline(cin, filename);
     ifstream input(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
