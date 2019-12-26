@@ -102,8 +102,9 @@ ListOfTrips *Parser::Parse(ifstream &input)
 void Parser::FiltreParType(ListOfTrips *trips, bool shouldFreeMemory, Trip::TYPE typeTrajet)
 {
     unsigned int nRemoved = 0;
+    const unsigned int n = trips->Size();
 
-    for (unsigned int i = 0; i < trips->Size(); i++)
+    for (unsigned int i = 0; i < n; i++)
     {
         const unsigned int j = i - nRemoved;
         if (trips->Get(j)->GetType() != typeTrajet)
