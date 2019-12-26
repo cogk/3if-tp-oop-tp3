@@ -218,7 +218,7 @@ protected:
     MenuStatus menuCharger();
     MenuStatus menuSauvegarder() const;
 
-    MenuStatus menuFiltrer(ListOfTrips *liste) const;
+    MenuStatus menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) const;
 
     //----------------------------------------------------- Attributs protégés
     Catalog *catalog;

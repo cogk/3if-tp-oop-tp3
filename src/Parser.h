@@ -32,11 +32,11 @@ public:
     //----------------------------------------------------- Méthodes publiques
     static ListOfTrips *Parse(ifstream &input);
 
-    static void FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet);
+    static void FiltreParType(ListOfTrips *trips, bool shouldFreeMemory, Trip::TYPE typeTrajet);
 
-    static void FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin);
+    static void FiltreParIndex(ListOfTrips *trips, bool shouldFreeMemory, unsigned int debut, unsigned int fin);
 
-    static void FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const char *endCitySearch);
+    static void FiltreParNom(ListOfTrips *trips, bool shouldFreeMemory, const char *startCitySearch, const char *endCitySearch);
 
     //------------------------------------------------------------------ PRIVE
 

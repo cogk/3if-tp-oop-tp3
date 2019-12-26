@@ -99,7 +99,7 @@ ListOfTrips *Parser::Parse(ifstream &input)
     return parseResults;
 }
 
-void Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
+void Parser::FiltreParType(ListOfTrips *trips, bool shouldFreeMemory, Trip::TYPE typeTrajet)
 {
     unsigned int nRemoved = 0;
 
@@ -109,13 +109,16 @@ void Parser::FiltreParType(ListOfTrips *trips, Trip::TYPE typeTrajet)
         if (trips->Get(j)->GetType() != typeTrajet)
         {
             const Trip *t = trips->Remove(j);
-            delete t;
+            if (shouldFreeMemory)
+            {
+                delete t;
+            }
             nRemoved++;
         }
     }
 }
 
-void Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int fin)
+void Parser::FiltreParIndex(ListOfTrips *trips, bool shouldFreeMemory, unsigned int debut, unsigned int fin)
 {
     unsigned int nRemoved = 0;
     const unsigned int n = trips->Size();
@@ -123,19 +126,25 @@ void Parser::FiltreParIndex(ListOfTrips *trips, unsigned int debut, unsigned int
     for (unsigned int i = 0; i < debut; i++)
     {
         const Trip *t = trips->Remove(i - nRemoved);
-        delete t;
+        if (shouldFreeMemory)
+        {
+            delete t;
+        }
         nRemoved++;
     }
 
     for (unsigned int i = fin + 1; i < n; i++)
     {
         const Trip *t = trips->Remove(i - nRemoved);
-        delete t;
+        if (shouldFreeMemory)
+        {
+            delete t;
+        }
         nRemoved++;
     }
 }
 
-void Parser::FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const char *endCitySearch)
+void Parser::FiltreParNom(ListOfTrips *trips, bool shouldFreeMemory, const char *startCitySearch, const char *endCitySearch)
 {
     unsigned int nRemoved = 0;
     const unsigned int n = trips->Size();
@@ -150,7 +159,10 @@ void Parser::FiltreParNom(ListOfTrips *trips, const char *startCitySearch, const
         if (!startCityValid || !endCityValid)
         {
             const Trip *t = trips->Remove(i - nRemoved);
-            delete t;
+            if (shouldFreeMemory)
+            {
+                delete t;
+            }
             nRemoved++;
         }
     }

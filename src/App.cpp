@@ -518,7 +518,9 @@ App::MenuStatus App::menuSauvegarder() const
         filteredList->Add(catalog->Get(i));
     }
 
-    menuFiltrer(filteredList);
+    // shouldFreeMemory = false
+    // On ne doit pas libérer la mémoire car la liste est dupliquée (en surface)
+    menuFiltrer(filteredList, false);
 
     const unsigned int nToSave = filteredList->Size();
 
@@ -558,7 +560,9 @@ App::MenuStatus App::menuCharger()
 
     ListOfTrips *parseResults = Parser::Parse(input);
 
-    const MenuStatus status = menuFiltrer(parseResults);
+    // shouldFreeMemory = true
+    // On libère la mémoire allouée "en trop" dans Parser::Parse
+    const MenuStatus status = menuFiltrer(parseResults, true);
     if (status == MenuStatus::ERROR)
     {
         cout << "Chargement annulé." << endl;
@@ -590,7 +594,7 @@ App::MenuStatus App::menuCharger()
     return MenuStatus::DONE;
 }
 
-App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette méthode modifie la liste en entrée
+App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) const // attention, cette méthode modifie la liste en entrée
 {
     const int nChoices = 5;
     const char *choices[] = {
@@ -621,7 +625,7 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
         const char *types[] = {"Annuler", "Simple", "Composé"};
         const int ans = App::Choose(3, types);
         const Trip::TYPE type = ans == 1 ? Trip::TYPE::SIMPLE : Trip::TYPE::COMPOUND;
-        Parser::FiltreParType(liste, type);
+        Parser::FiltreParType(liste, shouldFreeMemory, type);
         break;
     }
     case 3:
@@ -633,7 +637,7 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
         const char *startCityName = App::Ask("* Ville de départ: ");
         const char *endCityName = App::Ask("* Ville d'arrivée: ");
 
-        Parser::FiltreParNom(liste, startCityName, endCityName);
+        Parser::FiltreParNom(liste, shouldFreeMemory, startCityName, endCityName);
 
         delete[] startCityName;
         delete[] endCityName;
@@ -671,16 +675,17 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste) const // attention, cette m
         }
 
         // on transforme les indices pour qu'ils commencent à 0
-        Parser::FiltreParIndex(liste, debut - 1, fin - 1);
+        Parser::FiltreParIndex(liste, shouldFreeMemory, debut - 1, fin - 1);
         break;
     }
     default:
         App::Error("Cette option n'existe pas.");
-        return App::menuFiltrer(liste); // On redemande un filtre.
-                                        // On pourrait aussi utiliser
-                                        // une boucle while,
-                                        // mais ça complexifie le code
-                                        // alors que ce n'est pas demandé.
+        return App::menuFiltrer(liste,
+                                shouldFreeMemory); // On redemande un filtre.
+                                                   // On pourrait aussi utiliser
+                                                   // une boucle while,
+                                                   // mais ça complexifie le code
+                                                   // alors que ce n'est pas demandé.
         // break;
     }
 
