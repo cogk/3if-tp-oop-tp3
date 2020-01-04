@@ -216,9 +216,87 @@ protected:
     // MenuStatus::DONE sinon (même si l'utilisateur quitte le menu).
 
     MenuStatus menuCharger();
+    // Mode d'emploi :
+    // Affiche le menu de  chargement
+    //
+    // L'utilisateur doit renseigner  :
+    // - chemin du fichier à charger
+    // Si l'ouverture du fichier échoue, la méthode affiche un message d'erreur.
+    //
+    // L'application appelle ensuite la méthode Parser() de la classe Parser
+    // pour qu'elle traduise les données du fichier texte en un tableau de pointeurs
+    // vers les trajets écrits.
+    //
+    // L'application appelle ensuite la méthode menuFiltrer(ListOfTrips*, bool)
+    // qui se charge de proposer à l'utilisateur de filtrer les trajets selon
+    // certains critères (voir description de cette méthode). Le booléen est à true,
+    // les trajets ne correspondant pas aux critères de l'utilisateur sont détruits.
+    //
+    // La méthode affiche ensuite la nombre de trajets chargés ou un message
+    // d'erreur si le chargement a échoué
+    // La valeur de retour est MenuStatus::DONE sinon (même si le chargement a échoué).
+
     MenuStatus menuSauvegarder() const;
+    // Mode d'emploi :
+    // Affiche le menu de sauvegarde
+    //
+    // L'utilisateur doit renseigner  :
+    // - chemin du fichier où la sauvegarde doit être faite
+    // Si l'ouverture du fichier échoue, la méthode affiche un message d'erreur.
+    //
+    // L'application copie ensuite les trajets du catalogue dans une autres liste
+    // de trajets.
+    //
+    // L'application appelle ensuite la méthode menuFiltrer(ListOfTrips*, bool)
+    // qui se charge de proposer à l'utilisateur de filtrer les trajets selon
+    // certains critères (voir description de cette méthode). Le boolén est à false,
+    // pas de destruction de trajets.
+    //
+    // Si tout s'est bien passé au niveau du filtrage, la méthode appel les méthodes
+    // Serialize() de chaque trajets présent de la liste de trajets issue du filtrage
+    // qui s'occupe de leur mise en page dans le fichier de destination.
+    //
+    // La méthode affiche ensuite la nombre de trajets sauvegardés ou un message
+    // d'erreur si le chargement a échoué
+    // La valeur de retour est MenuStatus::DONE sinon (même si la sauvegarde a échoué).
 
     MenuStatus menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) const;
+    // Mode d'emploi
+    // - Le paramètre liste est un pointeur vers un ListOfTrips qui donne la liste
+    // des trajets à filtrer
+    // - Le paramètre shouldFreeMemory est un booléen qui indique si les trajets qui
+    // ne correspondent pas aux critères de filtrage doivent être supprimées (mode
+    // chargement) ou non (mode sauvegarde).
+    //
+    // L'utilisateur doit rensigner plusieurs données
+    // 0 s'il souhaite abandonnée l'opération.
+    // Le type filtre qu'il souhaite appliquer à la liste de trajets (ou l'absence de filtre) sinon
+    //
+    // Options:
+    // 1 - Aucun filtrage
+    //
+    // 2 - S'il choisit un filtrage par type il doit indiquer quel types de trajets :
+    // - 1 SIMPLE
+    // - 2 Composé
+    // La méthode appel ensuite la méthode FiltreParType(ListOfTrips *, bool, Trip::TYPE )
+    // de la classe Parser
+    //
+    // 3 - S'il choisit un filtrage par nom de ville il doit indiquer une ville de départ
+    // ou une ville d'arrivée, ou les deux
+    // (s'il ne souhaite pas spécifier l'une des deux, il doit fournir un retour à la ligne)
+    // La méthode appel ensuite la méthode FiltreParNom(ListOfTrips *, bool, const char *, const char *)
+    // de la classe Parser
+    //
+    // 4 - S'il choisit un filtrage par index il doit indiquer l'index du première et du
+    // dernier trajet à considérer
+    // La méthode appel ensuite la méthode FiltreParIndex(ListOfTrips *, bool, unsigned int, unsigned int)
+    // de la classe Parser
+    //
+    // La valeur de retour est MenuStatus::ERROR en cas d'erreur fatale ou annulation
+    // MenuStatus::DONE sinon.
+
+
+
 
     //----------------------------------------------------- Attributs protégés
     Catalog *catalog;
