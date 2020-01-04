@@ -45,9 +45,11 @@ const char *App::Ask(const char *question)
 
     cin.getline(answer, UI_BUFFER_SIZE);
 
-    if (answer[0] == '\0')
+    if (answer[0] == '\0' || cin.eof() || cin.fail())
     {
-        // length == 0
+        cin.clear();             // on efface les bits d'erreur du flux std::cin
+        cin.ignore(10000, '\n'); // skip new line
+
         delete[] answer;
         return nullptr;
     }
@@ -572,6 +574,12 @@ App::MenuStatus App::menuCharger()
 
     ListOfTrips *parseResults = Parser::Parse(input);
 
+    if (parseResults == nullptr)
+    {
+        cout << "Fichier invalide, chargement annulé." << endl;
+        return MenuStatus::DONE;
+    }
+
     // shouldFreeMemory = true
     // On libère la mémoire allouée "en trop" dans Parser::Parse
     const MenuStatus status = menuFiltrer(parseResults, true);
@@ -655,13 +663,24 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) cons
              << "Veuillez définir les noms des villes :" << endl
              << "[Laissez vide pour ne pas filtrer]" << endl;
 
-        const char *startCityName = App::Ask("* Ville de départ: ");
-        const char *endCityName = App::Ask("* Ville d'arrivée: ");
+        string startCityName;
+        string endCityName;
 
-        Parser::FiltreParNom(liste, shouldFreeMemory, startCityName, endCityName);
+        cout << ("* Ville de départ: ");
+        std::getline(cin, startCityName);
+        if (!cin)
+        {
+            break;
+        }
 
-        delete[] startCityName;
-        delete[] endCityName;
+        cout << ("* Ville d'arrivée: ");
+        std::getline(cin, endCityName);
+        if (!cin)
+        {
+            break;
+        }
+
+        Parser::FiltreParNom(liste, shouldFreeMemory, startCityName.c_str(), endCityName.c_str());
         break;
     }
     case 4:
