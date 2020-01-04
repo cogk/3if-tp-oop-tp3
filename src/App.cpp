@@ -689,7 +689,8 @@ App::MenuStatus App::menuFiltrer(ListOfTrips *liste, bool shouldFreeMemory) cons
         unsigned int fin;
 
         cout << endl
-             << "Veuillez définir la plage de sélection (indices à partir de 1) :"
+             << "Veuillez définir la plage de sélection"
+             << " (indices entre 1 et " << liste->Size() << " inclus) : "
              << endl;
 
         // les indices sont donnés à partir de 1
