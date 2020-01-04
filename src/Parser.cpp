@@ -29,6 +29,8 @@ ListOfTrips *Parser::Parse(ifstream &input)
     unsigned int lineIndex = 0;
     string line;
 
+    bool isInvalidInput = false;
+
     while (std::getline(input, line))
     {
         lineIndex += 1;
@@ -57,8 +59,9 @@ ListOfTrips *Parser::Parse(ifstream &input)
             {
                 cerr << "Erreur de lecture: la ligne " << lineIndex << " doit ne contenir qu'un nombre" << endl;
                 cerr << "  mais “" << line << "” trouvé après le nombre lu (" << nSubTrips << ")." << endl;
-                input.close();
-                return nullptr;
+
+                isInvalidInput = true;
+                break;
             }
 
             ListOfTrips *subtrips = new ListOfTrips(nSubTrips);
@@ -91,9 +94,24 @@ ListOfTrips *Parser::Parse(ifstream &input)
             cerr << "Erreur de lecture: caractère invalide à la ligne " << lineIndex << "." << endl;
             cerr << "  ‘@’ ou ‘>’ attendu" << endl;
             cerr << "  mais “" << line << "” trouvé." << endl;
-            input.close();
-            return nullptr;
+
+            isInvalidInput = true;
+            break;
         }
+    }
+
+    input.close();
+
+    if (isInvalidInput)
+    {
+        const unsigned int n = parseResults->Size();
+        for (unsigned int i = 0; i < n; i++)
+        {
+            delete parseResults->Get(i);
+        }
+        delete parseResults;
+
+        return nullptr;
     }
 
     return parseResults;
@@ -154,8 +172,8 @@ void Parser::FiltreParNom(ListOfTrips *trips, bool shouldFreeMemory, const char 
     {
         const Trip *trip = trips->Get(i - nRemoved);
 
-        const bool startCityValid = (startCitySearch == nullptr) || (strcmp(trip->GetStart(), startCitySearch) == 0);
-        const bool endCityValid = (endCitySearch == nullptr) || (strcmp(trip->GetEnd(), endCitySearch) == 0);
+        const bool startCityValid = (strlen(startCitySearch) == 0) || (strcmp(trip->GetStart(), startCitySearch) == 0);
+        const bool endCityValid = (strlen(endCitySearch) == 0) || (strcmp(trip->GetEnd(), endCitySearch) == 0);
 
         if (!startCityValid || !endCityValid)
         {
