@@ -504,7 +504,7 @@ App::MenuStatus App::menuSauvegarder() const
     ofstream output(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
-    if ((output.rdstate() & ifstream::failbit) != 0) // diapo page 79
+    if (output.fail()) // diapo N°43
     {
         App::Error("Impossible d'ouvrir le fichier de sauvegarde.");
         return MenuStatus::DONE;
@@ -564,7 +564,7 @@ App::MenuStatus App::menuCharger()
     ifstream input(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
-    if ((input.rdstate() & ifstream::failbit) != 0) // diapo page 79
+    if (input.fail()) // diapo N°43
     {
         App::Error("Impossible d'ouvrir le fichier à charger.");
         return MenuStatus::DONE;
