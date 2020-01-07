@@ -5,7 +5,7 @@ CFLAGS    = -ansi -pedantic -Wall -Werror -Wextra -std=c++11
 EXEC_NAME = exec
 INCLUDES  =
 LIBS      =
-SRCS      = $(wildcard src/*.cpp)
+SRCS      = $(wildcard *.cpp)
 OBJS      = $(addprefix tmp/,$(notdir $(SRCS:.cpp=.o)))
 
 ifdef DEBUG
@@ -33,7 +33,7 @@ directories:
 	mkdir -p tmp
 
 # Règle de compilation
-tmp/%.o: src/%.cpp
+tmp/%.o: %.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 # Règle d'édition de liens
