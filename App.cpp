@@ -90,7 +90,7 @@ int App::Choose(const unsigned int nChoices, const char *choices[])
 
     cin.ignore(10000, '\n'); // skip new line
 
-    if (answer > nChoices)
+    if (answer >= nChoices)
     {
         return -1;
     }
