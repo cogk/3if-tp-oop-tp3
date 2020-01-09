@@ -497,26 +497,26 @@ App::MenuStatus App::menuSauvegarder() const
 {
     App::MenuTitle("SAUVEGARDER LE CATALOGUE");
 
-    // On demande le nom du fichier de sortie
+    const unsigned int nTrips = catalog->Size();
 
-    // On ouvre le fichier
+    if (nTrips == 0)
+    {
+        cout << "Sauvegarde annulée, le catalogue ne contient aucun trajet." << endl;
+        return MenuStatus::DONE;
+    }
+
+    // On demande le nom du fichier de sortie
     string filename;
     cout << "Chemin du fichier de sauvegarde : ";
     std::getline(cin, filename);
+
+    // On ouvre le fichier
     ofstream output(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
     if (output.fail()) // diapo N°43
     {
         App::Error("Impossible d'ouvrir le fichier de sauvegarde.");
-        return MenuStatus::DONE;
-    }
-
-    const unsigned int nTrips = catalog->Size();
-
-    if (nTrips == 0)
-    {
-        cout << "Sauvegarde annulée, le catalogue ne contient aucun trajet." << endl;
         return MenuStatus::DONE;
     }
 
@@ -563,10 +563,12 @@ App::MenuStatus App::menuCharger()
 {
     App::MenuTitle("CHARGER DES TRAJETS DEPUIS UN FICHIER");
 
-    // On ouvre le fichier
+    // On demande le nom du fichier d'entrée
     string filename;
     cout << "Chemin du fichier à charger : ";
     std::getline(cin, filename);
+
+    // On ouvre le fichier
     ifstream input(filename);
 
     // On affiche une erreur s'il est impossible d'ouvrir le fichier
