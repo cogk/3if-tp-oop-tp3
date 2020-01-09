@@ -527,10 +527,7 @@ App::MenuStatus App::menuSauvegarder() const
     {
         cout << "Sauvegarde annulée." << endl;
 
-        for (unsigned int i = 0; i < filteredList->Size(); i++)
-        {
-            delete filteredList->Get(i);
-        }
+        // Attention : on ne libére pas la mémoire des trajets pointés
         delete filteredList;
 
         return MenuStatus::DONE;
@@ -587,6 +584,7 @@ App::MenuStatus App::menuCharger()
     {
         cout << "Chargement annulé." << endl;
 
+        // On n'oublie pas de libérer la mémoire.
         for (unsigned int i = 0; i < parseResults->Size(); i++)
         {
             delete parseResults->Get(i);
