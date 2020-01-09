@@ -513,6 +513,13 @@ App::MenuStatus App::menuSauvegarder() const
     }
 
     const unsigned int nTrips = catalog->Size();
+
+    if (nTrips == 0)
+    {
+        cout << "Sauvegarde annulée, le catalogue ne contient aucun trajet." << endl;
+        return MenuStatus::DONE;
+    }
+
     ListOfTrips *filteredList = new ListOfTrips(nTrips);
 
     for (unsigned int i = 0; i < nTrips; i++)
