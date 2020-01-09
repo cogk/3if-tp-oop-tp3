@@ -573,7 +573,14 @@ App::MenuStatus App::menuCharger()
 
     if (parseResults == nullptr)
     {
-        cout << "Fichier invalide, chargement annulé." << endl;
+        cout << "Chargement annulé, le fichier ne respecte pas le bon format de données." << endl;
+        return MenuStatus::DONE;
+    }
+
+    if (parseResults->Size() == 0)
+    {
+        cout << "Chargement annulé, le fichier ne contient aucun trajet." << endl;
+        delete parseResults;
         return MenuStatus::DONE;
     }
 
