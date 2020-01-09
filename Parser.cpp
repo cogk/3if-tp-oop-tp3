@@ -42,9 +42,35 @@ ListOfTrips *Parser::Parse(ifstream &input)
             string mode;
 
             std::getline(input, startCity);
+            lineIndex += 1;
+            if (startCity == "")
+            {
+                cerr << "Erreur: ligne " << lineIndex << endl;
+                cerr << "  [chaîne de caractères non vide] attendu" << endl;
+                cerr << "  mais [retour à la ligne] ou [fin de fichier] trouvé." << endl;
+                isInvalidInput = true;
+                break;
+            }
             std::getline(input, endCity);
+            lineIndex += 1;
+            if (endCity == "")
+            {
+                cerr << "Erreur: ligne " << lineIndex << endl;
+                cerr << "  [chaîne de caractères non vide] attendu." << endl;
+                cerr << "  mais [retour à la ligne] ou [fin de fichier] trouvé." << endl;
+                isInvalidInput = true;
+                break;
+            }
             std::getline(input, mode);
-            lineIndex += 3;
+            lineIndex += 1;
+            if (mode == "")
+            {
+                cerr << "Erreur: ligne " << lineIndex << endl;
+                cerr << "  [chaîne de caractères non vide] attendu." << endl;
+                cerr << "  mais [retour à la ligne] ou [fin de fichier] trouvé." << endl;
+                isInvalidInput = true;
+                break;
+            }
 
             Trip *trip = new SimpleTrip(startCity.c_str(), endCity.c_str(), mode.c_str());
             parseResults->Add(trip);
@@ -57,7 +83,8 @@ ListOfTrips *Parser::Parse(ifstream &input)
 
             if (line != "")
             {
-                cerr << "Erreur de lecture: la ligne " << lineIndex << " doit ne contenir qu'un nombre" << endl;
+                cerr << "Erreur: ligne " << lineIndex << endl;
+                cerr << "  [nombre seul] attendu" << endl;
                 cerr << "  mais “" << line << "” trouvé après le nombre lu (" << nSubTrips << ")." << endl;
 
                 isInvalidInput = true;
@@ -73,12 +100,41 @@ ListOfTrips *Parser::Parse(ifstream &input)
             std::getline(input, city1);
             lineIndex += 1;
 
+            if (city1 == "")
+            {
+                cerr << "Erreur: ligne " << lineIndex << endl;
+                cerr << "  [chaîne de caractères non vide] attendu" << endl;
+                cerr << "  mais [retour à la ligne] ou [fin de fichier] trouvé." << endl;
+                isInvalidInput = true;
+                break;
+            }
+
             // On lit <nSubTrips> éléments, soit 2 * nSubTrips lignes au total.
             for (unsigned int i = 0; i < nSubTrips; i++)
             {
                 std::getline(input, city2);
+                lineIndex += 1;
+
+                if (city2 == "")
+                {
+                    cerr << "Erreur: ligne " << lineIndex << endl;
+                    cerr << "  [chaîne de caractères non vide] attendu." << endl;
+                    cerr << "  mais [retour à la ligne] ou [fin de fichier] trouvé." << endl;
+                    isInvalidInput = true;
+                    break;
+                }
+
                 std::getline(input, mode);
-                lineIndex += 2;
+                lineIndex += 1;
+
+                if (mode == "")
+                {
+                    cerr << "Erreur: ligne " << lineIndex << endl;
+                    cerr << "  [chaîne de caractères non vide] attendu." << endl;
+                    cerr << "  mais [retour à la ligne] ou [fin de fichier] trouvé." << endl;
+                    isInvalidInput = true;
+                    break;
+                }
 
                 SimpleTrip *theSubtrip = new SimpleTrip(city1.c_str(), city2.c_str(), mode.c_str());
                 subtrips->Add(theSubtrip);
@@ -91,7 +147,7 @@ ListOfTrips *Parser::Parse(ifstream &input)
         }
         else
         {
-            cerr << "Erreur de lecture: caractère invalide à la ligne " << lineIndex << "." << endl;
+            cerr << "Erreur: ligne " << lineIndex << "." << endl;
             cerr << "  ‘@’ ou ‘>’ attendu" << endl;
             cerr << "  mais “" << line << "” trouvé." << endl;
 
